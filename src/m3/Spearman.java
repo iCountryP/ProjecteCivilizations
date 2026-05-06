@@ -29,12 +29,12 @@ public class Spearman extends AttackUnit {
 	
 	// Devuelve 0 porque Spearman no gasta mana.
 	public int getManaCost() {
-		return 0;
+		return MANA_COST_SPEARMAN;
 	}
 	
 	// Devuelve la probabilidad de generar residuos al ser eliminada
 	public int getChanceGeneratingWaste() {
-		return CHANCE_GENERATNG_WASTE_SPEARMAN;
+		return CHANCE_GENERATING_WASTE_SPEARMAN;
 	}
 
 	// Devuelve la probabilidad de volver a atacar
