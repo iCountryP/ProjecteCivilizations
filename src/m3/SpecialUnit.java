@@ -3,6 +3,11 @@ package m3;
 public abstract class SpecialUnit implements MilitaryUnit, Variables {
 	private int armor, initialArmor, baseDamage, experience;
 	
+	// Devuelve el ataque de la unidad
+	public int getAttack() {
+		return this.baseDamage;
+	}
+	
 	// Resta receivedDamage a la armadura de la unidad
 	public void takeDamage(int receivedDamage) {
 		this.armor = this.armor - receivedDamage;
