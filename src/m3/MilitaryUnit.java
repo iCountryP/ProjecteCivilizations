@@ -36,6 +36,6 @@ public interface MilitaryUnit {
 	abstract void gainExperience(int n);
 
 	// Devuelve la experiencia actual de la unidad
-	abstract void getExperience();
+	abstract int getExperience();
 
 }
