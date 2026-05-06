@@ -58,14 +58,47 @@ public class Civilization implements Variables {
 	}
 	
 	public void newFarm() {
-		
+		try {
+			if (this.food >= FOOD_COST_FARM && this.wood >= WOOD_COST_FARM && this.iron >= IRON_COST_FARM) {
+				this.food =- FOOD_COST_FARM;
+				this.wood =- WOOD_COST_FARM;
+				this.iron =- IRON_COST_FARM;
+				this.farm++;
+			} else {
+				throw new ResourceException("No hay suficientes recursos");
+			}
+		} catch (ResourceException e) {
+			System.out.println(e);
+		}
 	}
 	
 	public void newCarpentry() {
-		
+		try {
+			if (this.food >= FOOD_COST_CARPENTRY && this.wood >= WOOD_COST_CARPENTRY && this.iron >= IRON_COST_CARPENTRY) {
+				this.food =- FOOD_COST_CARPENTRY;
+				this.wood =- WOOD_COST_CARPENTRY;
+				this.iron =- IRON_COST_CARPENTRY;
+				this.carpentry++;
+			} else {
+				throw new ResourceException("No hay suficientes recursos");
+			}
+		} catch (ResourceException e) {
+			System.out.println(e);
+		}
 	}
 	
 	public void newSmithy() {
-		
+		try {
+			if (this.food >= FOOD_COST_SMITHY && this.wood >= WOOD_COST_SMITHY && this.iron >= IRON_COST_SMITHY) {
+				this.food =- FOOD_COST_SMITHY;
+				this.wood =- WOOD_COST_SMITHY;
+				this.iron =- IRON_COST_SMITHY;
+				this.smithy++;
+			} else {
+				throw new ResourceException("No hay suficientes recursos");
+			}
+		} catch (ResourceException e) {
+			System.out.println(e);
+		}
 	}
 }
