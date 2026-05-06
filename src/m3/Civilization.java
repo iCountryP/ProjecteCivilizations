@@ -19,7 +19,17 @@ public class Civilization implements Variables {
 	private int carpentry;
 
 	private int battles;
+	
 	private ArrayList<MilitaryUnit>[] army = new ArrayList[9];
+	// army[0] --> Swordsman
+	// army[1] --> Spearman
+	// army[2] --> Crossbow
+	// army[3] --> Cannon
+	// army[4] --> ArrowTower
+	// army[5] --> Catapult
+	// army[6] --> RocketLauncher
+	// army[7] --> Magician
+	// army[8] --> Priest
 	
 	public Civilization() {
 		// Ver que onda con esto, instanciacion de las unidades
@@ -33,9 +43,9 @@ public class Civilization implements Variables {
 	public void newChurch() {
 		try {
 			if (this.food >= FOOD_COST_CHURCH && this.wood >= WOOD_COST_CHURCH && this.iron >= IRON_COST_CHURCH) {
-				this.food =- FOOD_COST_CHURCH;
-				this.wood =- WOOD_COST_CHURCH;
-				this.iron =- IRON_COST_CHURCH;
+				this.food -= FOOD_COST_CHURCH;
+				this.wood -= WOOD_COST_CHURCH;
+				this.iron -= IRON_COST_CHURCH;
 				this.church++;
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
@@ -48,9 +58,9 @@ public class Civilization implements Variables {
 	public void newMagicTower() {
 		try {
 			if (this.food >= FOOD_COST_MAGICTOWER && this.wood >= WOOD_COST_MAGICTOWER && this.iron >= IRON_COST_MAGICTOWER) {
-				this.food =- FOOD_COST_MAGICTOWER;
-				this.wood =- WOOD_COST_MAGICTOWER;
-				this.iron =- IRON_COST_MAGICTOWER;
+				this.food -= FOOD_COST_MAGICTOWER;
+				this.wood -= WOOD_COST_MAGICTOWER;
+				this.iron -= IRON_COST_MAGICTOWER;
 				this.magicTower++;
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
@@ -63,9 +73,9 @@ public class Civilization implements Variables {
 	public void newFarm() {
 		try {
 			if (this.food >= FOOD_COST_FARM && this.wood >= WOOD_COST_FARM && this.iron >= IRON_COST_FARM) {
-				this.food =- FOOD_COST_FARM;
-				this.wood =- WOOD_COST_FARM;
-				this.iron =- IRON_COST_FARM;
+				this.food -= FOOD_COST_FARM;
+				this.wood -= WOOD_COST_FARM;
+				this.iron -= IRON_COST_FARM;
 				this.farm++;
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
@@ -78,9 +88,9 @@ public class Civilization implements Variables {
 	public void newCarpentry() {
 		try {
 			if (this.food >= FOOD_COST_CARPENTRY && this.wood >= WOOD_COST_CARPENTRY && this.iron >= IRON_COST_CARPENTRY) {
-				this.food =- FOOD_COST_CARPENTRY;
-				this.wood =- WOOD_COST_CARPENTRY;
-				this.iron =- IRON_COST_CARPENTRY;
+				this.food -= FOOD_COST_CARPENTRY;
+				this.wood -= WOOD_COST_CARPENTRY;
+				this.iron -= IRON_COST_CARPENTRY;
 				this.carpentry++;
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
@@ -93,9 +103,9 @@ public class Civilization implements Variables {
 	public void newSmithy() {
 		try {
 			if (this.food >= FOOD_COST_SMITHY && this.wood >= WOOD_COST_SMITHY && this.iron >= IRON_COST_SMITHY) {
-				this.food =- FOOD_COST_SMITHY;
-				this.wood =- WOOD_COST_SMITHY;
-				this.iron =- IRON_COST_SMITHY;
+				this.food -= FOOD_COST_SMITHY;
+				this.wood -= WOOD_COST_SMITHY;
+				this.iron -= IRON_COST_SMITHY;
 				this.smithy++;
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
@@ -134,6 +144,80 @@ public class Civilization implements Variables {
 		} catch (ResourceException e) {
 			System.out.println(e);
 		}
+	}
+	
+	// Metodos para añadir unidades a la army
+	
+	public void newSwordsman(int n) {
+		
+		try {
+			if (n <= 0) {
+				throw new InvalidUnitAmountException(INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE);
+			} else if (this.food < FOOD_COST_SWORDSMAN*n || this.wood < WOOD_COST_SWORDSMAN*n || this.iron < IRON_COST_SWORDSMAN*n || this.mana < MANA_COST_SWORDSMAN*n) {
+				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
+			}
+		} catch (InvalidUnitAmountException e) {
+			System.out.println(e);
+			n = 0;
+		} catch (ResourceException e) {
+			System.out.println(e);
+			int maxFood = this.food / FOOD_COST_SWORDSMAN;
+			int maxWood = this.wood / WOOD_COST_SWORDSMAN;
+			int maxIron = this.iron / IRON_COST_SWORDSMAN;
+			int maxMana = this.mana / MANA_COST_SWORDSMAN;
+			
+			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
+			
+			if (minimum > 0) {
+				n = minimum;
+			} else {
+				n = 0;
+			}
+		} finally {
+			if (n > 0) {
+				this.food -= FOOD_COST_SWORDSMAN*n;
+				this.wood -= WOOD_COST_SWORDSMAN*n;
+				this.iron -= IRON_COST_SWORDSMAN*n;
+				this.mana -= MANA_COST_SWORDSMAN*n;
+				for (int i = 0; i < n; i++) {
+					this.army[0].add(new Swordsman(ARMOR_SWORDSMAN, BASE_DAMAGE_SWORDSMAN));
+				}
+			}
+			System.out.println("Se agregaron "+n+" espadachines al ejercito.");
+		}
+		
+	}
+	
+	public void newSpearman(int n) {
+		this.army[1].add(new Spearman(ARMOR_SPEARMAN, BASE_DAMAGE_SPEARMAN));
+	}
+	
+	public void newCrossbow(int n) {
+		this.army[2].add(new Crossbow(ARMOR_CROSSBOW, BASE_DAMAGE_CROSSBOW));
+	}
+	
+	public void newCannon(int n) {
+		this.army[3].add(new Cannon(ARMOR_CANNON, BASE_DAMAGE_CANNON));
+	}
+	
+	public void newArrowTower(int n) {
+		this.army[4].add(new ArrowTower(ARMOR_ARROWTOWER, BASE_DAMAGE_ARROWTOWER));
+	}
+	
+	public void newCatapult(int n) {
+		this.army[5].add(new Catapult(ARMOR_CATAPULT, BASE_DAMAGE_CATAPULT));
+	}
+	
+	public void newRocketLauncher(int n) {
+		this.army[6].add(new RocketLauncherTower(ARMOR_ROCKETLAUNCHERTOWER, BASE_DAMAGE_ROCKETLAUNCHERTOWER));
+	}
+	
+	public void newMagician(int n) {
+		this.army[7].add(new Magician(ARMOR_MAGICIAN, BASE_DAMAGE_MAGICIAN));
+	}
+	
+	public void newPriest(int n) {
+		this.army[8].add(new Priest(ARMOR_PRIEST, BASE_DAMAGE_PRIEST));
 	}
 	
 }

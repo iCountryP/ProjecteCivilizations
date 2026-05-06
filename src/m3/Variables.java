@@ -120,7 +120,10 @@ public interface Variables {
 	public final int BASE_DAMAGE_ARROWTOWER = 80;
 	public final int BASE_DAMAGE_CATAPULT = 250;
 	public final int BASE_DAMAGE_ROCKETLAUNCHERTOWER = 2000;
+	
+	// Ataque base de las unidades especiales
 	public final int BASE_DAMAGE_MAGICIAN = 3000;
+	public final int BASE_DAMAGE_PRIEST = 0;
 		
 	// Armadura base de las unidades ofensivas
 	public final int ARMOR_SWORDSMAN = 400;
@@ -128,11 +131,14 @@ public interface Variables {
 	public final int ARMOR_CROSSBOW = 6000;
 	public final int ARMOR_CANNON = 8000;
 	
-	
 	// Armadura base de las unidades defensivas
 	public final int ARMOR_ARROWTOWER = 200;
 	public final int ARMOR_CATAPULT = 1200;
 	public final int ARMOR_ROCKETLAUNCHERTOWER = 7000;
+	
+	// Armadura base de las unidades especiales
+	public final int ARMOR_MAGICIAN = 0;
+	public final int ARMOR_PRIEST = 0;
 	
 	// % de incremento de armadura por nivel de tecnologia
 	public final int PLUS_ARMOR_SWORDSMAN_BY_TECHNOLOGY = 5;
@@ -211,5 +217,6 @@ public interface Variables {
 	
 	// Mensajes de excepciones
 	public final String RESOURCE_EXCEPTION_MESSAGE = "Recursos insuficientes";
+	public final String INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE = "Valor inválido de unidades";
 
 }
