@@ -4,6 +4,18 @@ public abstract class AttackUnit implements MilitaryUnit, Variables {
 	private int armor, initialArmor, baseDamage, experience;
 	private boolean sanctified;
 	
+	public AttackUnit(int initialArmor, int baseDamage) {
+		this.initialArmor = initialArmor;
+		this.baseDamage = baseDamage;
+		this.armor = initialArmor;
+		this.experience = 0;
+	}
+	
+	// Devuelve el ataque de la unidad
+	public int getAttack() {
+		return baseDamage;
+	};
+	
 	// Resta receivedDamage a la armadura de la unidad
 	public void takeDamage(int receivedDamage) {
 		this.armor = this.armor - receivedDamage;
@@ -28,6 +40,5 @@ public abstract class AttackUnit implements MilitaryUnit, Variables {
 	public int getExperience() {
 		return this.experience;
 	};
-	
 	
 }
