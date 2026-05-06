@@ -21,13 +21,13 @@ public interface Variables {
 	
 	// Costes de la tecnologia
 	public final int UPGRADE_BASE_DEFENSE_TECHNOLOGY_IRON_COST = 2000;
-	public final int UPGRADE_BASE_ATTACK_TECHNOLOGY_IRON_COST = 2000;
-	public final int UPGRADE_PLUS_DEFENSE_TECHNOLOGY_IRON_COST = 60;
-	public final int UPGRADE_PLUS_ATTACK_TECHNOLOGY_IRON_COST = 60;
-	
 	public final int UPGRADE_BASE_DEFENSE_TECHNOLOGY_WOOD_COST = 0;
-	public final int UPGRADE_BASE_ATTACK_TECHNOLOGY_WOOD_COST = 0;
+	public final int UPGRADE_PLUS_DEFENSE_TECHNOLOGY_IRON_COST = 60;
 	public final int UPGRADE_PLUS_DEFENSE_TECHNOLOGY_WOOD_COST = 0;
+	
+	public final int UPGRADE_BASE_ATTACK_TECHNOLOGY_IRON_COST = 2000;
+	public final int UPGRADE_BASE_ATTACK_TECHNOLOGY_WOOD_COST = 0;
+	public final int UPGRADE_PLUS_ATTACK_TECHNOLOGY_IRON_COST = 60;
 	public final int UPGRADE_PLUS_ATTACK_TECHNOLOGY_WOOD_COST = 0;
 	
 	
@@ -89,25 +89,25 @@ public interface Variables {
 	public final int[] FOOD_COST_UNITS = {FOOD_COST_SWORDSMAN, FOOD_COST_SPEARMAN, FOOD_COST_CROSSBOW, FOOD_COST_CANNON, FOOD_COST_ARROWTOWER, FOOD_COST_CATAPULT, FOOD_COST_ROCKETLAUNCHERTOWER, FOOD_COST_MAGICIAN, FOOD_COST_PRIEST};
 	
 	// Coste de las construcciones
-	public final int  FOOD_COST_FARM = 5000;
-	public final int  WOOD_COST_FARM = 10000;
-	public final int  IRON_COST_FARM = 12000;
+	public final int FOOD_COST_FARM = 5000;
+	public final int WOOD_COST_FARM = 10000;
+	public final int IRON_COST_FARM = 12000;
 	
-	public final int  FOOD_COST_CARPENTRY = 5000;
-	public final int  WOOD_COST_CARPENTRY = 10000;
-	public final int  IRON_COST_CARPENTRY = 12000;
+	public final int FOOD_COST_CARPENTRY = 5000;
+	public final int WOOD_COST_CARPENTRY = 10000;
+	public final int IRON_COST_CARPENTRY = 12000;
 	
-	public final int  FOOD_COST_SMITHY = 5000;
-	public final int  WOOD_COST_SMITHY = 10000;
-	public final int  IRON_COST_SMITHY = 12000;
+	public final int FOOD_COST_SMITHY = 5000;
+	public final int WOOD_COST_SMITHY = 10000;
+	public final int IRON_COST_SMITHY = 12000;
 	
-	public final int  FOOD_COST_CHURCH = 5000;
-	public final int  WOOD_COST_CHURCH = 10000;
-	public final int  IRON_COST_CHURCH = 12000;
+	public final int FOOD_COST_CHURCH = 5000;
+	public final int WOOD_COST_CHURCH = 10000;
+	public final int IRON_COST_CHURCH = 12000;
 	
-	public final int  FOOD_COST_MAGICTOWER = 5000;
-	public final int  WOOD_COST_MAGICTOWER = 10000;
-	public final int  IRON_COST_MAGICTOWER = 12000;
+	public final int FOOD_COST_MAGICTOWER = 5000;
+	public final int WOOD_COST_MAGICTOWER = 10000;
+	public final int IRON_COST_MAGICTOWER = 12000;
 	
 	
 	// Ataque base de las unidades ofensivas
@@ -208,5 +208,8 @@ public interface Variables {
 	
 	// % de perdidas que genera una unidad respecto a su coste
 	public final int PERCENTATGE_WASTE = 70;
+	
+	// Mensajes de excepciones
+	public final String RESOURCE_EXCEPTION_MESSAGE = "Recursos insuficientes";
 
 }
