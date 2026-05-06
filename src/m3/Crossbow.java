@@ -29,12 +29,12 @@ public class Crossbow extends AttackUnit {
 	
 	// Devuelve 0 porque Crossbow no gasta mana.
 	public int getManaCost() {
-		return 0;
+		return MANA_COST_CROSSBOW;
 	}
 	
 	// Devuelve la probabilidad de generar residuos al ser eliminada
 	public int getChanceGeneratingWaste() {
-		return CHANCE_GENERATNG_WASTE_CROSSBOW;
+		return CHANCE_GENERATING_WASTE_CROSSBOW;
 	}
 
 	// Devuelve la probabilidad de volver a atacar

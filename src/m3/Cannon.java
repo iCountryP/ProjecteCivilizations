@@ -29,12 +29,12 @@ public class Cannon extends AttackUnit {
 	
 	// Devuelve 0 porque Cannon no gasta mana.
 	public int getManaCost() {
-		return 0;
+		return MANA_COST_CANNON;
 	}
 	
 	// Devuelve la probabilidad de generar residuos al ser eliminada
 	public int getChanceGeneratingWaste() {
-		return CHANCE_GENERATNG_WASTE_CANNON;
+		return CHANCE_GENERATING_WASTE_CANNON;
 	}
 
 	// Devuelve la probabilidad de volver a atacar
