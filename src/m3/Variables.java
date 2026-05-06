@@ -169,19 +169,19 @@ public interface Variables {
 	public final int CHANCE_MAGICIAN_RESSURECT = 2;
 	
 	// Probabilidad (%) de que una unidad ofensiva genere escombros
-	public final int CHANCE_GENERATNG_WASTE_SWORDSMAN = 55;
-	public final int CHANCE_GENERATNG_WASTE_SPEARMAN = 65;
-	public final int CHANCE_GENERATNG_WASTE_CROSSBOW = 80;
-	public final int CHANCE_GENERATNG_WASTE_CANNON = 90;
+	public final int CHANCE_GENERATING_WASTE_SWORDSMAN = 55;
+	public final int CHANCE_GENERATING_WASTE_SPEARMAN = 65;
+	public final int CHANCE_GENERATING_WASTE_CROSSBOW = 80;
+	public final int CHANCE_GENERATING_WASTE_CANNON = 90;
 	
 	// Probabilidad (%) de que una unidad defensiva genere escombros
-	public final int CHANCE_GENERATNG_WASTE_ARROWTOWER = 55;
-	public final int CHANCE_GENERATNG_WASTE_CATAPULT = 65;
-	public final int CHANCE_GENERATNG_WASTE_ROCKETLAUNCHERTOWER = 75;
+	public final int CHANCE_GENERATING_WASTE_ARROWTOWER = 55;
+	public final int CHANCE_GENERATING_WASTE_CATAPULT = 65;
+	public final int CHANCE_GENERATING_WASTE_ROCKETLAUNCHERTOWER = 75;
 	
 	// Probabilidad (%) de que una unidad especial genere escombros
-	public final int CHANCE_GENERATNG_WASTE_PRIEST = 0;
-	public final int CHANCE_GENERATNG_WASTE_MAGICIAN = 0;
+	public final int CHANCE_GENERATING_WASTE_PRIEST = 0;
+	public final int CHANCE_GENERATING_WASTE_MAGICIAN = 0;
 	
 	// Probabilidad (%) de que una unidad ofensiva vuelva a atacar
 	public final int CHANCE_ATTACK_AGAIN_SWORDSMAN = 3;
