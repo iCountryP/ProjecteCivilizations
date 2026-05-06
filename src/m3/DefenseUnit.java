@@ -1,6 +1,6 @@
 package m3;
 
-public abstract class DefenseUnit {
+public abstract class DefenseUnit implements MilitaryUnit, Variables {
 	private int armor, initialArmor, baseDamage, experience;
 	private boolean sanctified;
 	
