@@ -7,27 +7,27 @@ public class RocketLauncherTower extends DefenseUnit implements MilitaryUnit, Va
 	}
 
 	public int getFoodCost() {
-		return FOOD_COST_ARROWTOWER;
+		return FOOD_COST_ROCKETLAUNCHERTOWER;
 	}
 
 	public int getWoodCost() {
-		return WOOD_COST_ARROWTOWER;
+		return WOOD_COST_ROCKETLAUNCHERTOWER;
 	}
 
 	public int getIronCost() {
-		return IRON_COST_ARROWTOWER;
+		return IRON_COST_ROCKETLAUNCHERTOWER;
 	}
 
 	public int getManaCost() {
-		return MANA_COST_ARROWTOWER;
+		return MANA_COST_ROCKETLAUNCHERTOWER;
 	}
 
 	public int getChanceGeneratingWaste() {
-		return CHANCE_GENERATING_WASTE_ARROWTOWER;
+		return CHANCE_GENERATING_WASTE_ROCKETLAUNCHERTOWER;
 	}
 
 	public int getChanceAttackAgain() {
-		return CHANCE_ATTACK_AGAIN_ARROWTOWER;
+		return CHANCE_ATTACK_AGAIN_ROCKETLAUNCHERTOWER;
 	}
 
 }

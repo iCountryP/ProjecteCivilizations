@@ -7,27 +7,27 @@ public class Magician extends DefenseUnit implements MilitaryUnit, Variables {
 	}
 
 	public int getFoodCost() {
-		return FOOD_COST_ARROWTOWER;
+		return FOOD_COST_MAGICIAN;
 	}
 
 	public int getWoodCost() {
-		return WOOD_COST_ARROWTOWER;
+		return WOOD_COST_MAGICIAN;
 	}
 
 	public int getIronCost() {
-		return IRON_COST_ARROWTOWER;
+		return IRON_COST_MAGICIAN;
 	}
 
 	public int getManaCost() {
-		return MANA_COST_ARROWTOWER;
+		return MANA_COST_MAGICIAN;
 	}
 
 	public int getChanceGeneratingWaste() {
-		return CHANCE_GENERATING_WASTE_ARROWTOWER;
+		return CHANCE_GENERATING_WASTE_MAGICIAN;
 	}
 
 	public int getChanceAttackAgain() {
-		return CHANCE_ATTACK_AGAIN_ARROWTOWER;
+		return CHANCE_ATTACK_AGAIN_MAGICIAN;
 	}
 
 }
