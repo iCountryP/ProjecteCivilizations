@@ -179,8 +179,12 @@ public class Civilization implements Variables {
 				this.wood -= WOOD_COST_SWORDSMAN*n;
 				this.iron -= IRON_COST_SWORDSMAN*n;
 				this.mana -= MANA_COST_SWORDSMAN*n;
+				
+				int current_armor_plus = (int) Math.ceil(ARMOR_SWORDSMAN* Math.pow((1+PLUS_ARMOR_SWORDSMAN_BY_TECHNOLOGY*0.01), (technologyDefense-1)));
+				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_SWORDSMAN* Math.pow((1+PLUS_ATTACK_SWORDSMAN_BY_TECHNOLOGY*0.01), (technologyAttack-1)));
+				
 				for (int i = 0; i < n; i++) {
-					this.army[0].add(new Swordsman(ARMOR_SWORDSMAN, BASE_DAMAGE_SWORDSMAN));
+					this.army[0].add(new Swordsman(current_armor_plus, current_attack_plus));
 				}
 			}
 			System.out.println("Se agregaron "+n+" espadachines al ejercito.");
@@ -189,11 +193,87 @@ public class Civilization implements Variables {
 	}
 	
 	public void newSpearman(int n) {
-		this.army[1].add(new Spearman(ARMOR_SPEARMAN, BASE_DAMAGE_SPEARMAN));
+		try {
+			if (n <= 0) {
+				throw new InvalidUnitAmountException(INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE);
+			} else if (this.food < FOOD_COST_SPEARMAN*n || this.wood < WOOD_COST_SPEARMAN*n || this.iron < IRON_COST_SPEARMAN*n || this.mana < MANA_COST_SPEARMAN*n) {
+				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
+			}
+		} catch (InvalidUnitAmountException e) {
+			System.out.println(e);
+			n = 0;
+		} catch (ResourceException e) {
+			System.out.println(e);
+			int maxFood = this.food / FOOD_COST_SPEARMAN;
+			int maxWood = this.wood / WOOD_COST_SPEARMAN;
+			int maxIron = this.iron / IRON_COST_SPEARMAN;
+			int maxMana = this.mana / MANA_COST_SPEARMAN;
+			
+			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
+			
+			if (minimum > 0) {
+				n = minimum;
+			} else {
+				n = 0;
+			}
+		} finally {
+			if (n > 0) {
+				this.food -= FOOD_COST_SPEARMAN*n;
+				this.wood -= WOOD_COST_SPEARMAN*n;
+				this.iron -= IRON_COST_SPEARMAN*n;
+				this.mana -= MANA_COST_SPEARMAN*n;
+				
+				int current_armor_plus = (int) Math.ceil(ARMOR_SPEARMAN* Math.pow((1+PLUS_ARMOR_SPEARMAN_BY_TECHNOLOGY*0.01), (technologyDefense-1)));
+				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_SPEARMAN* Math.pow((1+PLUS_ATTACK_SPEARMAN_BY_TECHNOLOGY*0.01), (technologyAttack-1)));
+				
+				for (int i = 0; i < n; i++) {
+					this.army[1].add(new Spearman(current_armor_plus, current_attack_plus));
+				}
+			}
+			System.out.println("Se agregaron "+n+" espadachines al ejercito.");
+		}
 	}
 	
 	public void newCrossbow(int n) {
-		this.army[2].add(new Crossbow(ARMOR_CROSSBOW, BASE_DAMAGE_CROSSBOW));
+		try {
+			if (n <= 0) {
+				throw new InvalidUnitAmountException(INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE);
+			} else if (this.food < FOOD_COST_CROSSBOW*n || this.wood < WOOD_COST_CROSSBOW*n || this.iron < IRON_COST_CROSSBOW*n || this.mana < MANA_COST_CROSSBOW*n) {
+				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
+			}
+		} catch (InvalidUnitAmountException e) {
+			System.out.println(e);
+			n = 0;
+		} catch (ResourceException e) {
+			System.out.println(e);
+			int maxFood = this.food / FOOD_COST_CROSSBOW;
+			int maxWood = this.wood / WOOD_COST_CROSSBOW;
+			int maxIron = this.iron / IRON_COST_CROSSBOW;
+			int maxMana = this.mana / MANA_COST_CROSSBOW;
+			
+			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
+			
+			if (minimum > 0) {
+				n = minimum;
+			} else {
+				n = 0;
+			}
+		} finally {
+			if (n > 0) {
+				this.food -= FOOD_COST_CROSSBOW*n;
+				this.wood -= WOOD_COST_CROSSBOW*n;
+				this.iron -= IRON_COST_CROSSBOW*n;
+				this.mana -= MANA_COST_CROSSBOW*n;
+				
+				int current_armor_plus = (int) Math.ceil(ARMOR_CROSSBOW* Math.pow((1+PLUS_ARMOR_CROSSBOW_BY_TECHNOLOGY*0.01), (technologyDefense-1)));
+				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_CROSSBOW* Math.pow((1+PLUS_ATTACK_CROSSBOW_BY_TECHNOLOGY*0.01), (technologyAttack-1)));
+				
+				for (int i = 0; i < n; i++) {
+					this.army[2].add(new Crossbow(current_armor_plus, current_attack_plus));
+				}
+			}
+			System.out.println("Se agregaron "+n+" espadachines al ejercito.");
+		}
 	}
 	
 	public void newCannon(int n) {
