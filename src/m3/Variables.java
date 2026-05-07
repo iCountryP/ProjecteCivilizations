@@ -150,6 +150,9 @@ public interface Variables {
 	public final int PLUS_ARMOR_CATAPULT_BY_TECHNOLOGY = 5;
 	public final int PLUS_ARMOR_ROCKETLAUNCHERTOWER_BY_TECHNOLOGY = 5;
 	
+	public final int PLUS_ARMOR_MAGICIAN_BY_TECHNOLOGY = 0;
+	public final int PLUS_ARMOR_PRIEST_BY_TECHNOLOGY = 0;
+	
 
 	// % de incremento de ataque por nivel de tecnologia
 	public final int PLUS_ATTACK_SWORDSMAN_BY_TECHNOLOGY = 5;
@@ -161,7 +164,8 @@ public interface Variables {
 	public final int PLUS_ATTACK_CATAPULT_BY_TECHNOLOGY = 5;
 	public final int PLUS_ATTACK_ROCKETLAUNCHERTOWER_BY_TECHNOLOGY = 5;
 	
-	public final int PLUS_ATTACK_MAGICIAN_BY_TECHNOLOGY  = 6;
+	public final int PLUS_ATTACK_MAGICIAN_BY_TECHNOLOGY = 6;
+	public final int PLUS_ATTACK_PRIEST_BY_TECHNOLOGY = 0;
 	
 	// % de incremento de stats por nivel de experiencia
 	public final int PLUS_ARMOR_UNIT_PER_EXPERIENCE_POINT = 4;
@@ -218,5 +222,6 @@ public interface Variables {
 	// Mensajes de excepciones
 	public final String RESOURCE_EXCEPTION_MESSAGE = "Recursos insuficientes";
 	public final String INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE = "Valor inválido de unidades";
+	public final String BUILDING_EXCEPTION_MESSAGE = "Estructuras requeridas insuficientes";
 
 }

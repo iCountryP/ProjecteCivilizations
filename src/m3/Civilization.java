@@ -33,8 +33,24 @@ public class Civilization implements Variables {
 	
 	public Civilization() {
 		// Ver que onda con esto, instanciacion de las unidades
+		this.technologyAttack = 0;
+		this.technologyDefense = 0;
+		
+		this.wood = 0;
+		this.iron = 0;
+		this.food = 0;
+		this.mana = 0;
+		
+		this.magicTower = 0;
+		this.church = 0;
+		this.farm = 0;
+		this.smithy = 0;
+		this.carpentry = 0;
+		
+		this.battles = 0;
+		
 		for (int i = 0; i < army.length; i++) {
-		    army[i] = new ArrayList<>();
+		    army[i] = new ArrayList<MilitaryUnit>();
 		}
 	}
 	
@@ -120,8 +136,8 @@ public class Civilization implements Variables {
 	public void upgradeTechnologyDefense() {
 		try {
 			// Si el nivel por defecto es 0, quitar el -1
-			int current_iron_cost = (int) Math.ceil(UPGRADE_BASE_DEFENSE_TECHNOLOGY_IRON_COST* Math.pow((1+UPGRADE_PLUS_DEFENSE_TECHNOLOGY_IRON_COST*0.01), (technologyDefense-1)));
-			int current_wood_cost = (int) Math.ceil(UPGRADE_BASE_DEFENSE_TECHNOLOGY_WOOD_COST* Math.pow((1+UPGRADE_PLUS_DEFENSE_TECHNOLOGY_WOOD_COST*0.01), (technologyDefense-1)));
+			int current_iron_cost = (int) Math.ceil(UPGRADE_BASE_DEFENSE_TECHNOLOGY_IRON_COST* Math.pow((1+UPGRADE_PLUS_DEFENSE_TECHNOLOGY_IRON_COST*0.01), technologyDefense));
+			int current_wood_cost = (int) Math.ceil(UPGRADE_BASE_DEFENSE_TECHNOLOGY_WOOD_COST* Math.pow((1+UPGRADE_PLUS_DEFENSE_TECHNOLOGY_WOOD_COST*0.01), technologyDefense));
 			if (this.iron >= current_iron_cost && this.wood >= current_wood_cost) {
 				this.technologyDefense++;
 			} else {
@@ -134,8 +150,8 @@ public class Civilization implements Variables {
 	
 	public void upgradeTechnologyAttack() {
 		try {
-			int current_iron_cost = (int) Math.ceil(UPGRADE_BASE_ATTACK_TECHNOLOGY_IRON_COST* Math.pow((1+UPGRADE_PLUS_ATTACK_TECHNOLOGY_IRON_COST*0.01), (technologyAttack-1)));
-			int current_wood_cost = (int) Math.ceil(UPGRADE_BASE_ATTACK_TECHNOLOGY_WOOD_COST* Math.pow((1+UPGRADE_PLUS_ATTACK_TECHNOLOGY_WOOD_COST*0.01), (technologyAttack-1)));
+			int current_iron_cost = (int) Math.ceil(UPGRADE_BASE_ATTACK_TECHNOLOGY_IRON_COST* Math.pow((1+UPGRADE_PLUS_ATTACK_TECHNOLOGY_IRON_COST*0.01), technologyAttack));
+			int current_wood_cost = (int) Math.ceil(UPGRADE_BASE_ATTACK_TECHNOLOGY_WOOD_COST* Math.pow((1+UPGRADE_PLUS_ATTACK_TECHNOLOGY_WOOD_COST*0.01), technologyAttack));
 			if (this.iron >= current_iron_cost && this.wood >= current_wood_cost) {
 				this.technologyAttack++;
 			} else {
@@ -180,8 +196,8 @@ public class Civilization implements Variables {
 				this.iron -= IRON_COST_SWORDSMAN*n;
 				this.mana -= MANA_COST_SWORDSMAN*n;
 				
-				int current_armor_plus = (int) Math.ceil(ARMOR_SWORDSMAN* Math.pow((1+PLUS_ARMOR_SWORDSMAN_BY_TECHNOLOGY*0.01), (technologyDefense-1)));
-				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_SWORDSMAN* Math.pow((1+PLUS_ATTACK_SWORDSMAN_BY_TECHNOLOGY*0.01), (technologyAttack-1)));
+				int current_armor_plus = (int) Math.ceil(ARMOR_SWORDSMAN* Math.pow((1+PLUS_ARMOR_SWORDSMAN_BY_TECHNOLOGY*0.01), technologyDefense));
+				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_SWORDSMAN* Math.pow((1+PLUS_ATTACK_SWORDSMAN_BY_TECHNOLOGY*0.01), technologyAttack));
 				
 				for (int i = 0; i < n; i++) {
 					this.army[0].add(new Swordsman(current_armor_plus, current_attack_plus));
@@ -223,14 +239,14 @@ public class Civilization implements Variables {
 				this.iron -= IRON_COST_SPEARMAN*n;
 				this.mana -= MANA_COST_SPEARMAN*n;
 				
-				int current_armor_plus = (int) Math.ceil(ARMOR_SPEARMAN* Math.pow((1+PLUS_ARMOR_SPEARMAN_BY_TECHNOLOGY*0.01), (technologyDefense-1)));
-				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_SPEARMAN* Math.pow((1+PLUS_ATTACK_SPEARMAN_BY_TECHNOLOGY*0.01), (technologyAttack-1)));
+				int current_armor_plus = (int) Math.ceil(ARMOR_SPEARMAN* Math.pow((1+PLUS_ARMOR_SPEARMAN_BY_TECHNOLOGY*0.01), technologyDefense));
+				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_SPEARMAN* Math.pow((1+PLUS_ATTACK_SPEARMAN_BY_TECHNOLOGY*0.01), technologyAttack));
 				
 				for (int i = 0; i < n; i++) {
 					this.army[1].add(new Spearman(current_armor_plus, current_attack_plus));
 				}
 			}
-			System.out.println("Se agregaron "+n+" espadachines al ejercito.");
+			System.out.println("Se agregaron "+n+" lanceros al ejercito.");
 		}
 	}
 	
@@ -265,39 +281,277 @@ public class Civilization implements Variables {
 				this.iron -= IRON_COST_CROSSBOW*n;
 				this.mana -= MANA_COST_CROSSBOW*n;
 				
-				int current_armor_plus = (int) Math.ceil(ARMOR_CROSSBOW* Math.pow((1+PLUS_ARMOR_CROSSBOW_BY_TECHNOLOGY*0.01), (technologyDefense-1)));
-				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_CROSSBOW* Math.pow((1+PLUS_ATTACK_CROSSBOW_BY_TECHNOLOGY*0.01), (technologyAttack-1)));
+				int current_armor_plus = (int) Math.ceil(ARMOR_CROSSBOW* Math.pow((1+PLUS_ARMOR_CROSSBOW_BY_TECHNOLOGY*0.01), technologyDefense));
+				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_CROSSBOW* Math.pow((1+PLUS_ATTACK_CROSSBOW_BY_TECHNOLOGY*0.01), technologyAttack));
 				
 				for (int i = 0; i < n; i++) {
 					this.army[2].add(new Crossbow(current_armor_plus, current_attack_plus));
 				}
 			}
-			System.out.println("Se agregaron "+n+" espadachines al ejercito.");
+			System.out.println("Se agregaron "+n+" ballestas al ejercito.");
 		}
 	}
 	
 	public void newCannon(int n) {
-		this.army[3].add(new Cannon(ARMOR_CANNON, BASE_DAMAGE_CANNON));
+		try {
+			if (n <= 0) {
+				throw new InvalidUnitAmountException(INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE);
+			} else if (this.food < FOOD_COST_CANNON*n || this.wood < WOOD_COST_CANNON*n || this.iron < IRON_COST_CANNON*n || this.mana < MANA_COST_CANNON*n) {
+				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
+			}
+		} catch (InvalidUnitAmountException e) {
+			System.out.println(e);
+			n = 0;
+		} catch (ResourceException e) {
+			System.out.println(e);
+			int maxFood = this.food / FOOD_COST_CANNON;
+			int maxWood = this.wood / WOOD_COST_CANNON;
+			int maxIron = this.iron / IRON_COST_CANNON;
+			int maxMana = this.mana / MANA_COST_CANNON;
+			
+			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
+			
+			if (minimum > 0) {
+				n = minimum;
+			} else {
+				n = 0;
+			}
+		} finally {
+			if (n > 0) {
+				this.food -= FOOD_COST_CANNON*n;
+				this.wood -= WOOD_COST_CANNON*n;
+				this.iron -= IRON_COST_CANNON*n;
+				this.mana -= MANA_COST_CANNON*n;
+				
+				int current_armor_plus = (int) Math.ceil(ARMOR_CANNON* Math.pow((1+PLUS_ARMOR_CANNON_BY_TECHNOLOGY*0.01), technologyDefense));
+				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_CANNON* Math.pow((1+PLUS_ATTACK_CANNON_BY_TECHNOLOGY*0.01), technologyAttack));
+				
+				for (int i = 0; i < n; i++) {
+					this.army[3].add(new Cannon(current_armor_plus, current_attack_plus));
+				}
+			}
+			System.out.println("Se agregaron "+n+" cañones al ejercito.");
+		}
 	}
 	
 	public void newArrowTower(int n) {
-		this.army[4].add(new ArrowTower(ARMOR_ARROWTOWER, BASE_DAMAGE_ARROWTOWER));
+		try {
+			if (n <= 0) {
+				throw new InvalidUnitAmountException(INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE);
+			} else if (this.food < FOOD_COST_ARROWTOWER*n || this.wood < WOOD_COST_ARROWTOWER*n || this.iron < IRON_COST_ARROWTOWER*n || this.mana < MANA_COST_ARROWTOWER*n) {
+				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
+			}
+		} catch (InvalidUnitAmountException e) {
+			System.out.println(e);
+			n = 0;
+		} catch (ResourceException e) {
+			System.out.println(e);
+			int maxFood = this.food / FOOD_COST_ARROWTOWER;
+			int maxWood = this.wood / WOOD_COST_ARROWTOWER;
+			int maxIron = this.iron / IRON_COST_ARROWTOWER;
+			int maxMana = this.mana / MANA_COST_ARROWTOWER;
+			
+			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
+			
+			if (minimum > 0) {
+				n = minimum;
+			} else {
+				n = 0;
+			}
+		} finally {
+			if (n > 0) {
+				this.food -= FOOD_COST_ARROWTOWER*n;
+				this.wood -= WOOD_COST_ARROWTOWER*n;
+				this.iron -= IRON_COST_ARROWTOWER*n;
+				this.mana -= MANA_COST_ARROWTOWER*n;
+				
+				int current_armor_plus = (int) Math.ceil(ARMOR_ARROWTOWER* Math.pow((1+PLUS_ARMOR_ARROWTOWER_BY_TECHNOLOGY*0.01), technologyDefense));
+				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_ARROWTOWER* Math.pow((1+PLUS_ATTACK_ARROWTOWER_BY_TECHNOLOGY*0.01), technologyAttack));
+				
+				for (int i = 0; i < n; i++) {
+					this.army[4].add(new ArrowTower(current_armor_plus, current_attack_plus));
+				}
+			}
+			System.out.println("Se agregaron "+n+" torres arqueras al ejercito.");
+		}
 	}
 	
 	public void newCatapult(int n) {
-		this.army[5].add(new Catapult(ARMOR_CATAPULT, BASE_DAMAGE_CATAPULT));
+		try {
+			if (n <= 0) {
+				throw new InvalidUnitAmountException(INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE);
+			} else if (this.food < FOOD_COST_CATAPULT*n || this.wood < WOOD_COST_CATAPULT*n || this.iron < IRON_COST_CATAPULT*n || this.mana < MANA_COST_CATAPULT*n) {
+				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
+			}
+		} catch (InvalidUnitAmountException e) {
+			System.out.println(e);
+			n = 0;
+		} catch (ResourceException e) {
+			System.out.println(e);
+			int maxFood = this.food / FOOD_COST_CATAPULT;
+			int maxWood = this.wood / WOOD_COST_CATAPULT;
+			int maxIron = this.iron / IRON_COST_CATAPULT;
+			int maxMana = this.mana / MANA_COST_CATAPULT;
+			
+			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
+			
+			if (minimum > 0) {
+				n = minimum;
+			} else {
+				n = 0;
+			}
+		} finally {
+			if (n > 0) {
+				this.food -= FOOD_COST_CATAPULT*n;
+				this.wood -= WOOD_COST_CATAPULT*n;
+				this.iron -= IRON_COST_CATAPULT*n;
+				this.mana -= MANA_COST_CATAPULT*n;
+				
+				int current_armor_plus = (int) Math.ceil(ARMOR_CATAPULT* Math.pow((1+PLUS_ARMOR_CATAPULT_BY_TECHNOLOGY*0.01), technologyDefense));
+				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_CATAPULT* Math.pow((1+PLUS_ATTACK_CATAPULT_BY_TECHNOLOGY*0.01), technologyAttack));
+				
+				for (int i = 0; i < n; i++) {
+					this.army[5].add(new Catapult(current_armor_plus, current_attack_plus));
+				}
+			}
+			System.out.println("Se agregaron "+n+" catapultas al ejercito.");
+		}
 	}
 	
 	public void newRocketLauncher(int n) {
-		this.army[6].add(new RocketLauncherTower(ARMOR_ROCKETLAUNCHERTOWER, BASE_DAMAGE_ROCKETLAUNCHERTOWER));
+		try {
+			if (n <= 0) {
+				throw new InvalidUnitAmountException(INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE);
+			} else if (this.food < FOOD_COST_ROCKETLAUNCHERTOWER*n || this.wood < WOOD_COST_ROCKETLAUNCHERTOWER*n || this.iron < IRON_COST_ROCKETLAUNCHERTOWER*n || this.mana < MANA_COST_ROCKETLAUNCHERTOWER*n) {
+				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
+			}
+		} catch (InvalidUnitAmountException e) {
+			System.out.println(e);
+			n = 0;
+		} catch (ResourceException e) {
+			System.out.println(e);
+			int maxFood = this.food / FOOD_COST_ROCKETLAUNCHERTOWER;
+			int maxWood = this.wood / WOOD_COST_ROCKETLAUNCHERTOWER;
+			int maxIron = this.iron / IRON_COST_ROCKETLAUNCHERTOWER;
+			int maxMana = this.mana / MANA_COST_ROCKETLAUNCHERTOWER;
+			
+			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
+			
+			if (minimum > 0) {
+				n = minimum;
+			} else {
+				n = 0;
+			}
+		} finally {
+			if (n > 0) {
+				this.food -= FOOD_COST_ROCKETLAUNCHERTOWER*n;
+				this.wood -= WOOD_COST_ROCKETLAUNCHERTOWER*n;
+				this.iron -= IRON_COST_ROCKETLAUNCHERTOWER*n;
+				this.mana -= MANA_COST_ROCKETLAUNCHERTOWER*n;
+				
+				int current_armor_plus = (int) Math.ceil(ARMOR_ROCKETLAUNCHERTOWER* Math.pow((1+PLUS_ARMOR_ROCKETLAUNCHERTOWER_BY_TECHNOLOGY*0.01), technologyDefense));
+				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_ROCKETLAUNCHERTOWER* Math.pow((1+PLUS_ATTACK_ROCKETLAUNCHERTOWER_BY_TECHNOLOGY*0.01), technologyAttack));
+				
+				for (int i = 0; i < n; i++) {
+					this.army[6].add(new RocketLauncherTower(current_armor_plus, current_attack_plus));
+				}
+			}
+			System.out.println("Se agregaron "+n+" torres lanzacohetes al ejercito.");
+		}
 	}
 	
 	public void newMagician(int n) {
-		this.army[7].add(new Magician(ARMOR_MAGICIAN, BASE_DAMAGE_MAGICIAN));
+		try {
+			if (n <= 0) {
+				throw new InvalidUnitAmountException(INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE);
+			} else if (this.food < FOOD_COST_MAGICIAN*n || this.wood < WOOD_COST_MAGICIAN*n || this.iron < IRON_COST_MAGICIAN*n || this.mana < MANA_COST_MAGICIAN*n) {
+				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
+			} else if (this.magicTower == 0) {
+				throw new BuildingException(BUILDING_EXCEPTION_MESSAGE);
+			}
+		} catch (InvalidUnitAmountException e) {
+			System.out.println(e);
+			n = 0;
+		} catch (ResourceException e) {
+			System.out.println(e);
+			int maxFood = this.food / FOOD_COST_MAGICIAN;
+			int maxWood = this.wood / WOOD_COST_MAGICIAN;
+			int maxIron = this.iron / IRON_COST_MAGICIAN;
+			int maxMana = this.mana / MANA_COST_MAGICIAN;
+			
+			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
+			
+			if (minimum > 0) {
+				n = minimum;
+			} else {
+				n = 0;
+			}
+		} catch (BuildingException e) {
+			System.out.println(e);
+			n = 0;
+		} finally {
+			if (n > 0) {
+				this.food -= FOOD_COST_MAGICIAN*n;
+				this.wood -= WOOD_COST_MAGICIAN*n;
+				this.iron -= IRON_COST_MAGICIAN*n;
+				this.mana -= MANA_COST_MAGICIAN*n;
+				
+				int current_armor_plus = (int) Math.ceil(ARMOR_MAGICIAN* Math.pow((1+PLUS_ARMOR_MAGICIAN_BY_TECHNOLOGY*0.01), technologyDefense));
+				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_MAGICIAN* Math.pow((1+PLUS_ATTACK_MAGICIAN_BY_TECHNOLOGY*0.01), technologyAttack));
+				
+				for (int i = 0; i < n; i++) {
+					this.army[7].add(new Magician(current_armor_plus, current_attack_plus));
+				}
+			}
+			System.out.println("Se agregaron "+n+" magos al ejercito.");
+		}
 	}
 	
 	public void newPriest(int n) {
-		this.army[8].add(new Priest(ARMOR_PRIEST, BASE_DAMAGE_PRIEST));
+		try {
+			if (n <= 0) {
+				throw new InvalidUnitAmountException(INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE);
+			} else if (this.food < FOOD_COST_PRIEST*n || this.wood < WOOD_COST_PRIEST*n || this.iron < IRON_COST_PRIEST*n || this.mana < MANA_COST_PRIEST*n) {
+				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
+			} else if (this.church < this.army[8].size() + 1) {
+				throw new BuildingException(BUILDING_EXCEPTION_MESSAGE);
+			}
+		} catch (InvalidUnitAmountException e) {
+			System.out.println(e);
+			n = 0;
+		} catch (ResourceException e) {
+			System.out.println(e);
+			int maxFood = this.food / FOOD_COST_PRIEST;
+			int maxWood = this.wood / WOOD_COST_PRIEST;
+			int maxIron = this.iron / IRON_COST_PRIEST;
+			int maxMana = this.mana / MANA_COST_PRIEST;
+			
+			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
+			
+			if (minimum > 0) {
+				n = minimum;
+			} else {
+				n = 0;
+			}
+		} catch (BuildingException e) {
+			System.out.println(e);
+			n = 0;
+		} finally {
+			if (n > 0) {
+				this.food -= FOOD_COST_PRIEST*n;
+				this.wood -= WOOD_COST_PRIEST*n;
+				this.iron -= IRON_COST_PRIEST*n;
+				this.mana -= MANA_COST_PRIEST*n;
+				
+				int current_armor_plus = (int) Math.ceil(ARMOR_PRIEST* Math.pow((1+PLUS_ARMOR_PRIEST_BY_TECHNOLOGY*0.01), technologyDefense));
+				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_PRIEST* Math.pow((1+PLUS_ATTACK_PRIEST_BY_TECHNOLOGY*0.01), technologyAttack));
+				
+				for (int i = 0; i < n; i++) {
+					this.army[8].add(new Priest(current_armor_plus, current_attack_plus));
+				}
+			}
+			System.out.println("Se agregaron "+n+" sacerdotes al ejercito.");
+		}
 	}
 	
 }
