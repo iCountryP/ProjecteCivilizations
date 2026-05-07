@@ -21,13 +21,13 @@ public interface Variables {
 	
 	// Costes de la tecnologia
 	public final int UPGRADE_BASE_DEFENSE_TECHNOLOGY_IRON_COST = 2000;
-	public final int UPGRADE_BASE_ATTACK_TECHNOLOGY_IRON_COST = 2000;
-	public final int UPGRADE_PLUS_DEFENSE_TECHNOLOGY_IRON_COST = 60;
-	public final int UPGRADE_PLUS_ATTACK_TECHNOLOGY_IRON_COST = 60;
-	
 	public final int UPGRADE_BASE_DEFENSE_TECHNOLOGY_WOOD_COST = 0;
-	public final int UPGRADE_BASE_ATTACK_TECHNOLOGY_WOOD_COST = 0;
+	public final int UPGRADE_PLUS_DEFENSE_TECHNOLOGY_IRON_COST = 60;
 	public final int UPGRADE_PLUS_DEFENSE_TECHNOLOGY_WOOD_COST = 0;
+	
+	public final int UPGRADE_BASE_ATTACK_TECHNOLOGY_IRON_COST = 2000;
+	public final int UPGRADE_BASE_ATTACK_TECHNOLOGY_WOOD_COST = 0;
+	public final int UPGRADE_PLUS_ATTACK_TECHNOLOGY_IRON_COST = 60;
 	public final int UPGRADE_PLUS_ATTACK_TECHNOLOGY_WOOD_COST = 0;
 	
 	
@@ -89,25 +89,25 @@ public interface Variables {
 	public final int[] FOOD_COST_UNITS = {FOOD_COST_SWORDSMAN, FOOD_COST_SPEARMAN, FOOD_COST_CROSSBOW, FOOD_COST_CANNON, FOOD_COST_ARROWTOWER, FOOD_COST_CATAPULT, FOOD_COST_ROCKETLAUNCHERTOWER, FOOD_COST_MAGICIAN, FOOD_COST_PRIEST};
 	
 	// Coste de las construcciones
-	public final int  FOOD_COST_FARM = 5000;
-	public final int  WOOD_COST_FARM = 10000;
-	public final int  IRON_COST_FARM = 12000;
+	public final int FOOD_COST_FARM = 5000;
+	public final int WOOD_COST_FARM = 10000;
+	public final int IRON_COST_FARM = 12000;
 	
-	public final int  FOOD_COST_CARPENTRY = 5000;
-	public final int  WOOD_COST_CARPENTRY = 10000;
-	public final int  IRON_COST_CARPENTRY = 12000;
+	public final int FOOD_COST_CARPENTRY = 5000;
+	public final int WOOD_COST_CARPENTRY = 10000;
+	public final int IRON_COST_CARPENTRY = 12000;
 	
-	public final int  FOOD_COST_SMITHY = 5000;
-	public final int  WOOD_COST_SMITHY = 10000;
-	public final int  IRON_COST_SMITHY = 12000;
+	public final int FOOD_COST_SMITHY = 5000;
+	public final int WOOD_COST_SMITHY = 10000;
+	public final int IRON_COST_SMITHY = 12000;
 	
-	public final int  FOOD_COST_CHURCH = 5000;
-	public final int  WOOD_COST_CHURCH = 10000;
-	public final int  IRON_COST_CHURCH = 12000;
+	public final int FOOD_COST_CHURCH = 5000;
+	public final int WOOD_COST_CHURCH = 10000;
+	public final int IRON_COST_CHURCH = 12000;
 	
-	public final int  FOOD_COST_MAGICTOWER = 5000;
-	public final int  WOOD_COST_MAGICTOWER = 10000;
-	public final int  IRON_COST_MAGICTOWER = 12000;
+	public final int FOOD_COST_MAGICTOWER = 5000;
+	public final int WOOD_COST_MAGICTOWER = 10000;
+	public final int IRON_COST_MAGICTOWER = 12000;
 	
 	
 	// Ataque base de las unidades ofensivas
@@ -120,7 +120,10 @@ public interface Variables {
 	public final int BASE_DAMAGE_ARROWTOWER = 80;
 	public final int BASE_DAMAGE_CATAPULT = 250;
 	public final int BASE_DAMAGE_ROCKETLAUNCHERTOWER = 2000;
+	
+	// Ataque base de las unidades especiales
 	public final int BASE_DAMAGE_MAGICIAN = 3000;
+	public final int BASE_DAMAGE_PRIEST = 0;
 		
 	// Armadura base de las unidades ofensivas
 	public final int ARMOR_SWORDSMAN = 400;
@@ -128,11 +131,14 @@ public interface Variables {
 	public final int ARMOR_CROSSBOW = 6000;
 	public final int ARMOR_CANNON = 8000;
 	
-	
 	// Armadura base de las unidades defensivas
 	public final int ARMOR_ARROWTOWER = 200;
 	public final int ARMOR_CATAPULT = 1200;
 	public final int ARMOR_ROCKETLAUNCHERTOWER = 7000;
+	
+	// Armadura base de las unidades especiales
+	public final int ARMOR_MAGICIAN = 0;
+	public final int ARMOR_PRIEST = 0;
 	
 	// % de incremento de armadura por nivel de tecnologia
 	public final int PLUS_ARMOR_SWORDSMAN_BY_TECHNOLOGY = 5;
@@ -143,6 +149,9 @@ public interface Variables {
 	public final int PLUS_ARMOR_ARROWTOWER_BY_TECHNOLOGY = 5;
 	public final int PLUS_ARMOR_CATAPULT_BY_TECHNOLOGY = 5;
 	public final int PLUS_ARMOR_ROCKETLAUNCHERTOWER_BY_TECHNOLOGY = 5;
+	
+	public final int PLUS_ARMOR_MAGICIAN_BY_TECHNOLOGY = 0;
+	public final int PLUS_ARMOR_PRIEST_BY_TECHNOLOGY = 0;
 	
 
 	// % de incremento de ataque por nivel de tecnologia
@@ -155,7 +164,8 @@ public interface Variables {
 	public final int PLUS_ATTACK_CATAPULT_BY_TECHNOLOGY = 5;
 	public final int PLUS_ATTACK_ROCKETLAUNCHERTOWER_BY_TECHNOLOGY = 5;
 	
-	public final int PLUS_ATTACK_MAGICIAN_BY_TECHNOLOGY  = 6;
+	public final int PLUS_ATTACK_MAGICIAN_BY_TECHNOLOGY = 6;
+	public final int PLUS_ATTACK_PRIEST_BY_TECHNOLOGY = 0;
 	
 	// % de incremento de stats por nivel de experiencia
 	public final int PLUS_ARMOR_UNIT_PER_EXPERIENCE_POINT = 4;
@@ -208,5 +218,10 @@ public interface Variables {
 	
 	// % de perdidas que genera una unidad respecto a su coste
 	public final int PERCENTATGE_WASTE = 70;
+	
+	// Mensajes de excepciones
+	public final String RESOURCE_EXCEPTION_MESSAGE = "Recursos insuficientes";
+	public final String INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE = "Valor inválido de unidades";
+	public final String BUILDING_EXCEPTION_MESSAGE = "Estructuras requeridas insuficientes";
 
 }
