@@ -54,6 +54,14 @@ public class Civilization implements Variables {
 		}
 	}
 	
+	public void addWood(int quantity) {
+		this.wood += quantity;
+	}
+	
+	public void addIron(int quantity) {
+		this.iron += quantity;
+	}
+	
 	// Metodos para añadir estructuras a la civilizacion
 	
 	public void newChurch() {
