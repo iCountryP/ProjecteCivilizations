@@ -203,10 +203,13 @@ public interface Variables {
 	public final int CHANCE_ATTACK_AGAIN_MAGICIAN = 75;
 	public final int CHANCE_ATTACK_AGAIN_PRIEST = 0;
 	
+	public final int[] CHANCE_ATTACK_AGAIN_UNITS = {CHANCE_ATTACK_AGAIN_SWORDSMAN, CHANCE_ATTACK_AGAIN_SPEARMAN, CHANCE_ATTACK_AGAIN_CROSSBOW, CHANCE_ATTACK_AGAIN_CANNON, CHANCE_ATTACK_AGAIN_ARROWTOWER, CHANCE_ATTACK_AGAIN_CATAPULT, CHANCE_ATTACK_AGAIN_ROCKETLAUNCHERTOWER, CHANCE_ATTACK_AGAIN_MAGICIAN, CHANCE_ATTACK_AGAIN_PRIEST};
+	
 	// Probabilidad de atacar de cada unidad
 
 	// Unidades del jugador
 	public final int[] CHANCE_ATTACK_ARMY_UNITS = {4,9,13,37,4,9,14,10,0};
+	public final int[] CHANCE_PLACEHOLDER = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 	
 	// % de perdidas que genera una unidad respecto a su coste
 	public final int PERCENTATGE_WASTE = 70;

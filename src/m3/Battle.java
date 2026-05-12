@@ -19,6 +19,30 @@ public class Battle implements Variables {
 	private int wasteWood, wasteIron; // Residuos generados en la batalla
 	private int enemyDrops, civilizationDrops; // Bajas de los ejercitos
 	
+	private int[] totalInitialUnits; // Array de 2 columnas, unidades totales iniciales tuyas y enemigas
+	private int[] totalCurrentUnits; // Array de 2 columnas, unidades totales actuales tuyas y enemigas
+	
+	// Variables para el loop de batalla
+	
+	private boolean battleFinished;
+	private boolean attackAgain;
+	
+	private int attackingArmyIndex;
+	private ArrayList<MilitaryUnit>[] attackingArmy;
+	private int attackingGroupIndex;
+	private ArrayList<MilitaryUnit> attackingGroup;
+	private int attackingUnitIndex;
+	private MilitaryUnit attackingUnit;
+	
+	private int defendingArmyIndex;
+	private ArrayList<MilitaryUnit>[] defendingArmy;
+	private int defendingGroupIndex;
+	private ArrayList<MilitaryUnit> defendingGroup;
+	private int defendingUnitIndex;
+	private MilitaryUnit defendingUnit;
+	
+	// ---------------------------------
+	
 	public Battle(ArrayList<MilitaryUnit>[] civilizationArmy, ArrayList<MilitaryUnit>[] enemyArmy) {
 		// Valores por defecto antes de la batalla
 		this.wasteWood = 0;
@@ -39,11 +63,16 @@ public class Battle implements Variables {
 		// Instanciación de los datos de las armys
 		this.initialArmies = new int[2][9];
 		this.currentArmies = new int[2][9];
+		this.totalInitialUnits = new int[2];
+		this.totalCurrentUnits = new int[2];
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 9; j++) {
 			    this.initialArmies[i][j] = this.armies[i][j].size();
 			    this.currentArmies[i][j] = this.initialArmies[i][j];
+			    
+			    this.totalInitialUnits[i] += this.initialArmies[i][j];
 			}
+			this.totalCurrentUnits[i] = this.totalInitialUnits[i];
 		}
 		
 		this.initialArmyCosts = new int[2][9];
@@ -59,78 +88,142 @@ public class Battle implements Variables {
 	}
 	
 	public void startBattle() {
-		boolean battleFinished = false;
+		this.battleFinished = false;
+		this.attackAgain = false;
 		
-		// Se elige un ejercito al azar atacante (Falta implementar)
-		int attackingArmyIndex = 0;
-		ArrayList<MilitaryUnit>[] attackingArmy = armies[attackingArmyIndex];
-		int defendingArmyIndex = 1;
-		ArrayList<MilitaryUnit>[] defendingArmy = armies[defendingArmyIndex];
+		// Elegir inicio aleatorio
+		this.chooseStartingSides();
 		
-		while (!battleFinished) {
-			// Se elige un grupo al azar (Falta implementar)
-			ArrayList<MilitaryUnit> attackingGroup = attackingArmy[0];
+		while (!this.battleFinished) {
 			
-			// Se elige una unidad al azar del grupo (Falta implementar)
-			MilitaryUnit attackingUnit = attackingGroup.get(0);
+			// Elegir atacante en caso de que el anterior no ataque de nuevo
+			if (!this.attackAgain) {
+				this.chooseRandomUnit(this.attackingArmyIndex);
+			}
 			
-			// Se elige un grupo defensor al azar (Falta implementar)
-			int defendingGroupIndex = 0;
-			ArrayList<MilitaryUnit> defendingGroup = defendingArmy[defendingGroupIndex];
-			
-			// Se elige una unidad defensora al azar (Falta implementar)
-			int defendingUnitIndex = 0;
-			MilitaryUnit defendingUnit = defendingGroup.get(defendingUnitIndex);
+			// Elegir defensor
+			this.chooseRandomUnit(this.defendingArmyIndex);
 			
 			// El atacante ataca a la unidad defensora
-			defendingUnit.takeDamage(attackingUnit.getAttack());
+			this.defendingUnit.takeDamage(this.attackingUnit.getAttack());
 			
 			// Comprobar si genera residuos
-			if (RandomUtils.chancePercent(CHANCE_GENERATING_WASTE_UNITS[defendingGroupIndex])) {
-				this.wasteWood += (int) Math.ceil(WOOD_COST_UNITS[defendingGroupIndex] * (PERCENTATGE_WASTE * 0.01));
-				this.wasteIron += (int) Math.ceil(IRON_COST_UNITS[defendingGroupIndex] * (PERCENTATGE_WASTE * 0.01));
-			}
+			this.generateWaste();
 			
 			// Comprobar si se ha muerto la unidad defensora
-			if (defendingUnit.getActualArmor() == 0) {
+			if (this.defendingUnit.getActualArmor() == 0) {
+
 				// Eliminar a la unidad muerta
-				defendingGroup.remove(defendingUnitIndex);
+				this.defendingGroup.remove(this.defendingUnitIndex);
 				
-				// Actualizar el numero de unidades de cada grupo actualmente
-				// Total de unidades
-				int totalInitialUnits = 0;
-				int totalCurrentUnits = 0;
-				for (int i = 0; i < 9; i++) {
-				    this.currentArmies[defendingArmyIndex][i] = this.armies[defendingArmyIndex][i].size();
-				    // Sumamos al total
-				    totalInitialUnits += this.initialArmies[defendingArmyIndex][i];
-				    totalCurrentUnits += this.armies[defendingArmyIndex][i].size();
-				    // Recalcular valor actual del ejercito defensor
-				    this.currentArmyCosts[defendingArmyIndex][i] = ((WOOD_COST_UNITS[i] * 2) + (IRON_COST_UNITS[i] * 10) + FOOD_COST_UNITS[i]) * this.initialArmies[defendingArmyIndex][i];
-				}
-				
+			    this.currentArmies[defendingArmyIndex][defendingGroupIndex] = this.armies[defendingArmyIndex][defendingGroupIndex].size();
+			    
+			    // Sumamos al total
+			    this.totalCurrentUnits[defendingArmyIndex] -= 1;
+			    
+			    // Recalcular valor actual del ejercito defensor
+			    this.currentArmyCosts[this.defendingArmyIndex][this.defendingGroupIndex] = ((WOOD_COST_UNITS[this.defendingGroupIndex] * 2) + (IRON_COST_UNITS[this.defendingGroupIndex] * 10) + FOOD_COST_UNITS[this.defendingGroupIndex]) * this.currentArmies[this.defendingArmyIndex][this.defendingGroupIndex];
+
+				int minimumUnits = (int) (Math.ceil(this.totalInitialUnits[defendingArmyIndex] * (DEFEAT_PERCENTAGE * 0.01)));
 				// Comparamos con el numero total de unidades con el que empezó la army
-				if ((Math.ceil(totalInitialUnits * (DEFEAT_PERCENTAGE * 0.01))) > totalCurrentUnits) {
-					battleFinished = true;
-					// Calcular el valor perdido de cada ejercito
-					for (int i = 0; i < 9; i++) {
-					    // Recalcular valor actual del ejercito defensor
-					    this.resourcesLosses[0] += this.currentArmyCosts[0][i];
-					    this.resourcesLosses[1] += this.currentArmyCosts[1][i];
-					}
+				if (this.totalCurrentUnits[defendingArmyIndex] < minimumUnits) {
+					this.battleFinished = true;
+
+					// Calcula las perdidas tanto del jugador como del enemigo
+					this.calculateLosses();
 					
-					if (this.resourcesLosses[0] > this.resourcesLosses[1]) {
-						System.out.println("Has ganado");
-					} else if (this.resourcesLosses[0] == this.resourcesLosses[1]) {
-						System.out.println("Has empatado");
-					} else {
-						System.out.println("Has perdido");
-					}
+					// Gestiona el resultado de la batalla, ganada o perdida
+					this.handleBattleResult();
 					
 				}
 			}
+			
+			// Ver si el atacante vuelve a atacar
+			this.handleExtraAttackingTurn();
+			
+			// Turno de la otra army para atacar
+			this.swapSides();
 		}
 		
+	}
+	
+	private void chooseStartingSides() {
+		if (RandomUtils.chancePercent(50)) {
+			// 50% de empezar nostros
+			this.attackingArmyIndex = 0;
+			this.defendingArmyIndex = 1;
+			
+			this.attackingArmy = armies[0];
+			this.defendingArmy = armies[1];
+		} else {
+			// 50% de empezar el enemigo
+			this.attackingArmyIndex = 1;
+			this.defendingArmyIndex = 0;
+			
+			this.attackingArmy = armies[1];
+			this.defendingArmy = armies[0];
+		}
+	}
+	
+	private void swapSides() {
+		int aux = this.defendingArmyIndex;
+		this.defendingArmyIndex = this.attackingArmyIndex;
+		this.attackingArmyIndex = aux;
+		
+		this.attackingArmy = armies[this.attackingArmyIndex];
+		this.defendingArmy = armies[this.defendingArmyIndex];
+	}
+	
+	private void chooseRandomUnit(int side) {
+		// Comprobar a que bando le vamos a elegir una unidad random
+		if (side == this.attackingArmyIndex) {
+			// Si side es igual al indice de la army que ataca, seleccionamos un atacante random
+			this.attackingGroupIndex = RandomUtils.weightedChoice(CHANCE_ATTACK_ARMY_UNITS);
+			this.attackingGroup = this.attackingArmy[this.attackingGroupIndex];
+			this.attackingUnitIndex = RandomUtils.weightedChoice(CHANCE_PLACEHOLDER); // Cambiar placeholder
+			this.attackingUnit = this.attackingGroup.get(this.attackingUnitIndex);
+		} else {
+			// En caso contrario, seleccionamos un defensor random
+			this.defendingGroupIndex = RandomUtils.weightedChoice(CHANCE_PLACEHOLDER); // Cambiar placeholder
+			this.defendingGroup = this.defendingArmy[this.defendingGroupIndex];
+			this.defendingUnitIndex = RandomUtils.weightedChoice(CHANCE_PLACEHOLDER); // Cambiar placeholder
+			this.defendingUnit = this.defendingGroup.get(this.defendingUnitIndex);
+		}
+	}
+	
+	private void generateWaste() {
+		if (RandomUtils.chancePercent(CHANCE_GENERATING_WASTE_UNITS[this.defendingGroupIndex])) {
+			this.wasteWood += (int) Math.ceil(WOOD_COST_UNITS[this.defendingGroupIndex] * (PERCENTATGE_WASTE * 0.01));
+			this.wasteIron += (int) Math.ceil(IRON_COST_UNITS[this.defendingGroupIndex] * (PERCENTATGE_WASTE * 0.01));
+		}
+	}
+	
+	private void calculateLosses() {
+		for (int i = 0; i < this.initialArmyCosts[0].length; i++) {
+			// Perdidas jugador
+		    this.resourcesLosses[0] += (this.initialArmyCosts[0][i] - this.currentArmyCosts[0][i]);
+		    // Perdidas enemigo
+		    this.resourcesLosses[1] += (this.initialArmyCosts[1][i] - this.currentArmyCosts[1][i]);
+		}
+	}
+	
+	private void handleBattleResult() {
+		// Si tienes menos perdidas que el enemigo ganas
+		if (this.resourcesLosses[0] < this.resourcesLosses[1]) {
+			System.out.println("Has ganado");
+		} else if (this.resourcesLosses[0] == this.resourcesLosses[1]) {
+			System.out.println("Has empatado");
+		} else {
+			System.out.println("Has perdido");
+		}
+	}
+	
+	private void handleExtraAttackingTurn() {
+		if (RandomUtils.chancePercent(CHANCE_ATTACK_AGAIN_UNITS[this.attackingGroupIndex])) {
+			this.attackAgain = true;
+		} else {
+			this.attackAgain = false;
+		}
 	}
 	
 	public int[] getWaste() {
