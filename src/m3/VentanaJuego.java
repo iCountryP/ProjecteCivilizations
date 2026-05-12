@@ -1,7 +1,9 @@
 package m3;
 
 import javax.swing.JFrame;
-
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class VentanaJuego extends JFrame {
 	// Constructor
@@ -12,13 +14,25 @@ public class VentanaJuego extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Dominion");
 		setResizable(false);
-		PanelJuego panelJuego = new PanelJuego();
+		Civilization miCivilizacion = new Civilization();
+		PanelJuego panelJuego = new PanelJuego(miCivilizacion);
 		panelJuego.setBounds(0, 0, 600, 600);
-		PanelMenu panelMenu = new PanelMenu();
+		PanelMenu panelMenu = new PanelMenu(panelJuego, miCivilizacion);
 		panelMenu.setBounds(600,0, 200,600);
+		panelJuego.setMenu(panelMenu);
+		
 		add(panelJuego);
 		add(panelMenu);
 		setVisible(true);
+		
+		// Timer que aumenta y actualiza los recursos (cambiar el primer parametro para aumentar los ms)
+		Timer reloj = new Timer(5000, new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        miCivilizacion.aumentoRecursos();
+		        panelMenu.actualizarRecursos();
+		    }
+		});
+		reloj.start();
 	}
 	
 	

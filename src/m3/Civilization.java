@@ -36,10 +36,10 @@ public class Civilization implements Variables {
 		this.technologyAttack = 0;
 		this.technologyDefense = 0;
 		
-		this.wood = 0;
-		this.iron = 0;
-		this.food = 0;
-		this.mana = 0;
+		this.wood = 50000;
+		this.iron = 50000;
+		this.food = 50000;
+		this.mana = 50000;
 		
 		this.magicTower = 0;
 		this.church = 0;
@@ -139,6 +139,8 @@ public class Civilization implements Variables {
 			int current_iron_cost = (int) Math.ceil(UPGRADE_BASE_DEFENSE_TECHNOLOGY_IRON_COST* Math.pow((1+UPGRADE_PLUS_DEFENSE_TECHNOLOGY_IRON_COST*0.01), technologyDefense));
 			int current_wood_cost = (int) Math.ceil(UPGRADE_BASE_DEFENSE_TECHNOLOGY_WOOD_COST* Math.pow((1+UPGRADE_PLUS_DEFENSE_TECHNOLOGY_WOOD_COST*0.01), technologyDefense));
 			if (this.iron >= current_iron_cost && this.wood >= current_wood_cost) {
+				this.iron -= current_iron_cost;
+			    this.wood -= current_wood_cost;
 				this.technologyDefense++;
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
@@ -153,6 +155,8 @@ public class Civilization implements Variables {
 			int current_iron_cost = (int) Math.ceil(UPGRADE_BASE_ATTACK_TECHNOLOGY_IRON_COST* Math.pow((1+UPGRADE_PLUS_ATTACK_TECHNOLOGY_IRON_COST*0.01), technologyAttack));
 			int current_wood_cost = (int) Math.ceil(UPGRADE_BASE_ATTACK_TECHNOLOGY_WOOD_COST* Math.pow((1+UPGRADE_PLUS_ATTACK_TECHNOLOGY_WOOD_COST*0.01), technologyAttack));
 			if (this.iron >= current_iron_cost && this.wood >= current_wood_cost) {
+				this.iron -= current_iron_cost;
+			    this.wood -= current_wood_cost;
 				this.technologyAttack++;
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
@@ -553,5 +557,124 @@ public class Civilization implements Variables {
 			System.out.println("Se agregaron "+n+" sacerdotes al ejercito.");
 		}
 	}
+	
+	
+	// método que controla el aumento de recuroos y teniendo en cuenta la cantidad de edificios que hay
+	public void aumentoRecursos() {
+	    this.food = this.food + CIVILIZATION_FOOD_GENERATED + (this.farm * CIVILIZATION_FOOD_GENERATED_PER_FARM);
+	    this.wood = this.wood + CIVILIZATION_WOOD_GENERATED + (this.carpentry * CIVILIZATION_WOOD_GENERATED_PER_CARPENTRY);
+	    this.iron = this.iron + CIVILIZATION_IRON_GENERATED + (this.smithy * CIVILIZATION_IRON_GENERATED_PER_SMITHY);
+	    this.mana = this.mana + (this.magicTower * CIVILIZATION_MANA_GENERATED_PER_MAGIC_TOWER);
+	}
+	
+	// Getters & Setters
+
+	public int getWood() {
+		return wood;
+	}
+
+	public void setWood(int wood) {
+		this.wood = wood;
+	}
+
+	public int getIron() {
+		return iron;
+	}
+
+	public void setIron(int iron) {
+		this.iron = iron;
+	}
+
+	public int getFood() {
+		return food;
+	}
+
+	public void setFood(int food) {
+		this.food = food;
+	}
+
+	public int getTechnologyDefense() {
+		return technologyDefense;
+	}
+
+	public void setTechnologyDefense(int technologyDefense) {
+		this.technologyDefense = technologyDefense;
+	}
+
+	public int getTechnologyAttack() {
+		return technologyAttack;
+	}
+
+	public void setTechnologyAttack(int technologyAttack) {
+		this.technologyAttack = technologyAttack;
+	}
+
+	public int getMana() {
+		return mana;
+	}
+
+	public void setMana(int mana) {
+		this.mana = mana;
+	}
+
+	public int getMagicTower() {
+		return magicTower;
+	}
+
+	public void setMagicTower(int magicTower) {
+		this.magicTower = magicTower;
+	}
+
+	public int getChurch() {
+		return church;
+	}
+
+	public void setChurch(int church) {
+		this.church = church;
+	}
+
+	public int getFarm() {
+		return farm;
+	}
+
+	public void setFarm(int farm) {
+		this.farm = farm;
+	}
+
+	public int getSmithy() {
+		return smithy;
+	}
+
+	public void setSmithy(int smithy) {
+		this.smithy = smithy;
+	}
+
+	public int getCarpentry() {
+		return carpentry;
+	}
+
+	public void setCarpentry(int carpentry) {
+		this.carpentry = carpentry;
+	}
+
+	public int getBattles() {
+		return battles;
+	}
+
+	public void setBattles(int battles) {
+		this.battles = battles;
+	}
+
+	public ArrayList<MilitaryUnit>[] getArmy() {
+		return army;
+	}
+
+	public void setArmy(ArrayList<MilitaryUnit>[] army) {
+		this.army = army;
+	}
+	
+	
+	
+	
 	
 }
