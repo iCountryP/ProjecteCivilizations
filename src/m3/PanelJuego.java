@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class PanelJuego extends JPanel {
-	private BufferedImage texturaHierba, texturaDesierto;
+	private BufferedImage texturaHierba;
 	private BufferedImage farm, carpinteria, herreria, torreMagica, church;
 	private int[][] mapa;
 	private int edificioSeleccionadoJuego;
@@ -116,16 +116,16 @@ public class PanelJuego extends JPanel {
 		        	setToolTipText("<html>"+"["+columna+"]  ["+fila+"]<br>"+"<b>Granja</b><br>Cantidad: "+civilizacion.getFarm()+"</html>");
 		        }
 		        else if (mapa[columna][fila] == 2) {
-		        	setToolTipText("<html>"+"["+columna+"]  ["+fila+"]<br>"+"<b>Carpinteria</b><br>Cantidad:"+"</html>");
+		        	setToolTipText("<html>"+"["+columna+"]  ["+fila+"]<br>"+"<b>Carpinteria</b><br>Cantidad: "+civilizacion.getCarpentry()+"</html>");
 		        }
 		        else if (mapa[columna][fila] == 3) {
-		        	setToolTipText("<html>"+"["+columna+"]  ["+fila+"]<br>"+"<b>Herreria</b><br>Cantidad:"+"</html>");
+		        	setToolTipText("<html>"+"["+columna+"]  ["+fila+"]<br>"+"<b>Herreria</b><br>Cantidad: "+civilizacion.getSmithy()+"</html>");
 		        }
 		        else if (mapa[columna][fila] == 4) {
-		        	setToolTipText("<html>"+"["+columna+"]  ["+fila+"]<br>"+"<b>Torre Magica</b><br>Cantidad:"+"</html>");
+		        	setToolTipText("<html>"+"["+columna+"]  ["+fila+"]<br>"+"<b>Torre Magica</b><br>Cantidad: "+civilizacion.getMagicTower()+"</html>");
 		        }
 		        else if (mapa[columna][fila] == 5) {
-		        	setToolTipText("<html>"+"["+columna+"]  ["+fila+"]<br>"+"<b>Iglesia</b><br>Cantidad:"+"</html>");
+		        	setToolTipText("<html>"+"["+columna+"]  ["+fila+"]<br>"+"<b>Iglesia</b><br>Cantidad: "+civilizacion.getChurch()+"</html>");
 		        }
 		        
 		        if (mapa[columna][fila] == 0) {
@@ -138,14 +138,6 @@ public class PanelJuego extends JPanel {
 		// Textura Hierba
     	try {
     		texturaHierba = ImageIO.read(new File("./src/m3/texturaHierba.jpeg"));
-    		
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
-    	
-    	// Textura Desierto
-    	try {
-    		texturaDesierto = ImageIO.read(new File("./src/m3/texturaDesierto.jpeg"));
     		
     	} catch (IOException e) {
     		e.printStackTrace();

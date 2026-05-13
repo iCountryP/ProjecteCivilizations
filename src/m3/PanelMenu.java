@@ -12,18 +12,23 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class PanelMenu extends JPanel {
-	private JLabel madera, comida, hierro, mana, nivelTecnologiaAtaque, nivelTecnologiaDefensa;
+	private JLabel madera, comida, hierro, mana, nivelTecnologiaAtaque, nivelTecnologiaDefensa, reclutarTitulo;
 	private JButton crearGranja, crearCarpinteria, crearHerreria, crearTorreMagica, crearIglesia;
 	private JButton mejorarTecnologiaAtaque, mejorarTecnologiaDefensa;
 	private BufferedImage menu;
 	private int tamanoFuenteBotones = 14;
 	private int edificioSeleccionado;
-
 	private Civilization civilizacion;
+	private JComboBox<String> selectorTropas;
+	private JTextField cajaCantidadTropas;
+	private JButton btnReclutar, btnVerTropas;
+	
 	// Constructor
 	public PanelMenu(PanelJuego mapaJuego, Civilization c) {
 		super();
@@ -104,7 +109,7 @@ public class PanelMenu extends JPanel {
     	
     	// Etiqueta hierro (esto es lo que muestra los stats en el menú. La cantidad de hierro disponible)
     	mana = new JLabel("Mana: "+ civilizacion.getMana());
-    	mana.setBounds(15,160,150,30);
+    	mana.setBounds(15,180,150,30);
     	mana.setFont(new Font("Arial", Font.BOLD, 16));
     	mana.setForeground(Color.WHITE);
     	add(mana);
@@ -114,7 +119,7 @@ public class PanelMenu extends JPanel {
     	
     	// 1. Boton Crear Granja
     	crearGranja = new JButton("Crear Granja");
-    	crearGranja.setBounds(15,200,170,30);
+    	crearGranja.setBounds(15,220,170,30);
     	crearGranja.setFont(new Font("Arial", Font.BOLD, tamanoFuenteBotones));
     	crearGranja.setForeground(Color.BLACK);
     		// Establece el edificio a 1 para saber que queremos construir granja.
@@ -128,7 +133,7 @@ public class PanelMenu extends JPanel {
     	
     	// 2. Boton Crear Carpinteria
     	crearCarpinteria = new JButton("Crear Carpinteria");
-    	crearCarpinteria.setBounds(15,240,170,30);
+    	crearCarpinteria.setBounds(15,260,170,30);
     	crearCarpinteria.setFont(new Font("Arial", Font.BOLD, tamanoFuenteBotones));
     	crearCarpinteria.setForeground(Color.BLACK);
 			// Establece el edificio a 2 para saber que queremos construir carpinteria.
@@ -142,7 +147,7 @@ public class PanelMenu extends JPanel {
     	
     	// 3. Boton Crear Herreria
     	crearHerreria = new JButton("Crear Herreria");
-    	crearHerreria.setBounds(15,280,170,30);
+    	crearHerreria.setBounds(15,300,170,30);
     	crearHerreria.setFont(new Font("Arial", Font.BOLD, tamanoFuenteBotones));
     	crearHerreria.setForeground(Color.BLACK);
 			// Establece el edificio a 3 para saber que queremos construir herreria.
@@ -156,7 +161,7 @@ public class PanelMenu extends JPanel {
     	
     	// 4. Boton Crear Torre Magica
     	crearTorreMagica = new JButton("Crear Torre Mágica");
-    	crearTorreMagica.setBounds(15,320,170,30);
+    	crearTorreMagica.setBounds(15,340,170,30);
     	crearTorreMagica.setFont(new Font("Arial", Font.BOLD, tamanoFuenteBotones));
     	crearTorreMagica.setForeground(Color.BLACK);
 			// Establece el edificio a 4 para saber que queremos construir torre magica.
@@ -170,7 +175,7 @@ public class PanelMenu extends JPanel {
     	
     	// 5. Boton Crear Iglesia
     	crearIglesia = new JButton("Crear Iglesia");
-    	crearIglesia.setBounds(15,360,170,30);
+    	crearIglesia.setBounds(15,380,170,30);
     	crearIglesia.setFont(new Font("Arial", Font.BOLD, tamanoFuenteBotones));
     	crearIglesia.setForeground(Color.BLACK);
 		// Establece el edificio a 5 para saber que queremos construir iglesia.
@@ -183,7 +188,68 @@ public class PanelMenu extends JPanel {
     	add(crearIglesia);
     	
     	
+    	// ---------------- ZONA RECLUTAR TROPAS ----------------
     	
+    	// Titulo Etiqueta Reclutar
+    	reclutarTitulo = new JLabel("-- RECLUTAR --");
+    	reclutarTitulo.setBounds(40,415,150,30);
+    	reclutarTitulo.setFont(new Font("Arial", Font.BOLD, 16));
+    	reclutarTitulo.setForeground(Color.WHITE);
+    	add(reclutarTitulo);
+    	
+    	// Desplegable Reclutar
+    	String[] tiposDeTropa = {"Swordsman", "Spearman", "Crossbow", "Cannon", "Arrow Tower", "Catapult", "Rocket Launcher", "Magician", "Priest"};
+    	selectorTropas = new JComboBox<String>(tiposDeTropa);
+    	selectorTropas.setBounds(15,445,170,30);
+    	add(selectorTropas);
+    	
+    	// Caja cantidad de tropas
+    	cajaCantidadTropas = new JTextField("1");
+    	cajaCantidadTropas.setBounds(15,485,80,30); 
+    	add(cajaCantidadTropas);
+    	
+    	// Boton Reclutar
+    	btnReclutar = new JButton("Reclutar");
+    	btnReclutar.setBounds(100,485,85,30); 
+    	btnReclutar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int cantidad = Integer.parseInt(cajaCantidadTropas.getText());
+					int indiceSeleccionado = selectorTropas.getSelectedIndex();
+					//System.out.println("Cantidad " + cantidad);
+					//System.out.println("Indice Seleccionado " + indiceSeleccionado);
+					if (indiceSeleccionado == 0) {
+					    civilizacion.newSwordsman(cantidad);
+					} else if (indiceSeleccionado == 1) {
+					    civilizacion.newSpearman(cantidad); 
+					} else if (indiceSeleccionado == 2) {
+					    civilizacion.newCrossbow(cantidad); 
+					} else if (indiceSeleccionado == 3) {
+					    civilizacion.newCannon(cantidad); 
+					} else if (indiceSeleccionado == 4) {
+					    civilizacion.newArrowTower(cantidad); 
+					} else if (indiceSeleccionado == 5) {
+					    civilizacion.newCatapult(cantidad); 
+					} else if (indiceSeleccionado == 6) {
+					    civilizacion.newRocketLauncher(cantidad); 
+					} else if (indiceSeleccionado == 7) {
+					    civilizacion.newMagician(cantidad); 
+					} else if (indiceSeleccionado == 8) {
+					    civilizacion.newPriest(cantidad); 
+					}
+				} 
+				catch(Exception arg0) {
+					System.out.println("Error obteniendo la cantidad.");
+				};
+
+			}
+		});
+    	add(btnReclutar);
+    	
+    	// ---------------- ZONA VER TROPAS ----------------
+    	btnVerTropas = new JButton("Ver Tropas");
+    	btnVerTropas.setBounds(15,525,170,30); 
+    	add(btnVerTropas);
 	} // Fin del constructor
 	
 	public void paintComponent(Graphics g) {
@@ -194,11 +260,12 @@ public class PanelMenu extends JPanel {
 
 	
 	public void actualizarRecursos() {
-	    madera.setText("Madera: " + civilizacion.getWood());
-	    comida.setText("Comida: " + civilizacion.getFood());
-	    hierro.setText("Hierro: " + civilizacion.getIron());
-	    
-	    
+	    madera.setText("Madera: " + civilizacion.getWood()); // Actualiza el texto del wood en el menú
+	    comida.setText("Comida: " + civilizacion.getFood()); // Actualiza el texto del food en el menú
+	    hierro.setText("Hierro: " + civilizacion.getIron()); // Actualiza el texto del iron en el menú
+	    mana.setText("Mana: " + civilizacion.getMana()); // Actualiza el texto del mana en el menú
+
+
 	    nivelTecnologiaAtaque.setText("Nv. Atk: " + civilizacion.getTechnologyAttack());
 	    nivelTecnologiaDefensa.setText("Nv. Def: " + civilizacion.getTechnologyDefense());
 	}

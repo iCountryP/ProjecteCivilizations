@@ -26,7 +26,7 @@ public class VentanaJuego extends JFrame {
 		setVisible(true);
 		
 		// Timer que aumenta y actualiza los recursos (cambiar el primer parametro para aumentar los ms)
-		Timer reloj = new Timer(5000, new ActionListener() {
+		Timer reloj = new Timer(10, new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        miCivilizacion.aumentoRecursos();
 		        panelMenu.actualizarRecursos();

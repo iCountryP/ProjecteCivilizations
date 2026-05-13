@@ -223,5 +223,9 @@ public interface Variables {
 	public final String RESOURCE_EXCEPTION_MESSAGE = "Recursos insuficientes";
 	public final String INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE = "Valor inválido de unidades";
 	public final String BUILDING_EXCEPTION_MESSAGE = "Estructuras requeridas insuficientes";
-
+	
+	
+	// MAX VALUE (Para las unidades que tienen 0 de coste en algun tipo de recurso)
+	public final int MAX_VALUE = 9999999;
+	
 }
