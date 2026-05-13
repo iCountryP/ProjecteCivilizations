@@ -124,7 +124,8 @@ public class Battle implements Variables {
 			    // Recalcular valor actual del ejercito defensor
 			    this.currentArmyCosts[this.defendingArmyIndex][this.defendingGroupIndex] = ((WOOD_COST_UNITS[this.defendingGroupIndex] * 2) + (IRON_COST_UNITS[this.defendingGroupIndex] * 10) + FOOD_COST_UNITS[this.defendingGroupIndex]) * this.currentArmies[this.defendingArmyIndex][this.defendingGroupIndex];
 
-				int minimumUnits = (int) (Math.ceil(this.totalInitialUnits[defendingArmyIndex] * (DEFEAT_PERCENTAGE * 0.01)));
+				int minimumUnits = (int) (Math.ceil(this.totalInitialUnits[defendingArmyIndex] * (DEFEAT_PERCENTAGE * 0.01))); // Posible Optimizacion aqui
+				
 				// Comparamos con el numero total de unidades con el que empezó la army
 				if (this.totalCurrentUnits[defendingArmyIndex] < minimumUnits) {
 					this.battleFinished = true;
@@ -144,6 +145,9 @@ public class Battle implements Variables {
 			// Turno de la otra army para atacar
 			this.swapSides();
 		}
+		
+		// Despues de la batalla reiniciamos las armaduras de las unidades
+		this.resetArmyArmor();
 		
 	}
 	
@@ -174,19 +178,20 @@ public class Battle implements Variables {
 		this.defendingArmy = armies[this.defendingArmyIndex];
 	}
 	
+	// Que pasa si no tienes unidades, que pasa si solo tienes unidades de 1-2 grupos con baja probabilidad
 	private void chooseRandomUnit(int side) {
 		// Comprobar a que bando le vamos a elegir una unidad random
 		if (side == this.attackingArmyIndex) {
 			// Si side es igual al indice de la army que ataca, seleccionamos un atacante random
 			this.attackingGroupIndex = RandomUtils.weightedChoice(CHANCE_ATTACK_ARMY_UNITS);
 			this.attackingGroup = this.attackingArmy[this.attackingGroupIndex];
-			this.attackingUnitIndex = RandomUtils.weightedChoice(CHANCE_PLACEHOLDER); // Cambiar placeholder
+			this.attackingUnitIndex = RandomUtils.chooseRandomInt(0, this.attackingGroup.size()-1);
 			this.attackingUnit = this.attackingGroup.get(this.attackingUnitIndex);
 		} else {
 			// En caso contrario, seleccionamos un defensor random
-			this.defendingGroupIndex = RandomUtils.weightedChoice(CHANCE_PLACEHOLDER); // Cambiar placeholder
+			this.defendingGroupIndex = RandomUtils.weightedChoice(CHANCE_ATTACK_ARMY_UNITS);
 			this.defendingGroup = this.defendingArmy[this.defendingGroupIndex];
-			this.defendingUnitIndex = RandomUtils.weightedChoice(CHANCE_PLACEHOLDER); // Cambiar placeholder
+			this.defendingUnitIndex = RandomUtils.chooseRandomInt(0, this.defendingGroup.size()-1);
 			this.defendingUnit = this.defendingGroup.get(this.defendingUnitIndex);
 		}
 	}
@@ -223,6 +228,14 @@ public class Battle implements Variables {
 			this.attackAgain = true;
 		} else {
 			this.attackAgain = false;
+		}
+	}
+	
+	private void resetArmyArmor() {
+		for (int i = 0; i < this.civilizationArmy.length; i++) {
+			for (int j = 0; j < this.civilizationArmy[i].size(); j++) {
+				this.civilizationArmy[i].get(j).resetArmor();
+			}
 		}
 	}
 	
