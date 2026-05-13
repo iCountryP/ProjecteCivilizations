@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -249,6 +250,22 @@ public class PanelMenu extends JPanel {
     	// ---------------- ZONA VER TROPAS ----------------
     	btnVerTropas = new JButton("Ver Tropas");
     	btnVerTropas.setBounds(15,525,170,30); 
+		
+    	btnVerTropas.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent e) {
+    			String informe = "Swordsman: " + civilizacion.getSwordsmanCount() + 
+    					"\nSpearman: " + civilizacion.getSpearmanCount() + 
+    					"\nCrossbow: " + civilizacion.getCrossbowCount() + 
+    					"\nCannon: " + civilizacion.getCannonCount() + 
+    					"\nArrow Tower: " + civilizacion.getArrowTowerCount() + 
+    					"\nCatapult: " + civilizacion.getCatapultCount() + 
+    					"\nRocket Launcher: " + civilizacion.getRocketLauncherCount() + 
+    					"\nMagician: " + civilizacion.getMagicianCount() + 
+    					"\nPriest: " + civilizacion.getPriestCount();
+    			JOptionPane.showMessageDialog(null, informe, "Informe Militar", JOptionPane.INFORMATION_MESSAGE);
+    		}
+    		
+    	});
     	add(btnVerTropas);
 	} // Fin del constructor
 	
