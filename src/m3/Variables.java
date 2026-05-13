@@ -30,7 +30,6 @@ public interface Variables {
 	public final int UPGRADE_PLUS_ATTACK_TECHNOLOGY_IRON_COST = 60;
 	public final int UPGRADE_PLUS_ATTACK_TECHNOLOGY_WOOD_COST = 0;
 	
-	
 	// Coste de las unidades ofensivas
 	public final int FOOD_COST_SWORDSMAN = 8000;
 	public final int FOOD_COST_SPEARMAN = 5000;
@@ -51,7 +50,6 @@ public interface Variables {
 	public final int MANA_COST_SPEARMAN = 0;
 	public final int MANA_COST_CROSSBOW = 0;
 	public final int MANA_COST_CANNON = 0;
-	
 	
 	// Coste de las unidades defensivas
 	public final int IRON_COST_ARROWTOWER = 0;
@@ -109,7 +107,6 @@ public interface Variables {
 	public final int WOOD_COST_MAGICTOWER = 10000;
 	public final int IRON_COST_MAGICTOWER = 12000;
 	
-	
 	// Ataque base de las unidades ofensivas
 	public final int BASE_DAMAGE_SWORDSMAN = 80;
 	public final int BASE_DAMAGE_SPEARMAN = 150;
@@ -153,7 +150,6 @@ public interface Variables {
 	public final int PLUS_ARMOR_MAGICIAN_BY_TECHNOLOGY = 0;
 	public final int PLUS_ARMOR_PRIEST_BY_TECHNOLOGY = 0;
 	
-
 	// % de incremento de ataque por nivel de tecnologia
 	public final int PLUS_ATTACK_SWORDSMAN_BY_TECHNOLOGY = 5;
 	public final int PLUS_ATTACK_SPEARMAN_BY_TECHNOLOGY = 5;
@@ -175,9 +171,6 @@ public interface Variables {
 	public final int PLUS_ARMOR_UNIT_SANCTIFIED = 7;
 	public final int PLUS_ATTACK_UNIT_SANCTIFIED = 7;
 	
-	// Probabilidad (%) de que un mago resucite (lol)
-	public final int CHANCE_MAGICIAN_RESSURECT = 2;
-	
 	// Probabilidad (%) de que una unidad ofensiva genere escombros
 	public final int CHANCE_GENERATING_WASTE_SWORDSMAN = 55;
 	public final int CHANCE_GENERATING_WASTE_SPEARMAN = 65;
@@ -190,8 +183,10 @@ public interface Variables {
 	public final int CHANCE_GENERATING_WASTE_ROCKETLAUNCHERTOWER = 75;
 	
 	// Probabilidad (%) de que una unidad especial genere escombros
-	public final int CHANCE_GENERATING_WASTE_PRIEST = 0;
 	public final int CHANCE_GENERATING_WASTE_MAGICIAN = 0;
+	public final int CHANCE_GENERATING_WASTE_PRIEST = 0;
+	
+	public final int[] CHANCE_GENERATING_WASTE_UNITS = {CHANCE_GENERATING_WASTE_SWORDSMAN, CHANCE_GENERATING_WASTE_SPEARMAN, CHANCE_GENERATING_WASTE_CROSSBOW, CHANCE_GENERATING_WASTE_CANNON, CHANCE_GENERATING_WASTE_ARROWTOWER, CHANCE_GENERATING_WASTE_CATAPULT, CHANCE_GENERATING_WASTE_ROCKETLAUNCHERTOWER, CHANCE_GENERATING_WASTE_MAGICIAN, CHANCE_GENERATING_WASTE_PRIEST};
 	
 	// Probabilidad (%) de que una unidad ofensiva vuelva a atacar
 	public final int CHANCE_ATTACK_AGAIN_SWORDSMAN = 3;
@@ -208,16 +203,18 @@ public interface Variables {
 	public final int CHANCE_ATTACK_AGAIN_MAGICIAN = 75;
 	public final int CHANCE_ATTACK_AGAIN_PRIEST = 0;
 	
+	public final int[] CHANCE_ATTACK_AGAIN_UNITS = {CHANCE_ATTACK_AGAIN_SWORDSMAN, CHANCE_ATTACK_AGAIN_SPEARMAN, CHANCE_ATTACK_AGAIN_CROSSBOW, CHANCE_ATTACK_AGAIN_CANNON, CHANCE_ATTACK_AGAIN_ARROWTOWER, CHANCE_ATTACK_AGAIN_CATAPULT, CHANCE_ATTACK_AGAIN_ROCKETLAUNCHERTOWER, CHANCE_ATTACK_AGAIN_MAGICIAN, CHANCE_ATTACK_AGAIN_PRIEST};
+	
 	// Probabilidad de atacar de cada unidad
 
 	// Unidades del jugador
-	public final int[] CHANCE_ATTACK_CIVILIZATION_UNITS = {4,9,13,37,4,9,14,10,0};
-
-	// Unidades del enemigo
-	public final int[] CHANCE_ATTACK_ENEMY_UNITS = {10,20,30,40};
+	public final int[] CHANCE_ATTACK_ARMY_UNITS = {4,9,13,37,4,9,14,10,0};
+	public final int[] CHANCE_PLACEHOLDER = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 	
 	// % de perdidas que genera una unidad respecto a su coste
 	public final int PERCENTATGE_WASTE = 70;
+	
+	public final int DEFEAT_PERCENTAGE = 20;
 	
 	// Mensajes de excepciones
 	public final String RESOURCE_EXCEPTION_MESSAGE = "Recursos insuficientes";
