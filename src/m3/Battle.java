@@ -26,6 +26,7 @@ public class Battle implements Variables {
 	
 	private boolean battleFinished;
 	private boolean attackAgain;
+	private boolean gameOver;
 	
 	private int attackingArmyIndex;
 	private ArrayList<MilitaryUnit>[] attackingArmy;
@@ -72,6 +73,7 @@ public class Battle implements Variables {
 			    
 			    this.totalInitialUnits[i] += this.initialArmies[i][j];
 			}
+			this.totalInitialUnits[i] -= this.initialArmies[i][8];
 			this.totalCurrentUnits[i] = this.totalInitialUnits[i];
 		}
 		
@@ -152,21 +154,29 @@ public class Battle implements Variables {
 	}
 	
 	private void chooseStartingSides() {
-		if (RandomUtils.chancePercent(50)) {
-			// 50% de empezar nostros
-			this.attackingArmyIndex = 0;
-			this.defendingArmyIndex = 1;
-			
-			this.attackingArmy = armies[0];
-			this.defendingArmy = armies[1];
+		
+		// Comprobar si la army del jugador tiene unidades antes de todo
+		if (this.totalInitialUnits[0] == 0) {
+			this.battleFinished = true;
+			this.gameOver = true;
 		} else {
-			// 50% de empezar el enemigo
-			this.attackingArmyIndex = 1;
-			this.defendingArmyIndex = 0;
-			
-			this.attackingArmy = armies[1];
-			this.defendingArmy = armies[0];
+			if (RandomUtils.chancePercent(50)) {
+				// 50% de empezar nostros
+				this.attackingArmyIndex = 0;
+				this.defendingArmyIndex = 1;
+				
+				this.attackingArmy = armies[0];
+				this.defendingArmy = armies[1];
+			} else {
+				// 50% de empezar el enemigo
+				this.attackingArmyIndex = 1;
+				this.defendingArmyIndex = 0;
+				
+				this.attackingArmy = armies[1];
+				this.defendingArmy = armies[0];
+			}
 		}
+		
 	}
 	
 	private void swapSides() {
@@ -180,16 +190,37 @@ public class Battle implements Variables {
 	
 	// Que pasa si no tienes unidades, que pasa si solo tienes unidades de 1-2 grupos con baja probabilidad
 	private void chooseRandomUnit(int side) {
+		
 		// Comprobar a que bando le vamos a elegir una unidad random
 		if (side == this.attackingArmyIndex) {
+			
+			int[] modifiedChances = new int[8];
+			
+			// Hacemos una copia del array de probabilidades modificandola para que no salgan grupos vacios
+			for (int i = 0; i < this.attackingArmy.length - 1; i++) {
+				if (!this.attackingArmy[i].isEmpty()) {
+					modifiedChances[i] = CHANCE_ATTACK_ARMY_UNITS[i];
+				}
+			}
+			
 			// Si side es igual al indice de la army que ataca, seleccionamos un atacante random
-			this.attackingGroupIndex = RandomUtils.weightedChoice(CHANCE_ATTACK_ARMY_UNITS);
+			this.attackingGroupIndex = RandomUtils.weightedChoice(modifiedChances);
 			this.attackingGroup = this.attackingArmy[this.attackingGroupIndex];
 			this.attackingUnitIndex = RandomUtils.chooseRandomInt(0, this.attackingGroup.size()-1);
 			this.attackingUnit = this.attackingGroup.get(this.attackingUnitIndex);
 		} else {
+			
+			int[] modifiedChances = new int[8];
+			
+			// Hacemos una copia del array de probabilidades modificandola para que no salgan grupos vacios
+			for (int i = 0; i < this.defendingArmy.length - 1; i++) {
+				if (!this.defendingArmy[i].isEmpty()) {
+					modifiedChances[i] = CHANCE_ATTACK_ARMY_UNITS[i];
+				}
+			}
+			
 			// En caso contrario, seleccionamos un defensor random
-			this.defendingGroupIndex = RandomUtils.weightedChoice(CHANCE_ATTACK_ARMY_UNITS);
+			this.defendingGroupIndex = RandomUtils.weightedChoice(modifiedChances);
 			this.defendingGroup = this.defendingArmy[this.defendingGroupIndex];
 			this.defendingUnitIndex = RandomUtils.chooseRandomInt(0, this.defendingGroup.size()-1);
 			this.defendingUnit = this.defendingGroup.get(this.defendingUnitIndex);
@@ -216,10 +247,13 @@ public class Battle implements Variables {
 		// Si tienes menos perdidas que el enemigo ganas
 		if (this.resourcesLosses[0] < this.resourcesLosses[1]) {
 			System.out.println("Has ganado");
+			this.gameOver = false;
 		} else if (this.resourcesLosses[0] == this.resourcesLosses[1]) {
 			System.out.println("Has empatado");
+			this.gameOver = false;
 		} else {
 			System.out.println("Has perdido");
+			this.gameOver = true;
 		}
 	}
 	
@@ -232,7 +266,7 @@ public class Battle implements Variables {
 	}
 	
 	private void resetArmyArmor() {
-		for (int i = 0; i < this.civilizationArmy.length; i++) {
+		for (int i = 0; i < this.civilizationArmy.length - 1; i++) {
 			for (int j = 0; j < this.civilizationArmy[i].size(); j++) {
 				this.civilizationArmy[i].get(j).resetArmor();
 			}
