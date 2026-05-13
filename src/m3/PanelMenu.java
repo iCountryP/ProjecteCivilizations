@@ -11,12 +11,14 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class PanelMenu extends JPanel {
 	private JLabel madera, comida, hierro, mana, nivelTecnologiaAtaque, nivelTecnologiaDefensa, reclutarTitulo;
@@ -122,6 +124,13 @@ public class PanelMenu extends JPanel {
     	crearGranja = new JButton("Crear Granja");
     	crearGranja.setBounds(15,220,170,30);
     	crearGranja.setFont(new Font("Arial", Font.BOLD, tamanoFuenteBotones));
+    	ImageIcon diseñoDorado = new ImageIcon("./src/m3/disenoBotonGranja.png"); 
+    	crearGranja.setIcon(diseñoDorado);
+    	crearGranja.setHorizontalTextPosition(SwingConstants.CENTER);
+    	crearGranja.setVerticalTextPosition(SwingConstants.CENTER);
+    	crearGranja.setBorderPainted(false);
+    	crearGranja.setContentAreaFilled(false);
+    	crearGranja.setFocusPainted(false);
     	crearGranja.setForeground(Color.BLACK);
     		// Establece el edificio a 1 para saber que queremos construir granja.
     	crearGranja.addActionListener(new ActionListener() {
@@ -136,7 +145,8 @@ public class PanelMenu extends JPanel {
     	crearCarpinteria = new JButton("Crear Carpinteria");
     	crearCarpinteria.setBounds(15,260,170,30);
     	crearCarpinteria.setFont(new Font("Arial", Font.BOLD, tamanoFuenteBotones));
-    	crearCarpinteria.setForeground(Color.BLACK);
+    	crearCarpinteria.setBackground(new Color(139, 69, 19)); // Esto es un tono marrón madera
+    	crearCarpinteria.setForeground(Color.WHITE);
 			// Establece el edificio a 2 para saber que queremos construir carpinteria.
     	crearCarpinteria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
