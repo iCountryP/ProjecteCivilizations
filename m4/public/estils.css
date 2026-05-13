@@ -71,6 +71,20 @@ footer{
     background-repeat: no-repeat;
 }
 
+.madera{
+    background-image: url("./img/fondo_madera.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.poster{
+    padding: 30px;
+    background-image: url("./img/papel_antiguo.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 .linea{
     border-bottom: 7px solid goldenrod;
 }
@@ -228,6 +242,23 @@ body:has(#slide3:checked) .flecha_Prev3 { display: flex; }
 body:has(#slide1:checked) .dots label:nth-child(1),
 body:has(#slide2:checked) .dots label:nth-child(2),
 body:has(#slide3:checked) .dots label:nth-child(3){
-    background: white;
+    background: beige;
     transform: scale(1.3);
+}
+
+.batallas_recien{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.batallas_recien h1{
+    color: beige;
+    font-size: 50px;
+}
+
+.batallas_recien .poster{
+    width: 80%;
+    margin-bottom: 100px;
+    box-shadow: 0 30px 40px rgba(0, 0, 0, 0.8);
 }
