@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -89,32 +90,41 @@ public class PanelMenu extends JPanel {
     	
     	
     	// Etiqueta Madera (esto es lo que muestra los stats en el menú. La cantidad de madera disponible)
+    	//
+    	ImageIcon iconoMadera = new ImageIcon(new ImageIcon("./src/m3/iconoMadera.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));    	
     	madera = new JLabel("Madera: "+ civilizacion.getWood());
-    	madera.setBounds(15,120,150,30);
-    	madera.setFont(new Font("Arial", Font.BOLD, 16));
+    	madera.setBounds(10,110,180,30);
+    	madera.setFont(new Font("Arial", Font.BOLD, 15));
     	madera.setForeground(Color.WHITE);
+    	madera.setIcon(iconoMadera);
     	add(madera);
     	
     	// Etiqueta comida (esto es lo que muestra los stats en el menú. La cantidad de comida disponible)
+    	ImageIcon iconoComida = new ImageIcon(new ImageIcon("./src/m3/iconoComida.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));    	
     	comida = new JLabel("Comida: "+ civilizacion.getFood());
-    	comida.setBounds(15,140,150,30);
-    	comida.setFont(new Font("Arial", Font.BOLD, 16));
+    	comida.setBounds(10,135,180,30);
+    	comida.setFont(new Font("Arial", Font.BOLD, 15));
     	comida.setForeground(Color.WHITE);
+    	comida.setIcon(iconoComida);
     	add(comida);
     	
     	// Etiqueta hierro (esto es lo que muestra los stats en el menú. La cantidad de hierro disponible)
+    	ImageIcon iconoHierro = new ImageIcon(new ImageIcon("./src/m3/iconoHierro.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));    	
     	hierro = new JLabel("Hierro: "+ civilizacion.getIron());
-    	hierro.setBounds(15,160,150,30);
-    	hierro.setFont(new Font("Arial", Font.BOLD, 16));
+    	hierro.setBounds(10,160,180,30);
+    	hierro.setFont(new Font("Arial", Font.BOLD, 15));
     	hierro.setForeground(Color.WHITE);
+    	hierro.setIcon(iconoHierro);
     	add(hierro);
     	
     	
     	// Etiqueta hierro (esto es lo que muestra los stats en el menú. La cantidad de hierro disponible)
+    	ImageIcon iconoMana = new ImageIcon(new ImageIcon("./src/m3/iconoMana.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));    	
     	mana = new JLabel("Mana: "+ civilizacion.getMana());
-    	mana.setBounds(15,180,150,30);
-    	mana.setFont(new Font("Arial", Font.BOLD, 16));
+    	mana.setBounds(10,185,180,30);
+    	mana.setFont(new Font("Arial", Font.BOLD, 15));
     	mana.setForeground(Color.WHITE);
+    	mana.setIcon(iconoMana);
     	add(mana);
     	
     	
@@ -124,11 +134,10 @@ public class PanelMenu extends JPanel {
     	crearGranja = new JButton("Crear Granja");
     	crearGranja.setBounds(15,220,170,30);
     	crearGranja.setFont(new Font("Arial", Font.BOLD, tamanoFuenteBotones));
-    	ImageIcon diseñoDorado = new ImageIcon("./src/m3/disenoBotonGranja.png"); 
-    	crearGranja.setIcon(diseñoDorado);
+    	ImageIcon disenoDorado = new ImageIcon("./src/m3/disenoBoton.png"); 
+    	crearGranja.setIcon(disenoDorado);
     	crearGranja.setHorizontalTextPosition(SwingConstants.CENTER);
     	crearGranja.setVerticalTextPosition(SwingConstants.CENTER);
-    	crearGranja.setBorderPainted(false);
     	crearGranja.setContentAreaFilled(false);
     	crearGranja.setFocusPainted(false);
     	crearGranja.setForeground(Color.BLACK);
@@ -145,8 +154,12 @@ public class PanelMenu extends JPanel {
     	crearCarpinteria = new JButton("Crear Carpinteria");
     	crearCarpinteria.setBounds(15,260,170,30);
     	crearCarpinteria.setFont(new Font("Arial", Font.BOLD, tamanoFuenteBotones));
-    	crearCarpinteria.setBackground(new Color(139, 69, 19)); // Esto es un tono marrón madera
-    	crearCarpinteria.setForeground(Color.WHITE);
+    	crearCarpinteria.setIcon(disenoDorado);
+    	crearCarpinteria.setHorizontalTextPosition(SwingConstants.CENTER);
+    	crearCarpinteria.setVerticalTextPosition(SwingConstants.CENTER);
+    	crearCarpinteria.setContentAreaFilled(false);
+    	crearCarpinteria.setFocusPainted(false);
+    	crearCarpinteria.setForeground(Color.BLACK);
 			// Establece el edificio a 2 para saber que queremos construir carpinteria.
     	crearCarpinteria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -160,6 +173,11 @@ public class PanelMenu extends JPanel {
     	crearHerreria = new JButton("Crear Herreria");
     	crearHerreria.setBounds(15,300,170,30);
     	crearHerreria.setFont(new Font("Arial", Font.BOLD, tamanoFuenteBotones));
+    	crearHerreria.setIcon(disenoDorado);
+    	crearHerreria.setHorizontalTextPosition(SwingConstants.CENTER);
+    	crearHerreria.setVerticalTextPosition(SwingConstants.CENTER);
+    	crearHerreria.setContentAreaFilled(false);
+    	crearHerreria.setFocusPainted(false);
     	crearHerreria.setForeground(Color.BLACK);
 			// Establece el edificio a 3 para saber que queremos construir herreria.
     	crearHerreria.addActionListener(new ActionListener() {
@@ -174,6 +192,11 @@ public class PanelMenu extends JPanel {
     	crearTorreMagica = new JButton("Crear Torre Mágica");
     	crearTorreMagica.setBounds(15,340,170,30);
     	crearTorreMagica.setFont(new Font("Arial", Font.BOLD, tamanoFuenteBotones));
+    	crearTorreMagica.setIcon(disenoDorado);
+    	crearTorreMagica.setHorizontalTextPosition(SwingConstants.CENTER);
+    	crearTorreMagica.setVerticalTextPosition(SwingConstants.CENTER);
+    	crearTorreMagica.setContentAreaFilled(false);
+    	crearTorreMagica.setFocusPainted(false);
     	crearTorreMagica.setForeground(Color.BLACK);
 			// Establece el edificio a 4 para saber que queremos construir torre magica.
     	crearTorreMagica.addActionListener(new ActionListener() {
@@ -188,6 +211,11 @@ public class PanelMenu extends JPanel {
     	crearIglesia = new JButton("Crear Iglesia");
     	crearIglesia.setBounds(15,380,170,30);
     	crearIglesia.setFont(new Font("Arial", Font.BOLD, tamanoFuenteBotones));
+    	crearIglesia.setIcon(disenoDorado);
+    	crearIglesia.setHorizontalTextPosition(SwingConstants.CENTER);
+    	crearIglesia.setVerticalTextPosition(SwingConstants.CENTER);
+    	crearIglesia.setContentAreaFilled(false);
+    	crearIglesia.setFocusPainted(false);
     	crearIglesia.setForeground(Color.BLACK);
 		// Establece el edificio a 5 para saber que queremos construir iglesia.
     	crearIglesia.addActionListener(new ActionListener() {
@@ -221,7 +249,14 @@ public class PanelMenu extends JPanel {
     	
     	// Boton Reclutar
     	btnReclutar = new JButton("Reclutar");
-    	btnReclutar.setBounds(100,485,85,30); 
+    	btnReclutar.setBounds(100,485,85,30);
+    	btnReclutar.setIcon(disenoDorado);
+    	btnReclutar.setHorizontalTextPosition(SwingConstants.CENTER);
+    	btnReclutar.setVerticalTextPosition(SwingConstants.CENTER);
+    	btnReclutar.setContentAreaFilled(false);
+    	btnReclutar.setFocusPainted(false);
+    	btnReclutar.setForeground(Color.BLACK);
+
     	btnReclutar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -260,6 +295,13 @@ public class PanelMenu extends JPanel {
     	// ---------------- ZONA VER TROPAS ----------------
     	btnVerTropas = new JButton("Ver Tropas");
     	btnVerTropas.setBounds(15,525,170,30); 
+    	ImageIcon disenoAzul = new ImageIcon("./src/m3/disenoBotonAzul.png"); 
+    	btnVerTropas.setIcon(disenoAzul);
+    	btnVerTropas.setHorizontalTextPosition(SwingConstants.CENTER);
+    	btnVerTropas.setVerticalTextPosition(SwingConstants.CENTER);
+    	btnVerTropas.setContentAreaFilled(false);
+    	btnVerTropas.setFocusPainted(false);
+    	btnVerTropas.setForeground(Color.BLACK);
 		
     	btnVerTropas.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
