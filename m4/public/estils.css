@@ -61,6 +61,7 @@ main{
     flex: 1;
 }
 
+
 .marmol{
     background-image: url("./img/fondo_marmol.jpg");
     background-size: cover;
@@ -315,3 +316,19 @@ body:has(#slide3:checked) .dots label:nth-child(3){
     letter-spacing: 1px;
 }
 
+
+/* ------------------------ informe ------------------------ */
+.fondo_informe{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.informe{
+    background-image: url("./img/papel_antiguo.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 90%;
+    height: 1000px;
+    margin: 30px 0;
+}
