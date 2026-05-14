@@ -29,15 +29,17 @@ public class PanelMenu extends JPanel {
 	private int tamanoFuenteBotones = 14;
 	private int edificioSeleccionado;
 	private Civilization civilizacion;
+	private Main objetoMain;
 	private JComboBox<String> selectorTropas;
 	private JTextField cajaCantidadTropas;
-	private JButton btnReclutar, btnVerTropas;
+	private JButton btnReclutar, btnVerTropas, btnVerTropasEnemigas;
 	
 	// Constructor
-	public PanelMenu(PanelJuego mapaJuego, Civilization c) {
+	public PanelMenu(PanelJuego mapaJuego, Civilization c, Main m) {
 		super();
 		setLayout(null);
 		this.civilizacion = c;
+		this.objetoMain = m;
 		// Imagen Menú
     	try {
     		menu = ImageIO.read(new File("./src/m3/menu.png"));
@@ -145,7 +147,7 @@ public class PanelMenu extends JPanel {
     	crearGranja.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mapaJuego.setEdificioSeleccionadoJuego(1);
-				System.out.println(mapaJuego.getEdificioSeleccionadoJuego());
+				System.out.println("Has seleccionado construir: Granja");
 			}
 		});
     	add(crearGranja);
@@ -164,7 +166,7 @@ public class PanelMenu extends JPanel {
     	crearCarpinteria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mapaJuego.setEdificioSeleccionadoJuego(2);
-				System.out.println(mapaJuego.getEdificioSeleccionadoJuego());
+				System.out.println("Has seleccionado construir: Carpinteria");
 			}
 		});
     	add(crearCarpinteria);
@@ -183,7 +185,7 @@ public class PanelMenu extends JPanel {
     	crearHerreria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mapaJuego.setEdificioSeleccionadoJuego(3);
-				System.out.println(mapaJuego.getEdificioSeleccionadoJuego());
+				System.out.println("Has seleccionado construir: Herreria");
 			}
 		});
     	add(crearHerreria);
@@ -202,7 +204,7 @@ public class PanelMenu extends JPanel {
     	crearTorreMagica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mapaJuego.setEdificioSeleccionadoJuego(4);
-				System.out.println(mapaJuego.getEdificioSeleccionadoJuego());
+				System.out.println("Has seleccionado construir: Torre Mágica");
 			}
 		});
     	add(crearTorreMagica);
@@ -221,7 +223,7 @@ public class PanelMenu extends JPanel {
     	crearIglesia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mapaJuego.setEdificioSeleccionadoJuego(5);
-				System.out.println(mapaJuego.getEdificioSeleccionadoJuego());
+				System.out.println("Has seleccionado construir: Iglesia (Amén)");
 			}
 		});
     	add(crearIglesia);
@@ -292,8 +294,8 @@ public class PanelMenu extends JPanel {
 		});
     	add(btnReclutar);
     	
-    	// ---------------- ZONA VER TROPAS ----------------
-    	btnVerTropas = new JButton("Ver Tropas");
+    	// ---------------- ZONA VER TROPAS / EDIFICIOS ----------------
+    	btnVerTropas = new JButton("Ver Tropas / Edificios");
     	btnVerTropas.setBounds(15,525,170,30); 
     	ImageIcon disenoAzul = new ImageIcon("./src/m3/disenoBotonAzul.png"); 
     	btnVerTropas.setIcon(disenoAzul);
@@ -305,20 +307,47 @@ public class PanelMenu extends JPanel {
 		
     	btnVerTropas.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
-    			String informe = "Swordsman: " + civilizacion.getSwordsmanCount() + 
+    			String informe = "========== TROPAS ACTUALES ==========" + 
+    					"\n--- Attack Units ---\n*******************************************************" +
+    					"\nSwordsman: " + civilizacion.getSwordsmanCount() + 
     					"\nSpearman: " + civilizacion.getSpearmanCount() + 
     					"\nCrossbow: " + civilizacion.getCrossbowCount() + 
     					"\nCannon: " + civilizacion.getCannonCount() + 
+    					"\n--- Defense Units ---\n*******************************************************" +
     					"\nArrow Tower: " + civilizacion.getArrowTowerCount() + 
     					"\nCatapult: " + civilizacion.getCatapultCount() + 
     					"\nRocket Launcher: " + civilizacion.getRocketLauncherCount() + 
+    					"\n--- Special Units ---\n*******************************************************" +
     					"\nMagician: " + civilizacion.getMagicianCount() + 
-    					"\nPriest: " + civilizacion.getPriestCount();
+    					"\nPriest: " + civilizacion.getPriestCount() + 
+    					"\n========== EDIFICIOS ACTUALES ==========" + 
+    					"\nGranjas: " + civilizacion.getFarm() +
+    					"\nCarpinterias: " + civilizacion.getCarpentry() + 
+    					"\nHerrerías: " + civilizacion.getSmithy() + 
+    					"\nTorres Mágicas: " + civilizacion.getMagicTower() +
+    					"\nIglesias: " + civilizacion.getChurch();
     			JOptionPane.showMessageDialog(null, informe, "Informe Militar", JOptionPane.INFORMATION_MESSAGE);
     		}
     		
     	});
     	add(btnVerTropas);
+    	
+    	// ---------------- ZONA VER TROPAS ENEMIGAS ----------------
+    	btnVerTropasEnemigas = new JButton("VS");
+    	btnVerTropasEnemigas.setBounds(15,565,50,30); 
+    	btnVerTropasEnemigas.setIcon(disenoAzul);
+    	btnVerTropasEnemigas.setHorizontalTextPosition(SwingConstants.CENTER);
+    	btnVerTropasEnemigas.setVerticalTextPosition(SwingConstants.CENTER);
+    	btnVerTropasEnemigas.setContentAreaFilled(false);
+    	btnVerTropasEnemigas.setFocusPainted(false);
+    	btnVerTropasEnemigas.setForeground(Color.BLACK);
+    	btnVerTropasEnemigas.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent e) {
+    			String informeEnemigo = m.viewThreat();
+    			JOptionPane.showMessageDialog(null, informeEnemigo, "Informe Militar Enemigo", JOptionPane.INFORMATION_MESSAGE);
+    		}
+    	});
+    	add(btnVerTropasEnemigas);
 	} // Fin del constructor
 	
 	public void paintComponent(Graphics g) {

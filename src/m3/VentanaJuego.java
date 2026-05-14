@@ -18,7 +18,7 @@ public class VentanaJuego extends JFrame implements Variables {
 		Civilization miCivilizacion = new Civilization();
 		PanelJuego panelJuego = new PanelJuego(miCivilizacion);
 		panelJuego.setBounds(0, 0, 600, 600);
-		PanelMenu panelMenu = new PanelMenu(panelJuego, miCivilizacion);
+		PanelMenu panelMenu = new PanelMenu(panelJuego, miCivilizacion, objetoMain);
 		panelMenu.setBounds(600,0, 200,600);
 		panelJuego.setMenu(panelMenu);
 		
@@ -40,9 +40,14 @@ public class VentanaJuego extends JFrame implements Variables {
 			public void actionPerformed(ActionEvent e) {
 				Battle batalla = new Battle(miCivilizacion.getArmy(), objetoMain.getEnemyArmy());
 				batalla.startBattle();
-				objetoMain.setComidaEnemigo(FOOD_BASE_ENEMY_ARMY + (FOOD_BASE_ENEMY_ARMY * ENEMY_FLEET_INCREASE / 100));
-				objetoMain.setHierroEnemigo(IRON_BASE_ENEMY_ARMY + (IRON_BASE_ENEMY_ARMY * ENEMY_FLEET_INCREASE / 100));
-				objetoMain.setMaderaEnemigo(WOOD_BASE_ENEMY_ARMY + (WOOD_BASE_ENEMY_ARMY * ENEMY_FLEET_INCREASE / 100));
+				// Subimos el % de ENEMY FLEET
+				objetoMain.setTopeComida(objetoMain.getTopeComida() + (objetoMain.getTopeComida() * ENEMY_FLEET_INCREASE / 100));
+				objetoMain.setTopeHierro(objetoMain.getTopeHierro() + (objetoMain.getTopeHierro() * ENEMY_FLEET_INCREASE / 100));
+				objetoMain.setTopeMadera(objetoMain.getTopeMadera() + (objetoMain.getTopeMadera() * ENEMY_FLEET_INCREASE / 100));
+				// Se lo asignamos
+				objetoMain.setComidaEnemigo(objetoMain.getTopeComida());
+		        objetoMain.setHierroEnemigo(objetoMain.getTopeHierro());
+		        objetoMain.setMaderaEnemigo(objetoMain.getTopeMadera());
 				objetoMain.createEnemyArmy();
 			}
 		});

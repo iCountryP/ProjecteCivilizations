@@ -9,16 +9,14 @@ public class Main implements Variables {
 	 private int hierroEnemigo = IRON_BASE_ENEMY_ARMY;
 	 private int maderaEnemigo = WOOD_BASE_ENEMY_ARMY;
 	 private int comidaEnemigo = FOOD_BASE_ENEMY_ARMY;
+	 private int topeComida = FOOD_BASE_ENEMY_ARMY;
+	 private int topeMadera = WOOD_BASE_ENEMY_ARMY;
+	 private int topeHierro = IRON_BASE_ENEMY_ARMY;
 	 private ArrayList<MilitaryUnit>[] enemyArmy = new ArrayList[9];
 
 	public static void main(String[] args) {
 		new VentanaJuego();
 	}
-	
-	
-	
-	
-	
 	
 	
 	// Método para crear el ejército enemigo
@@ -72,72 +70,71 @@ public class Main implements Variables {
 		}
 	} // Fin createEnemyArmy
 
-
+	
+	public String viewThreat() {
+		String informeEnemigo = "NEW THREAT INCOMING:\nSwordsman: " + enemyArmy[0].size() + 
+				"\nSpearman: " + enemyArmy[1].size() + 
+				"\nCrossbow: " + enemyArmy[2].size() +
+				"\nCannon: " + enemyArmy[3].size();
+		return informeEnemigo;
+	}
+	
+	
+	// Getters & Setters
 	public ArrayList<MilitaryUnit>[] getEnemyArmy() {
 		return enemyArmy;
 	}
-
-
-
-
-
 
 
 	public int getHierroEnemigo() {
 		return hierroEnemigo;
 	}
 
-
-
-
-
-
-
 	public void setHierroEnemigo(int hierroEnemigo) {
 		this.hierroEnemigo = hierroEnemigo;
 	}
-
-
-
-
-
-
 
 	public int getMaderaEnemigo() {
 		return maderaEnemigo;
 	}
 
-
-
-
-
-
-
 	public void setMaderaEnemigo(int maderaEnemigo) {
 		this.maderaEnemigo = maderaEnemigo;
 	}
-
-
-
-
-
-
 
 	public int getComidaEnemigo() {
 		return comidaEnemigo;
 	}
 
-
-
-
-
-
-
 	public void setComidaEnemigo(int comidaEnemigo) {
 		this.comidaEnemigo = comidaEnemigo;
 	}
-	
-	
+
+	public int getTopeComida() {
+		return topeComida;
+	}
+
+	public int getTopeMadera() {
+		return topeMadera;
+	}
+
+	public int getTopeHierro() {
+		return topeHierro;
+	}
+
+	public void setTopeComida(int topeComida) {
+		this.topeComida = topeComida;
+	}
+
+
+	public void setTopeMadera(int topeMadera) {
+		this.topeMadera = topeMadera;
+	}
+
+	public void setTopeHierro(int topeHierro) {
+		this.topeHierro = topeHierro;
+	}
+
 
 	
 	

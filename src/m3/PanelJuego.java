@@ -43,6 +43,7 @@ public class PanelJuego extends JPanel {
 		        		
 		        		if(civilizacion.getFarm() > granjasAntesDeConstruir) {
 		        			mapa[columna][fila] = 1;
+		        			System.out.println("Se ha construido una granja.");
 		        		}
 		        	}
 		        	
@@ -54,6 +55,8 @@ public class PanelJuego extends JPanel {
 		        		
 		        		if(civilizacion.getCarpentry() > carpinteriasAntesDeConstruir) {
 		        			mapa[columna][fila] = 2;
+		        			System.out.println("Se ha construido una carpinteria.");
+
 		        		}
 		        	}
 		        	
@@ -65,6 +68,8 @@ public class PanelJuego extends JPanel {
 		        		
 		        		if(civilizacion.getSmithy() > herreriasAntesDeConstruir) {
 		        			mapa[columna][fila] = 3;
+		        			System.out.println("Se ha construido una herreria.");
+		      
 		        		}
 		        	}
 		        	
@@ -76,6 +81,8 @@ public class PanelJuego extends JPanel {
 		        		
 		        		if(civilizacion.getMagicTower() > magicTowerAntesDeConstruir) {
 		        			mapa[columna][fila] = 4;
+		        			System.out.println("Se ha construido una torre mágica.");
+
 		        		}
 		        	}
 		        	
@@ -87,6 +94,8 @@ public class PanelJuego extends JPanel {
 		        		
 		        		if(civilizacion.getChurch() > churchAntesDeConstruir) {
 		        			mapa[columna][fila] = 5;
+		        			System.out.println("Se ha construido una iglesia (Amén).");
+
 		        		}
 		        	}
 		        	
