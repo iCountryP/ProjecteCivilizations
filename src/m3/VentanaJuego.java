@@ -5,7 +5,8 @@ import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class VentanaJuego extends JFrame {
+public class VentanaJuego extends JFrame implements Variables {
+	private Main objetoMain = new Main();
 	// Constructor
 	public VentanaJuego() {
 		super();
@@ -33,6 +34,21 @@ public class VentanaJuego extends JFrame {
 		    }
 		});
 		reloj.start();
+		objetoMain.createEnemyArmy();
+		
+		Timer relojInvasion = new Timer(30000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Battle batalla = new Battle(miCivilizacion.getArmy(), objetoMain.getEnemyArmy());
+				batalla.startBattle();
+				objetoMain.setComidaEnemigo(FOOD_BASE_ENEMY_ARMY + (FOOD_BASE_ENEMY_ARMY * ENEMY_FLEET_INCREASE / 100));
+				objetoMain.setHierroEnemigo(IRON_BASE_ENEMY_ARMY + (IRON_BASE_ENEMY_ARMY * ENEMY_FLEET_INCREASE / 100));
+				objetoMain.setMaderaEnemigo(WOOD_BASE_ENEMY_ARMY + (WOOD_BASE_ENEMY_ARMY * ENEMY_FLEET_INCREASE / 100));
+				objetoMain.createEnemyArmy();
+			}
+		});
+		relojInvasion.start();
+		
+		
 	}
 	
 	
