@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Civilization implements Variables {
 
+	private String name;
+	
 	private int technologyDefense;
 	private int technologyAttack;
 
