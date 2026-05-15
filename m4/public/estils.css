@@ -1,3 +1,8 @@
+@keyframes animacion_entrada{
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
 body{
     margin: 0;
     padding: 0;
@@ -51,7 +56,7 @@ nav a:hover{
 }
 
 footer{
-    padding: 30px 0 50px;
+    padding: 40px 0 70px;
     background-color: black;
     color: white;
     text-align: center;
@@ -81,6 +86,7 @@ main{
     background-image: url("./img/papel_antiguo.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+    box-shadow: 0 30px 40px rgba(0, 0, 0, 0.8);
 }
 
 .linea{
@@ -272,9 +278,9 @@ body:has(#slide3:checked) .dots label:nth-child(3){
 }
 
 .batallas_recien .poster{
-    width: 80%;
-    margin-bottom: 100px;
-    box-shadow: 0 30px 40px rgba(0, 0, 0, 0.8);
+    width: 100%;
+    min-height: 300px;
+    margin: 30px 50px 100px;
 }
 
 /* ------------------------ batallas ------------------------ */
@@ -283,12 +289,23 @@ body:has(#slide3:checked) .dots label:nth-child(3){
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    align-items: flex-start;
 }
 
-.registros_batallas .poster{
+.registros_batallas .madera{
     width: 40%;
+    min-height: 100px;
     box-shadow: 0 30px 40px rgba(0, 0, 0, 0.8);
     margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: animacion_entrada 0.4s ease-in;
+}
+
+.registros_batallas .madera .poster{
+    width: 100%;
+    margin: 30px 50px;
     display: flex;
     flex-direction: column;
 }
@@ -303,7 +320,8 @@ body:has(#slide3:checked) .dots label:nth-child(3){
     margin: 10px 0 30px;
 }
 
-.verdetalles{
+.verdetalles, .volver{
+    margin-top: auto;
     align-self: flex-end;
     font-size: large;
     font-weight: bold;
@@ -311,7 +329,7 @@ body:has(#slide3:checked) .dots label:nth-child(3){
     transition: all 0.3s;
 }
 
-.verdetalles:hover{
+.verdetalles:hover,.volver:hover{
     color: rgb(114, 46, 46);
     letter-spacing: 1px;
 }
@@ -325,10 +343,19 @@ body:has(#slide3:checked) .dots label:nth-child(3){
 }
 
 .informe{
-    background-image: url("./img/papel_antiguo.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 90%;
-    height: 1000px;
-    margin: 30px 0;
+    width: 100%;
+    min-height: 700px;
+    margin: 60px 100px 100px;
+    animation: animacion_entrada 0.4s ease-in;
+}
+
+.informe h1{
+    font-size: 50px;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+}
+
+.volver{
+    font-size: x-large;
 }
