@@ -58,9 +58,9 @@ public class VentanaJuego extends JFrame implements Variables {
 		            Battle batalla = new Battle(miCivilizacion.getArmy(), objetoMain.getEnemyArmy());
 		            batalla.startBattle();
 
-		            objetoMain.setTopeComida(objetoMain.getTopeComida() + (objetoMain.getTopeComida() * ENEMY_FLEET_INCREASE / 100));
-		            objetoMain.setTopeHierro(objetoMain.getTopeHierro() + (objetoMain.getTopeHierro() * ENEMY_FLEET_INCREASE / 100));
-		            objetoMain.setTopeMadera(objetoMain.getTopeMadera() + (objetoMain.getTopeMadera() * ENEMY_FLEET_INCREASE / 100));
+		            objetoMain.setTopeComida(objetoMain.getTopeComida() + (objetoMain.getTopeComida() * ENEMY_ARMY_INCREASE / 100));
+		            objetoMain.setTopeHierro(objetoMain.getTopeHierro() + (objetoMain.getTopeHierro() * ENEMY_ARMY_INCREASE / 100));
+		            objetoMain.setTopeMadera(objetoMain.getTopeMadera() + (objetoMain.getTopeMadera() * ENEMY_ARMY_INCREASE / 100));
 		            
 		            objetoMain.setComidaEnemigo(objetoMain.getTopeComida());
 		            objetoMain.setHierroEnemigo(objetoMain.getTopeHierro());
