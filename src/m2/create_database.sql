@@ -115,3 +115,15 @@ CREATE TABLE BATTLE_RESOURCE_LOSSES (
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
+
+INSERT INTO UNIT_TYPE (name)
+VALUES 
+    ('swordsman'),
+    ('spearman'),
+    ('crossbow'),
+    ('cannon'),
+    ('arrow_tower'),
+    ('catapult'),
+    ('rocket_launcher'),
+    ('magician'),
+    ('priest');
