@@ -5,7 +5,6 @@ import java.awt.Color;
 import javax.swing.JFrame;
 
 public class VentanaInicio extends JFrame {
-
 	public static void main(String[] args) {
 		new VentanaInicio();
 	}
