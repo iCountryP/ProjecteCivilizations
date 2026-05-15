@@ -33,6 +33,7 @@ header{
     position: sticky;
     top: 0;
     z-index: 100;
+    border-bottom: 2px solid beige;
 }
 
 nav{
@@ -329,7 +330,7 @@ body:has(#slide3:checked) .dots label:nth-child(3){
     transition: all 0.3s;
 }
 
-.verdetalles:hover,.volver:hover{
+.verdetalles:hover, .volver:hover{
     color: rgb(114, 46, 46);
     letter-spacing: 1px;
 }
@@ -358,4 +359,50 @@ body:has(#slide3:checked) .dots label:nth-child(3){
 
 .volver{
     font-size: x-large;
+}
+
+/* ------------------------ civilizacion ------------------------ */
+.civilizaciones{
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 100px;
+    justify-content: center;
+}
+
+.cartel{
+    background-image: url("./img/cartel_colgado.png");
+    background-size: contain;
+    background-position: top;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.7));
+    width: 500px;
+    height: 370px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* lo manda hacia la parte inferior */
+    animation: animacion_entrada 0.4s ease-in;
+}
+
+.cartel_contenido{
+    width: 69%;
+    height: 60%; /* solo zona del cartel */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    word-break: break-word;
+}
+
+.cartel_contenido a{
+    font-size: 40px;
+    font-weight: bolder;
+    color: black;
+    transition: all 0.3s ease-in-out;
+}
+
+.cartel_contenido a:hover{
+    color: rgb(114, 46, 46);
+    transform: scale(1.05);
 }

@@ -64,6 +64,14 @@ app.get('/batallas', async (req, res) => {
   res.render('batallas');
 });
 
+app.get('/informe', async (req, res) => {
+  res.render('informe');
+});
+
+app.get('/civilizaciones', async (req, res) => {
+  res.render('civilizaciones');
+});
+
 app.get('/civilizacion', async (req, res) => {
   res.render('civilizacion');
 });
@@ -72,15 +80,11 @@ app.get('/programadores', async (req, res) => {
   res.render('programadores');
 });
 
-app.get('/informe', async (req, res) => {
-  res.render('informe');
-});
-
 // Start server
 const httpServer = app.listen(port, () => {
   console.log(`http://localhost:${port}`);
   console.log(`http://localhost:${port}/batallas`);
-  console.log(`http://localhost:${port}/civilizacion`);
+  console.log(`http://localhost:${port}/civilizaciones`);
   console.log(`http://localhost:${port}/programadores`);
 });
 
