@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-public class PanelMenu extends JPanel {
+public class PanelMenu extends JPanel implements Variables {
 	private JLabel madera, comida, hierro, mana, nivelTecnologiaAtaque, nivelTecnologiaDefensa, reclutarTitulo;
 	private JButton crearGranja, crearCarpinteria, crearHerreria, crearTorreMagica, crearIglesia;
 	private JButton mejorarTecnologiaAtaque, mejorarTecnologiaDefensa;
@@ -33,7 +33,12 @@ public class PanelMenu extends JPanel {
 	private JComboBox<String> selectorTropas;
 	private JTextField cajaCantidadTropas;
 	private JButton btnReclutar, btnVerTropas, btnVerTropasEnemigas;
-	
+	private int tiempoRestante = 180; // Para que sean 3 minutos.
+	private JLabel proximoAtaque = new JLabel("Próximo Ataque: 03:00"); // Label que indica cuanto falta para el próximo ataque	
+	// Rutas para los iconos de los materiales. el toUri().toString() lo que hace es añadir el file:// para q la etiqueta <img> lo entienda en Java
+	private String rutaMadera = new File("./src/m3/iconoMadera.png").toURI().toString();
+	private String rutaHierro = new File("./src/m3/iconoHierro.png").toURI().toString();
+	private String rutaComida = new File("./src/m3/iconoComida.png").toURI().toString();
 	// Constructor
 	public PanelMenu(PanelJuego mapaJuego, Civilization c, Main m) {
 		super();
@@ -142,6 +147,14 @@ public class PanelMenu extends JPanel {
     	crearGranja.setVerticalTextPosition(SwingConstants.CENTER);
     	crearGranja.setContentAreaFilled(false);
     	crearGranja.setFocusPainted(false);
+    	crearGranja.setToolTipText("<html>"
+    		    + "<div style='margin: 5px; font-family: Arial;'>"
+    		    + "<b>Coste de Granja:</b><br><br>"
+    		    + "<img src='" + rutaMadera + "' width='25' height='25'> Madera: " + WOOD_COST_FARM + "<br>"
+    		    + "<img src='" + rutaHierro + "' width='25' height='25'> Hierro: " + IRON_COST_FARM + "<br>"
+    		    + "<img src='" + rutaComida + "' width='25' height='25'> Comida: " + FOOD_COST_FARM + "<br>"
+    		    + "</div>"
+    		    + "</html>");
     	crearGranja.setForeground(Color.BLACK);
     		// Establece el edificio a 1 para saber que queremos construir granja.
     	crearGranja.addActionListener(new ActionListener() {
@@ -161,6 +174,15 @@ public class PanelMenu extends JPanel {
     	crearCarpinteria.setVerticalTextPosition(SwingConstants.CENTER);
     	crearCarpinteria.setContentAreaFilled(false);
     	crearCarpinteria.setFocusPainted(false);
+    		// Añade que salgan los recursos si pones el raton encima
+    	crearCarpinteria.setToolTipText("<html>"
+    		    + "<div style='margin: 5px; font-family: Arial;'>"
+    		    + "<b>Coste de Carpintería:</b><br><br>"
+    		    + "<img src='" + rutaMadera + "' width='25' height='25'> Madera: " + WOOD_COST_CARPENTRY + "<br>"
+    		    + "<img src='" + rutaHierro + "' width='25' height='25'> Hierro: " + IRON_COST_CARPENTRY + "<br>"
+    		    + "<img src='" + rutaComida + "' width='25' height='25'> Comida: " + FOOD_COST_CARPENTRY + "<br>"
+    		    + "</div>"
+    		    + "</html>");
     	crearCarpinteria.setForeground(Color.BLACK);
 			// Establece el edificio a 2 para saber que queremos construir carpinteria.
     	crearCarpinteria.addActionListener(new ActionListener() {
@@ -180,6 +202,15 @@ public class PanelMenu extends JPanel {
     	crearHerreria.setVerticalTextPosition(SwingConstants.CENTER);
     	crearHerreria.setContentAreaFilled(false);
     	crearHerreria.setFocusPainted(false);
+			// Añade que salgan los recursos si pones el raton encima
+    	crearHerreria.setToolTipText("<html>"
+    		    + "<div style='margin: 5px; font-family: Arial;'>"
+    		    + "<b>Coste de Herrería:</b><br><br>"
+    		    + "<img src='" + rutaMadera + "' width='25' height='25'> Madera: " + WOOD_COST_SMITHY + "<br>"
+    		    + "<img src='" + rutaHierro + "' width='25' height='25'> Hierro: " + IRON_COST_SMITHY + "<br>"
+    		    + "<img src='" + rutaComida + "' width='25' height='25'> Comida: " + FOOD_COST_SMITHY + "<br>"
+    		    + "</div>"
+    		    + "</html>");
     	crearHerreria.setForeground(Color.BLACK);
 			// Establece el edificio a 3 para saber que queremos construir herreria.
     	crearHerreria.addActionListener(new ActionListener() {
@@ -199,6 +230,15 @@ public class PanelMenu extends JPanel {
     	crearTorreMagica.setVerticalTextPosition(SwingConstants.CENTER);
     	crearTorreMagica.setContentAreaFilled(false);
     	crearTorreMagica.setFocusPainted(false);
+			// Añade que salgan los recursos si pones el raton encima
+    	crearTorreMagica.setToolTipText("<html>"
+		    + "<div style='margin: 5px; font-family: Arial;'>"
+		    + "<b>Coste de Torre Mágica:</b><br><br>"
+		    + "<img src='" + rutaMadera + "' width='25' height='25'> Madera: " + WOOD_COST_MAGICTOWER + "<br>"
+		    + "<img src='" + rutaHierro + "' width='25' height='25'> Hierro: " + IRON_COST_MAGICTOWER + "<br>"
+		    + "<img src='" + rutaComida + "' width='25' height='25'> Comida: " + FOOD_COST_MAGICTOWER + "<br>"
+		    + "</div>"
+		    + "</html>");
     	crearTorreMagica.setForeground(Color.BLACK);
 			// Establece el edificio a 4 para saber que queremos construir torre magica.
     	crearTorreMagica.addActionListener(new ActionListener() {
@@ -218,6 +258,15 @@ public class PanelMenu extends JPanel {
     	crearIglesia.setVerticalTextPosition(SwingConstants.CENTER);
     	crearIglesia.setContentAreaFilled(false);
     	crearIglesia.setFocusPainted(false);
+			// Añade que salgan los recursos si pones el raton encima
+    	crearIglesia.setToolTipText("<html>"
+    		    + "<div style='margin: 5px; font-family: Arial;'>"
+    		    + "<b>Coste de Iglesia:</b><br><br>"
+    		    + "<img src='" + rutaMadera + "' width='25' height='25'> Madera: " + WOOD_COST_CHURCH + "<br>"
+    		    + "<img src='" + rutaHierro + "' width='25' height='25'> Hierro: " + IRON_COST_CHURCH + "<br>"
+    		    + "<img src='" + rutaComida + "' width='25' height='25'> Comida: " + FOOD_COST_CHURCH + "<br>"
+    		    + "</div>"
+    		    + "</html>");
     	crearIglesia.setForeground(Color.BLACK);
 		// Establece el edificio a 5 para saber que queremos construir iglesia.
     	crearIglesia.addActionListener(new ActionListener() {
@@ -242,6 +291,20 @@ public class PanelMenu extends JPanel {
     	String[] tiposDeTropa = {"Swordsman", "Spearman", "Crossbow", "Cannon", "Arrow Tower", "Catapult", "Rocket Launcher", "Magician", "Priest"};
     	selectorTropas = new JComboBox<String>(tiposDeTropa);
     	selectorTropas.setBounds(15,445,170,30);
+    	selectorTropas.setToolTipText("<html>"
+    		    + "<div style='margin: 5px; font-family: Arial;'>"
+    		    + "<b>--- TABLA DE COSTES (por unidad) ---</b><br><br>"
+    		    + "<b>Swordsman: </b>" + WOOD_COST_SWORDSMAN + " Madera, "+ IRON_COST_SWORDSMAN +" Hierro, " + FOOD_COST_SWORDSMAN +" Comida, " + MANA_COST_SWORDSMAN + " Mana<br>"
+    		    + "<b>Spearman: </b>"+ WOOD_COST_SPEARMAN + " Madera, "+ IRON_COST_SPEARMAN +" Hierro, " + FOOD_COST_SPEARMAN +" Comida, " + MANA_COST_SPEARMAN + " Mana<br>"
+    		    + "<b>Crossbow: </b>"+ WOOD_COST_CROSSBOW + " Madera, "+ IRON_COST_CROSSBOW +" Hierro, " + FOOD_COST_CROSSBOW +" Comida, " + MANA_COST_CROSSBOW + " Mana<br>"
+    		    + "<b>Cannon: </b>"+ WOOD_COST_CANNON + " Madera, "+ IRON_COST_CANNON +" Hierro, " + FOOD_COST_CANNON +" Comida, " + MANA_COST_CANNON + " Mana<br>"
+    		    + "<b>Arrow Tower: </b>"+ WOOD_COST_ARROWTOWER + " Madera, "+ IRON_COST_ARROWTOWER +" Hierro, " + FOOD_COST_ARROWTOWER +" Comida, " + MANA_COST_ARROWTOWER + " Mana<br>"
+    		    + "<b>Catapult: </b>"+ WOOD_COST_CATAPULT + " Madera, "+ IRON_COST_CATAPULT +" Hierro, " + FOOD_COST_CATAPULT +" Comida, " + MANA_COST_CATAPULT + " Mana<br>"
+    		    + "<b>Rocket Launcher: </b>"+ WOOD_COST_ROCKETLAUNCHERTOWER + " Madera, "+ IRON_COST_ROCKETLAUNCHERTOWER +" Hierro, " + FOOD_COST_ROCKETLAUNCHERTOWER +" Comida, " + MANA_COST_ROCKETLAUNCHERTOWER + " Mana<br>"
+    		    + "<b>Magician: </b>"+ WOOD_COST_MAGICIAN + " Madera, "+ IRON_COST_MAGICIAN +" Hierro, " + FOOD_COST_MAGICIAN +" Comida, " + MANA_COST_MAGICIAN + " Mana<br>"
+    		    + "<b>Priest: </b>"+ WOOD_COST_PRIEST + " Madera, "+ IRON_COST_PRIEST +" Hierro, " + FOOD_COST_PRIEST +" Comida, " + MANA_COST_PRIEST + " Mana<br>"
+    		    + "</div>"
+    		    + "</html>");
     	add(selectorTropas);
     	
     	// Caja cantidad de tropas
@@ -343,7 +406,10 @@ public class PanelMenu extends JPanel {
     	btnVerTropasEnemigas.setForeground(Color.BLACK);
     	btnVerTropasEnemigas.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
-    			String informeEnemigo = m.viewThreat();
+    			int min = tiempoRestante / 60;
+    			int seg = tiempoRestante % 60;
+    			String textoTiempo = String.format("%02d:%02d", min, seg);
+    			String informeEnemigo = m.viewThreat(textoTiempo);
     			JOptionPane.showMessageDialog(null, informeEnemigo, "Informe Militar Enemigo", JOptionPane.INFORMATION_MESSAGE);
     		}
     	});
@@ -376,6 +442,22 @@ public class PanelMenu extends JPanel {
 
 	public void setEdificioSeleccionado(int edificioSeleccionado) {
 		this.edificioSeleccionado = edificioSeleccionado;
+	}
+
+	public int getTiempoRestante() {
+		return tiempoRestante;
+	}
+
+	public void setTiempoRestante(int tiempoRestante) {
+		this.tiempoRestante = tiempoRestante;
+	}
+
+	public JLabel getProximoAtaque() {
+		return proximoAtaque;
+	}
+
+	public void setProximoAtaque(JLabel proximoAtaque) {
+		this.proximoAtaque = proximoAtaque;
 	}
 	
 	
