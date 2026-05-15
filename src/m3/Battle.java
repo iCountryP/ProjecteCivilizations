@@ -278,4 +278,5 @@ public class Battle implements Variables {
 		return waste;
 	}
 	
+	
 }

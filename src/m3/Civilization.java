@@ -36,9 +36,9 @@ public class Civilization implements Variables {
 		this.technologyAttack = 0;
 		this.technologyDefense = 0;
 		
-		this.wood = 0;
-		this.iron = 0;
-		this.food = 0;
+		this.wood = 50000;
+		this.iron = 50000;
+		this.food = 50000;
 		this.mana = 0;
 		
 		this.magicTower = 0;
@@ -147,6 +147,8 @@ public class Civilization implements Variables {
 			int current_iron_cost = (int) Math.ceil(UPGRADE_BASE_DEFENSE_TECHNOLOGY_IRON_COST* Math.pow((1+UPGRADE_PLUS_DEFENSE_TECHNOLOGY_IRON_COST*0.01), technologyDefense));
 			int current_wood_cost = (int) Math.ceil(UPGRADE_BASE_DEFENSE_TECHNOLOGY_WOOD_COST* Math.pow((1+UPGRADE_PLUS_DEFENSE_TECHNOLOGY_WOOD_COST*0.01), technologyDefense));
 			if (this.iron >= current_iron_cost && this.wood >= current_wood_cost) {
+				this.iron -= current_iron_cost;
+			    this.wood -= current_wood_cost;
 				this.technologyDefense++;
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
@@ -161,6 +163,8 @@ public class Civilization implements Variables {
 			int current_iron_cost = (int) Math.ceil(UPGRADE_BASE_ATTACK_TECHNOLOGY_IRON_COST* Math.pow((1+UPGRADE_PLUS_ATTACK_TECHNOLOGY_IRON_COST*0.01), technologyAttack));
 			int current_wood_cost = (int) Math.ceil(UPGRADE_BASE_ATTACK_TECHNOLOGY_WOOD_COST* Math.pow((1+UPGRADE_PLUS_ATTACK_TECHNOLOGY_WOOD_COST*0.01), technologyAttack));
 			if (this.iron >= current_iron_cost && this.wood >= current_wood_cost) {
+				this.iron -= current_iron_cost;
+			    this.wood -= current_wood_cost;
 				this.technologyAttack++;
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
@@ -173,7 +177,6 @@ public class Civilization implements Variables {
 	// Metodos para añadir unidades a la army
 	
 	public void newSwordsman(int n) {
-		
 		try {
 			if (n <= 0) {
 				throw new InvalidUnitAmountException(INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE);
@@ -183,21 +186,24 @@ public class Civilization implements Variables {
 		} catch (InvalidUnitAmountException e) {
 			System.out.println(e);
 			n = 0;
+			
 		} catch (ResourceException e) {
 			System.out.println(e);
 			int maxFood = this.food / FOOD_COST_SWORDSMAN;
 			int maxWood = this.wood / WOOD_COST_SWORDSMAN;
 			int maxIron = this.iron / IRON_COST_SWORDSMAN;
-			int maxMana = this.mana / MANA_COST_SWORDSMAN;
-			
+			//System.out.println("MINIMUM VALE ESTO ");
+			int maxMana = MAX_VALUE;
+
+
 			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
-			
 			if (minimum > 0) {
 				n = minimum;
 			} else {
 				n = 0;
 			}
 		} finally {
+			System.out.println("N VALE ESTO "+n);
 			if (n > 0) {
 				this.food -= FOOD_COST_SWORDSMAN*n;
 				this.wood -= WOOD_COST_SWORDSMAN*n;
@@ -231,7 +237,7 @@ public class Civilization implements Variables {
 			int maxFood = this.food / FOOD_COST_SPEARMAN;
 			int maxWood = this.wood / WOOD_COST_SPEARMAN;
 			int maxIron = this.iron / IRON_COST_SPEARMAN;
-			int maxMana = this.mana / MANA_COST_SPEARMAN;
+			int maxMana = MAX_VALUE;
 			
 			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
 			
@@ -270,10 +276,10 @@ public class Civilization implements Variables {
 			n = 0;
 		} catch (ResourceException e) {
 			System.out.println(e);
-			int maxFood = this.food / FOOD_COST_CROSSBOW;
+			int maxFood = MAX_VALUE;
 			int maxWood = this.wood / WOOD_COST_CROSSBOW;
 			int maxIron = this.iron / IRON_COST_CROSSBOW;
-			int maxMana = this.mana / MANA_COST_CROSSBOW;
+			int maxMana = MAX_VALUE;
 			
 			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
 			
@@ -312,10 +318,10 @@ public class Civilization implements Variables {
 			n = 0;
 		} catch (ResourceException e) {
 			System.out.println(e);
-			int maxFood = this.food / FOOD_COST_CANNON;
+			int maxFood = MAX_VALUE;
 			int maxWood = this.wood / WOOD_COST_CANNON;
 			int maxIron = this.iron / IRON_COST_CANNON;
-			int maxMana = this.mana / MANA_COST_CANNON;
+			int maxMana = MAX_VALUE;
 			
 			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
 			
@@ -354,10 +360,10 @@ public class Civilization implements Variables {
 			n = 0;
 		} catch (ResourceException e) {
 			System.out.println(e);
-			int maxFood = this.food / FOOD_COST_ARROWTOWER;
+			int maxFood = MAX_VALUE;
 			int maxWood = this.wood / WOOD_COST_ARROWTOWER;
-			int maxIron = this.iron / IRON_COST_ARROWTOWER;
-			int maxMana = this.mana / MANA_COST_ARROWTOWER;
+			int maxIron = MAX_VALUE;
+			int maxMana = MAX_VALUE;
 			
 			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
 			
@@ -396,10 +402,10 @@ public class Civilization implements Variables {
 			n = 0;
 		} catch (ResourceException e) {
 			System.out.println(e);
-			int maxFood = this.food / FOOD_COST_CATAPULT;
+			int maxFood = MAX_VALUE;
 			int maxWood = this.wood / WOOD_COST_CATAPULT;
 			int maxIron = this.iron / IRON_COST_CATAPULT;
-			int maxMana = this.mana / MANA_COST_CATAPULT;
+			int maxMana = MAX_VALUE;
 			
 			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
 			
@@ -438,10 +444,10 @@ public class Civilization implements Variables {
 			n = 0;
 		} catch (ResourceException e) {
 			System.out.println(e);
-			int maxFood = this.food / FOOD_COST_ROCKETLAUNCHERTOWER;
+			int maxFood = MAX_VALUE;
 			int maxWood = this.wood / WOOD_COST_ROCKETLAUNCHERTOWER;
 			int maxIron = this.iron / IRON_COST_ROCKETLAUNCHERTOWER;
-			int maxMana = this.mana / MANA_COST_ROCKETLAUNCHERTOWER;
+			int maxMana = MAX_VALUE;
 			
 			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
 			
@@ -530,8 +536,8 @@ public class Civilization implements Variables {
 		} catch (ResourceException e) {
 			System.out.println(e);
 			int maxFood = this.food / FOOD_COST_PRIEST;
-			int maxWood = this.wood / WOOD_COST_PRIEST;
-			int maxIron = this.iron / IRON_COST_PRIEST;
+			int maxWood = MAX_VALUE;
+			int maxIron = MAX_VALUE;
 			int maxMana = this.mana / MANA_COST_PRIEST;
 			
 			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
@@ -562,4 +568,156 @@ public class Civilization implements Variables {
 		}
 	}
 	
+	
+	// método que controla el aumento de recuroos y teniendo en cuenta la cantidad de edificios que hay
+	public void aumentoRecursos() {
+	    this.food = this.food + CIVILIZATION_FOOD_GENERATED + (this.farm * CIVILIZATION_FOOD_GENERATED_PER_FARM);
+	    this.wood = this.wood + CIVILIZATION_WOOD_GENERATED + (this.carpentry * CIVILIZATION_WOOD_GENERATED_PER_CARPENTRY);
+	    this.iron = this.iron + CIVILIZATION_IRON_GENERATED + (this.smithy * CIVILIZATION_IRON_GENERATED_PER_SMITHY);
+	    this.mana = this.mana + (this.magicTower * CIVILIZATION_MANA_GENERATED_PER_MAGIC_TOWER);
+	    //System.out.println(this.magicTower);
+	}
+	
+	// Getters & Setters
+
+	public int getWood() {
+		return wood;
+	}
+
+	public void setWood(int wood) {
+		this.wood = wood;
+	}
+
+	public int getIron() {
+		return iron;
+	}
+
+	public void setIron(int iron) {
+		this.iron = iron;
+	}
+
+	public int getFood() {
+		return food;
+	}
+
+	public void setFood(int food) {
+		this.food = food;
+	}
+
+	public int getTechnologyDefense() {
+		return technologyDefense;
+	}
+
+	public void setTechnologyDefense(int technologyDefense) {
+		this.technologyDefense = technologyDefense;
+	}
+
+	public int getTechnologyAttack() {
+		return technologyAttack;
+	}
+
+	public void setTechnologyAttack(int technologyAttack) {
+		this.technologyAttack = technologyAttack;
+	}
+
+	public int getMana() {
+		return mana;
+	}
+
+	public void setMana(int mana) {
+		this.mana = mana;
+	}
+
+	public int getMagicTower() {
+		return magicTower;
+	}
+
+	public void setMagicTower(int magicTower) {
+		this.magicTower = magicTower;
+	}
+
+	public int getChurch() {
+		return church;
+	}
+
+	public void setChurch(int church) {
+		this.church = church;
+	}
+
+	public int getFarm() {
+		return farm;
+	}
+
+	public void setFarm(int farm) {
+		this.farm = farm;
+	}
+
+	public int getSmithy() {
+		return smithy;
+	}
+
+	public void setSmithy(int smithy) {
+		this.smithy = smithy;
+	}
+
+	public int getCarpentry() {
+		return carpentry;
+	}
+
+	public void setCarpentry(int carpentry) {
+		this.carpentry = carpentry;
+	}
+
+	public int getBattles() {
+		return battles;
+	}
+
+	public void setBattles(int battles) {
+		this.battles = battles;
+	}
+
+	public ArrayList<MilitaryUnit>[] getArmy() {
+		return army;
+	}
+
+	public void setArmy(ArrayList<MilitaryUnit>[] army) {
+		this.army = army;
+	}
+	
+	public int getSwordsmanCount() {
+		return this.army[0].size();
+	}
+	
+	public int getSpearmanCount() {
+		return this.army[1].size();
+	}
+	
+	public int getCrossbowCount() {
+		return this.army[2].size();
+	}
+	
+	public int getCannonCount() {
+		return this.army[3].size();
+	}
+	
+	public int getArrowTowerCount() {
+		return this.army[4].size();
+	}
+	
+	public int getCatapultCount() {
+		return this.army[5].size();
+	}
+	
+	public int getRocketLauncherCount() {
+		return this.army[6].size();
+	}
+	
+	public int getMagicianCount() {
+		return this.army[7].size();
+	}
+	
+	public int getPriestCount() {
+		return this.army[8].size();
+
+	}
 }
