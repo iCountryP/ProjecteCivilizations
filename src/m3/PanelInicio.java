@@ -57,12 +57,18 @@ public class PanelInicio extends JPanel {
 
 				// Si el usuario pulsa Cancelar, nombre será null
 				if (name != null && !name.trim().isEmpty()) {
-					// Cerrar la ventana actual
-					Window window = SwingUtilities.getWindowAncestor(nuevaPartida);
-					window.dispose();
-					
-					// Abrir el juego
-					new VentanaJuego(name);
+					name = name.trim();
+				    if (name.length() > 50) {
+				        // Advertencia
+				        JOptionPane.showMessageDialog(null, "El nombre no puede superar los 50 caracteres.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+				    } else {
+						// Cerrar la ventana actual
+						Window window = SwingUtilities.getWindowAncestor(nuevaPartida);
+						window.dispose();
+						
+						// Abrir el juego
+						new VentanaJuego(name);
+				    }
 				}
 			}
 		});

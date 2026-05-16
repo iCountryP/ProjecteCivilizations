@@ -13,6 +13,7 @@ public class VentanaJuego extends JFrame implements Variables {
 	public VentanaJuego(String new_name) {
 		super();
 		this.civilization = new Civilization(new_name);
+		DatabaseUtils.saveNewCivilization(civilization);
 		this.initializeGame();
 	}
 	

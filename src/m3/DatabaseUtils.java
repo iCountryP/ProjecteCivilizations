@@ -58,9 +58,8 @@ public final class DatabaseUtils {
                         smithy_amount,
                         carpentry_amount,
                         technology_defense_level,
-                        technology_attack_level,
-                        created_by
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        technology_attack_level
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
 
                 PreparedStatement stmt = connection.prepareStatement(sql);
@@ -79,8 +78,6 @@ public final class DatabaseUtils {
 
                 stmt.setInt(11, civilization.getTechnologyDefense());
                 stmt.setInt(12, civilization.getTechnologyAttack());
-
-                stmt.setString(13, "admin");
 
                 int rowsInserted = stmt.executeUpdate();
                 System.out.println("Filas insertadas: " + rowsInserted);
