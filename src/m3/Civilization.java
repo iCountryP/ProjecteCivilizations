@@ -728,4 +728,8 @@ public class Civilization implements Variables {
 		return this.army[8].size();
 
 	}
+	
+	public String getName() {
+		return this.name;
+	}
 }
