@@ -15,7 +15,7 @@ public class Main implements Variables {
 	 private ArrayList<MilitaryUnit>[] enemyArmy = new ArrayList[9];
 
 	public static void main(String[] args) {
-		new VentanaJuego();
+		new VentanaInicio();
 	}
 	
 	

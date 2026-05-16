@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -13,14 +14,16 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 public class PanelInicio extends JPanel {
 
 	private BufferedImage menuInicial;
-	private JButton nuevaPartida, continuar;
-	private int buttonFontSize = 14;
+	private JButton nuevaPartida, cargarPartida;
+	private int buttonFontSize = 18;
 	
 	public PanelInicio() {
 		super();
@@ -33,24 +36,55 @@ public class PanelInicio extends JPanel {
     		e.printStackTrace();
     	}
     	
+    	// Diseño de los botones
+    	ImageIcon buttonDesign = new ImageIcon("./src/m3/boton_inicial.png"); 
+    	
     	// Nueva Partida
     	nuevaPartida = new JButton("Nueva Partida");
     	nuevaPartida.setBounds(445,180,200,50);
     	nuevaPartida.setFont(new Font("Arial", Font.BOLD, buttonFontSize));
-    	ImageIcon disenoDorado = new ImageIcon("./src/m3/disenoBoton.png"); 
-    	nuevaPartida.setIcon(disenoDorado);
+    	nuevaPartida.setIcon(buttonDesign);
     	nuevaPartida.setHorizontalTextPosition(SwingConstants.CENTER);
     	nuevaPartida.setVerticalTextPosition(SwingConstants.CENTER);
-    	nuevaPartida.setContentAreaFilled(true); // poner false
-    	nuevaPartida.setFocusPainted(true); // poner false
-    	nuevaPartida.setForeground(Color.BLACK);
+    	nuevaPartida.setContentAreaFilled(false); // poner false
+    	nuevaPartida.setFocusPainted(false); // poner false
+    	nuevaPartida.setForeground(new Color(0xF5F1EA));
     	// Accion nueva partida
     	nuevaPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Has creado una nueva partida");
+				String name = JOptionPane.showInputDialog(null, "Introduce el nombre de tu civilización:", "Nueva partida", JOptionPane.PLAIN_MESSAGE);
+
+				// Si el usuario pulsa Cancelar, nombre será null
+				if (name != null && !name.trim().isEmpty()) {
+					// Cerrar la ventana actual
+					Window window = SwingUtilities.getWindowAncestor(nuevaPartida);
+					window.dispose();
+					
+					// Abrir el juego
+					new VentanaJuego(name);
+				}
 			}
 		});
     	add(nuevaPartida);
+    	
+    	// Cargar partida
+    	cargarPartida = new JButton("Cargar Partida");
+    	cargarPartida.setBounds(445,250,200,50);
+    	cargarPartida.setFont(new Font("Arial", Font.BOLD, buttonFontSize));
+    	cargarPartida.setIcon(buttonDesign);
+    	cargarPartida.setHorizontalTextPosition(SwingConstants.CENTER);
+    	cargarPartida.setVerticalTextPosition(SwingConstants.CENTER);
+    	cargarPartida.setContentAreaFilled(false); // poner false
+    	cargarPartida.setFocusPainted(false); // poner false
+    	cargarPartida.setForeground(new Color(0xF5F1EA));
+    	// Accion nueva partida
+    	cargarPartida.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Has cargado partida");
+			}
+		});
+    	add(cargarPartida);
     	
     	
 	}

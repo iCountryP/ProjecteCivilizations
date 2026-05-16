@@ -33,8 +33,12 @@ public class Civilization implements Variables {
 	// army[7] --> Magician
 	// army[8] --> Priest
 	
-	public Civilization() {
+	// Constructor para nuevas civilizaciones
+	public Civilization(String name) {
 		// Ver que onda con esto, instanciacion de las unidades
+		this.name = name;
+		System.out.println("Nueva civilizacion: " + this.name);
+		
 		this.technologyAttack = 0;
 		this.technologyDefense = 0;
 		
@@ -54,6 +58,8 @@ public class Civilization implements Variables {
 		for (int i = 0; i < army.length; i++) {
 		    army[i] = new ArrayList<MilitaryUnit>();
 		}
+		
+		DatabaseUtils.connectionTest();
 	}
 	
 	public void addWood(int quantity) {
