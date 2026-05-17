@@ -88,6 +88,8 @@ public class PanelInicio extends JPanel {
     	cargarPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Has cargado partida");
+				String id = JOptionPane.showInputDialog(null, "Introduce la ID de la civilización:", "Cargar partida", JOptionPane.PLAIN_MESSAGE);
+
 			}
 		});
     	add(cargarPartida);

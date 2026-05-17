@@ -14,6 +14,7 @@ public class VentanaJuego extends JFrame implements Variables {
 		super();
 		this.civilization = new Civilization(new_name);
 		DatabaseUtils.saveNewCivilization(civilization);
+		System.out.println("ID de la nueva civilización generada: "+this.civilization.getID());
 		this.initializeGame();
 	}
 	

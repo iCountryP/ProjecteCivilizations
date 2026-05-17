@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Civilization implements Variables {
 
+	private int id;
 	private String name;
 	
 	private int technologyDefense;
@@ -21,6 +22,7 @@ public class Civilization implements Variables {
 	private int carpentry;
 
 	private int battles;
+	private boolean gameOver;
 	
 	private ArrayList<MilitaryUnit>[] army = new ArrayList[9];
 	// army[0] --> Swordsman
@@ -59,7 +61,6 @@ public class Civilization implements Variables {
 		    army[i] = new ArrayList<MilitaryUnit>();
 		}
 		
-		DatabaseUtils.connectionTest();
 	}
 	
 	public void addWood(int quantity) {
@@ -731,5 +732,13 @@ public class Civilization implements Variables {
 	
 	public String getName() {
 		return this.name;
+	}
+	
+	public void setID(int id) {
+		this.id = id;
+	}
+	
+	public int getID() {
+		return this.id;
 	}
 }

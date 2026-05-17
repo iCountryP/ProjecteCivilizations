@@ -3,7 +3,9 @@ package m3;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public final class DatabaseUtils {
@@ -62,28 +64,40 @@ public final class DatabaseUtils {
                     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
 
-                PreparedStatement stmt = connection.prepareStatement(sql);
+            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-                stmt.setString(1, civilization.getName());
-                stmt.setInt(2, civilization.getWood());
-                stmt.setInt(3, civilization.getIron());
-                stmt.setInt(4, civilization.getFood());
-                stmt.setInt(5, civilization.getMana());
+            stmt.setString(1, civilization.getName());
+            stmt.setInt(2, civilization.getWood());
+            stmt.setInt(3, civilization.getIron());
+            stmt.setInt(4, civilization.getFood());
+            stmt.setInt(5, civilization.getMana());
 
-                stmt.setInt(6, civilization.getMagicTower());
-                stmt.setInt(7, civilization.getChurch());
-                stmt.setInt(8, civilization.getFarm());
-                stmt.setInt(9, civilization.getSmithy());
-                stmt.setInt(10, civilization.getCarpentry());
+            stmt.setInt(6, civilization.getMagicTower());
+            stmt.setInt(7, civilization.getChurch());
+            stmt.setInt(8, civilization.getFarm());
+            stmt.setInt(9, civilization.getSmithy());
+            stmt.setInt(10, civilization.getCarpentry());
 
-                stmt.setInt(11, civilization.getTechnologyDefense());
-                stmt.setInt(12, civilization.getTechnologyAttack());
+            stmt.setInt(11, civilization.getTechnologyDefense());
+            stmt.setInt(12, civilization.getTechnologyAttack());
 
-                int rowsInserted = stmt.executeUpdate();
-                System.out.println("Filas insertadas: " + rowsInserted);
+            stmt.executeUpdate();
+            
+            // Obtener la ID generada
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
 
-                stmt.close();
-                connection.close();
+            if (generatedKeys.next()) {
+                int generatedId = generatedKeys.getInt(1);
+
+                // Settear la id al objeto
+                civilization.setID(generatedId);
+
+                System.out.println("ID generada: " + generatedId);
+            }
+
+            generatedKeys.close();
+            stmt.close();
+            connection.close();
             
         } catch(ClassNotFoundException ex) {
             System.out.println("No se ha encontrado el Driver MySQL para JDBC.");
@@ -91,6 +105,51 @@ public final class DatabaseUtils {
             System.out.println("Excepción del tipo SQL");
             e.printStackTrace();
         }
+	}
+	
+	public static boolean loadCivilization(int id) {
+		boolean exists = false;
+        try {
+            // Cargar el driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            System.out.println("Driver cargado correctamente");
+            
+            // Crear conexion con la base de datos
+            Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            System.out.println("Conexión creada correctamente");
+            
+            String sql = """
+					SELECT c.civilization_id, c.name, c.wood_amount, c.iron_amount, c.food_amount, c.mana_amount, c.magic_tower_amount, c.church_amount, c.farm_amount, c.smithy_amount, c.carpentry_amount, c.technology_defense_level, c.technology_attack_level, c.game_over,
+						   (SELECT COUNT(*)
+					        FROM battle b
+					        WHERE b.civilization_id = c.civilization_id
+							) AS battle_count
+					FROM civilization c
+					WHERE c.civilization_id = ?
+                """;
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            
+            // Comprobar si la query ha dado resultados
+            if (rs.next()) {
+            	System.out.println("Civilización encontrada");
+            	exists = true;
+            	
+            }
+            
+            rs.close();
+            stmt.close();
+            connection.close();
+            
+        } catch(ClassNotFoundException ex) {
+            System.out.println("No se ha encontrado el Driver MySQL para JDBC.");
+        } catch (SQLException e) {
+            System.out.println("Excepción del tipo SQL");
+            e.printStackTrace();
+        }
+		return exists;
 	}
 	
 }
