@@ -3,7 +3,7 @@ package m3;
 import java.util.ArrayList;
 
 public class Civilization implements Variables {
-
+	private PanelMenu panelMenu;
 	private String name;
 	
 	private int technologyDefense;
@@ -75,6 +75,7 @@ public class Civilization implements Variables {
 				this.church++;
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
+				
 			}
 		} catch (ResourceException e) {
 			System.out.println(e);

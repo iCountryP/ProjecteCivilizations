@@ -12,7 +12,7 @@ public class VentanaJuego extends JFrame implements Variables {
 	public VentanaJuego() {
 		super();
 		setLayout(null);
-		setBounds(300,100,814,637);
+		setBounds(75,100,1414,637);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Dominion");
 		setResizable(false);
@@ -20,7 +20,7 @@ public class VentanaJuego extends JFrame implements Variables {
 		PanelJuego panelJuego = new PanelJuego(miCivilizacion);
 		panelJuego.setBounds(0, 0, 600, 600);
 		PanelMenu panelMenu = new PanelMenu(panelJuego, miCivilizacion, objetoMain);
-		panelMenu.setBounds(600,0, 200,600);
+		panelMenu.setBounds(600,0, 800,600);
 		panelJuego.setMenu(panelMenu);
 		
 		add(panelJuego);
@@ -28,7 +28,7 @@ public class VentanaJuego extends JFrame implements Variables {
 		setVisible(true);
 		
 		// Timer que aumenta y actualiza los recursos (cambiar el primer parametro para aumentar los ms)
-		Timer reloj = new Timer(100000, new ActionListener() {
+		Timer reloj = new Timer(500, new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        miCivilizacion.aumentoRecursos();
 		        panelMenu.actualizarRecursos();
@@ -45,7 +45,6 @@ public class VentanaJuego extends JFrame implements Variables {
 		            int segundos = panelMenu.getTiempoRestante() % 60;
 		            String tiempoFormateado = String.format("%02d:%02d", minutos, segundos);
 		            if(panelMenu.getTiempoRestante() == 60) {
-		                objetoMain.viewThreat(tiempoFormateado);
 		                JOptionPane.showMessageDialog(null, objetoMain.viewThreat(tiempoFormateado), "¡INVASIÓN INMINENTE!", JOptionPane.WARNING_MESSAGE);
 		            }
 		            panelMenu.setTiempoRestante(panelMenu.getTiempoRestante() - 1);
@@ -57,7 +56,12 @@ public class VentanaJuego extends JFrame implements Variables {
 		            panelMenu.setTiempoRestante(180);
 		            Battle batalla = new Battle(miCivilizacion.getArmy(), objetoMain.getEnemyArmy());
 		            batalla.startBattle();
+		            String reporte = batalla.getBattleReport(1);
+		            String battleDevelopment = batalla.getBattleDevelopment();
+		            panelMenu.mostrarConsola(battleDevelopment);
+		            panelMenu.mostrarConsola(reporte);
 
+		            
 		            objetoMain.setTopeComida(objetoMain.getTopeComida() + (objetoMain.getTopeComida() * ENEMY_ARMY_INCREASE / 100));
 		            objetoMain.setTopeHierro(objetoMain.getTopeHierro() + (objetoMain.getTopeHierro() * ENEMY_ARMY_INCREASE / 100));
 		            objetoMain.setTopeMadera(objetoMain.getTopeMadera() + (objetoMain.getTopeMadera() * ENEMY_ARMY_INCREASE / 100));

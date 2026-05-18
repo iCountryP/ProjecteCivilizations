@@ -7,6 +7,7 @@ public class Battle implements Variables {
 	private ArrayList<MilitaryUnit>[] civilizationArmy; // Tu army
 	private ArrayList<MilitaryUnit>[] enemyArmy; // Army enemiga
 	private ArrayList<MilitaryUnit>[][] armies;
+	private String[] troopsNames = {"Swordsman", "Spearman", "Crossbow", "Cannon", "Arrow Tower", "Catapult", "Rocket Launcher", "Magician", "Priest"}; // Diccionario con las unidades.
 	
 	private int[][] initialArmies; // Matriz de 2 filas 9 columnas del numero de tropas por grupo inicial
 	private int[][] currentArmies; // Matriz de 2 filas 9 columnas del numero de tropas por grupo actual
@@ -90,6 +91,7 @@ public class Battle implements Variables {
 	}
 	
 	public void startBattle() {
+		String whoAttacks;
 		this.battleFinished = false;
 		this.attackAgain = false;
 		
@@ -105,7 +107,21 @@ public class Battle implements Variables {
 			
 			// Elegir defensor
 			this.chooseRandomUnit(this.defendingArmyIndex);
-			
+			// Se monta el battleDevelopment aqui.
+			// Si el army index es 0, es que atacamos nosotros, si no, ataca el enemigo
+			if (this.attackingArmyIndex == 0) {
+			    whoAttacks = "Civilization";
+			} else {
+			    whoAttacks = "army enemy";
+			}
+			// log de la batalla de que tropa ataca a quien, etc.
+			this.battleDevelopment += "\n********************CHANGE ATTACKER********************\n" 
+				    + "Attacks " + whoAttacks + ": " + troopsNames[this.attackingGroupIndex] + " attacks " + troopsNames[this.defendingGroupIndex]
+				    + "\n" + troopsNames[this.attackingGroupIndex] + " generates the damage = " + this.attackingUnit.getAttack()
+				    + "\n" + troopsNames[this.defendingGroupIndex] + " stays with armor = " + this.defendingUnit.getActualArmor()
+				    + "\n";
+			// lo appendeamos a la consola
+			System.out.println(battleDevelopment);
 			// El atacante ataca a la unidad defensora
 			this.defendingUnit.takeDamage(this.attackingUnit.getAttack());
 			
@@ -114,6 +130,8 @@ public class Battle implements Variables {
 			
 			// Comprobar si se ha muerto la unidad defensora
 			if (this.defendingUnit.getActualArmor() == 0) {
+				// Si la tropa muere, lo añadimos al battleDevelopment
+				this.battleDevelopment += "we eliminate " + troopsNames[this.defendingGroupIndex] + "\n";
 
 				// Eliminar a la unidad muerta
 				this.defendingGroup.remove(this.defendingUnitIndex);
@@ -151,6 +169,76 @@ public class Battle implements Variables {
 		// Despues de la batalla reiniciamos las armaduras de las unidades
 		this.resetArmyArmor();
 		
+	}
+	
+	public String getBattleReport(int battles) {
+	    String reporte = "BATTLE NUMBER: " + battles + "\nBATTLE STATISTICS\n\n";
+	    reporte += "Civ. Army\tUnits\tDrops\tEnemy Army\tUnits\tDrops\n";
+
+	    // Civilizacion
+	    int costFoodCiv = 0, costWoodCiv = 0, costIronCiv = 0; // los costes de la civilizacion (nosotros)
+	    int lossFoodCiv = 0, lossWoodCiv = 0, lossIronCiv = 0; // las perdidas de la civilizacion (nosotros)
+	    // Enemigo 
+	    int costFoodEnemy = 0, costWoodEnemy = 0, costIronEnemy = 0; // los costes del enemigo
+	    int lossFoodEnemy = 0, lossWoodEnemy = 0, lossIronEnemy = 0; // los perdidas del enemigo
+
+	    // recorremos las 9 tropas
+	    for (int i = 0; i < 9; i++) {
+	        
+	        // soldados caidos por faccion
+	        int soldadosPerdidosCiv = this.initialArmies[0][i] - this.currentArmies[0][i];
+	        int soldadosPerdidosEnemy = this.initialArmies[1][i] - this.currentArmies[1][i];
+
+	        // costes civilizacion
+	        costFoodCiv += this.initialArmies[0][i] * FOOD_COST_UNITS[i];
+	        costWoodCiv += this.initialArmies[0][i] * WOOD_COST_UNITS[i];
+	        costIronCiv += this.initialArmies[0][i] * IRON_COST_UNITS[i];
+	        // costes enemigo
+	        costFoodEnemy += this.initialArmies[1][i] * FOOD_COST_UNITS[i];
+	        costWoodEnemy += this.initialArmies[1][i] * WOOD_COST_UNITS[i];
+	        costIronEnemy += this.initialArmies[1][i] * IRON_COST_UNITS[i];
+
+	        // perdidas civilizacion
+	        lossFoodCiv += soldadosPerdidosCiv * FOOD_COST_UNITS[i];
+	        lossWoodCiv += soldadosPerdidosCiv * WOOD_COST_UNITS[i];
+	        lossIronCiv += soldadosPerdidosCiv * IRON_COST_UNITS[i];
+	        // perdidas enemigo
+	        lossFoodEnemy += soldadosPerdidosEnemy * FOOD_COST_UNITS[i];
+	        lossWoodEnemy += soldadosPerdidosEnemy * WOOD_COST_UNITS[i];
+	        lossIronEnemy += soldadosPerdidosEnemy * IRON_COST_UNITS[i];
+	        // 	    reporte += "Army planet\tUnits\tDrops\tInitial Army Enemy\tUnits\tDrops\n";
+
+	        reporte += troopsNames[i] + "\t" + this.initialArmies[0][i] + "\t" + soldadosPerdidosCiv + "\t" + troopsNames[i] + "\t" + this.initialArmies[1][i] + "\t" + soldadosPerdidosEnemy + "\n";	        
+	    }
+
+	    reporte += "\n*********************************************************\n";
+	    reporte += "Cost Army Civilization\t\tCost Army Enemy\n\n";
+	    reporte += "Food:\t" + costFoodCiv + "\t\t\tFood:\t" + costFoodEnemy + "\n";
+	    reporte += "Wood:\t" + costWoodCiv + "\t\t\tWood:\t" + costWoodEnemy + "\n";
+	    reporte += "Iron:\t" + costIronCiv + "\t\t\tIron:\t" + costIronEnemy + "\n";
+
+	    reporte += "\n*********************************************************\n";
+	    reporte += "Losses Army Civilization\t\tLosses Army Enemy\n\n";
+	    reporte += "Food:\t" + lossFoodCiv + "\t\t\tFood:\t" + lossFoodEnemy + "\n";
+	    reporte += "Wood:\t" + lossWoodCiv + "\t\t\tWood:\t" + lossWoodEnemy + "\n";
+	    reporte += "Iron:\t" + lossIronCiv + "\t\t\tIron:\t" + lossIronEnemy + "\n";
+
+	    // residuos y final
+	    reporte += "\n*********************************************************\n";
+	    reporte += "Waste Generated:\nWood\t" + this.wasteWood + "\nIron\t" + this.wasteIron + "\n\n";
+	    
+	    	// si civilizacion gana la partida
+	    if (!this.gameOver) {
+	        reporte += "Battle Won by Civilization, We Collect Rubble\n";
+	    } else { // si pierde
+	        reporte += "Battle Lost by Civilization\n";
+	    }
+	    
+	    return reporte;
+	}
+	
+	public String getBattleDevelopment() {
+	    return this.battleDevelopment;
 	}
 	
 	private void chooseStartingSides() {
@@ -272,6 +360,8 @@ public class Battle implements Variables {
 			}
 		}
 	}
+	
+	
 	
 	public int[] getWaste() {
 		int[] waste = {this.wasteWood, this.wasteIron};
