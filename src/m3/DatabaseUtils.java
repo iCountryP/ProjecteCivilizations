@@ -141,4 +141,70 @@ public final class DatabaseUtils {
 		return valid;
 	}
 	
+	public static Civilization loadCivilization(int id) {
+		Civilization loaded_civilization = new Civilization(id);
+		
+        try {
+            // Cargar el driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            System.out.println("Driver cargado correctamente");
+            
+            // Crear conexion con la base de datos
+            Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            System.out.println("Conexión creada correctamente");
+            
+            String sql_stats = """
+					SELECT c.name, c.technology_defense_level, c.technology_attack_level, c.wood_amount, c.iron_amount, c.food_amount, c.mana_amount,
+						   (SELECT COUNT(*) FROM BATTLE b WHERE b.civilization_id = ?) AS battle_count
+					FROM CIVILIZATION c
+					WHERE c.civilization_id = ?
+                """;
+
+            PreparedStatement stmt_stats = connection.prepareStatement(sql_stats);
+            stmt_stats.setInt(1, id);
+            stmt_stats.setInt(2, id);
+            ResultSet rs_stats = stmt_stats.executeQuery();
+            
+            // Cargamos datos basicos de la tabla de civilization
+			if (rs_stats.next()) {
+			    loaded_civilization.setName(rs_stats.getString("name"));
+			    
+			    loaded_civilization.setTechnologyDefense(rs_stats.getInt("technology_defense_level"));
+			    loaded_civilization.setTechnologyAttack(rs_stats.getInt("technology_attack_level"));
+			    
+			    loaded_civilization.setWood(rs_stats.getInt("wood_amount"));
+			    loaded_civilization.setIron(rs_stats.getInt("iron_amount"));
+			    loaded_civilization.setFood(rs_stats.getInt("food_amount"));
+			    loaded_civilization.setMana(rs_stats.getInt("mana_amount"));
+			    
+			    loaded_civilization.setBattles(rs_stats.getInt("battle_count"));
+			} else {
+				System.out.println("Algo ha salido mal...");
+			}
+			
+			// Cerramos la consulta anterior
+			rs_stats.close();
+			rs_stats.close();
+			
+			// Cargar las building de la civilizacion
+            String sql_buildings = """
+					SELECT
+                """;
+
+            PreparedStatement stmt_buildings = connection.prepareStatement(sql_buildings);
+            stmt_buildings.setInt(1, id);
+            ResultSet rs_buildings = stmt_buildings.executeQuery();
+            
+            connection.close();
+            
+        } catch(ClassNotFoundException ex) {
+            System.out.println("No se ha encontrado el Driver MySQL para JDBC.");
+        } catch (SQLException e) {
+            System.out.println("Excepción del tipo SQL");
+            e.printStackTrace();
+        }
+		
+		return loaded_civilization;
+	}
+	
 }

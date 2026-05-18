@@ -95,6 +95,12 @@ public class PanelInicio extends JPanel {
 				    int validation = DatabaseUtils.checkCivilization(id);
 					if (validation == 1) {
 						System.out.println("Civilizacion encontrada con la id: "+id);
+						// Cerrar la ventana actual
+						Window window = SwingUtilities.getWindowAncestor(nuevaPartida);
+						window.dispose();
+						
+						// Abrir el juego
+						new VentanaJuego(id);
 					} else if (validation == -1) {
 						JOptionPane.showMessageDialog(null, "Civilizacion no encontrada.");
 					} else {

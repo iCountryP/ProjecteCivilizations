@@ -57,10 +57,19 @@ public class Civilization implements Variables {
 		
 		this.battles = 0;
 		
-		for (int i = 0; i < army.length; i++) {
-		    army[i] = new ArrayList<MilitaryUnit>();
+		for (int i = 0; i < this.army.length; i++) {
+		    this.army[i] = new ArrayList<MilitaryUnit>();
 		}
 		
+	}
+	
+	// Constructor para cargar civilizaciones de la base de datos mediante su id
+	public Civilization(int id) {
+		this.id = id;
+		this.gameOver = false;
+		for (int i = 0; i < this.army.length; i++) {
+		    this.army[i] = new ArrayList<MilitaryUnit>();
+		}
 	}
 	
 	public void addWood(int quantity) {
@@ -733,6 +742,10 @@ public class Civilization implements Variables {
 	
 	public String getName() {
 		return this.name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public void setID(int id) {

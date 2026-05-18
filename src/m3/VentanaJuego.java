@@ -19,6 +19,13 @@ public class VentanaJuego extends JFrame implements Variables {
 		this.initializeGame();
 	}
 	
+	public VentanaJuego(int game_id) {
+		super();
+		this.civilization = new Civilization(game_id);
+		System.out.println("ID de la civilización cargada: "+this.civilization.getID());
+		this.initializeGame();
+	}
+	
 	public void initializeGame() {
 		setLayout(null);
 		setBounds(75,100,1414,637);
