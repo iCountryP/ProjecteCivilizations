@@ -44,6 +44,8 @@ public class PanelJuego extends JPanel {
 		        		if(civilizacion.getFarm() > granjasAntesDeConstruir) {
 		        			mapa[columna][fila] = 1;
 		        			System.out.println("Se ha construido una granja.");
+		        			menu.getAreaConsola().append("Granja construida en " + "[" + columna + "]" + "[" + fila + "]. Tienes un total de: " + civilizacion.getFarm() + " granjas.\n");
+		        			menu.getAreaConsola().append("*********************************************************\n");
 		        		}
 		        	}
 		        	
@@ -55,7 +57,10 @@ public class PanelJuego extends JPanel {
 		        		
 		        		if(civilizacion.getCarpentry() > carpinteriasAntesDeConstruir) {
 		        			mapa[columna][fila] = 2;
-		        			System.out.println("Se ha construido una carpinteria.");
+		        			//System.out.println("Se ha construido una carpinteria.");
+		        			menu.getAreaConsola().append("Carpinteria construida en " + "[" + columna + "]" + "[" + fila + "]. Tienes un total de: " + civilizacion.getCarpentry() + " carpinterías.\n");
+		        			menu.getAreaConsola().append("*********************************************************\n");
+
 
 		        		}
 		        	}
@@ -68,8 +73,10 @@ public class PanelJuego extends JPanel {
 		        		
 		        		if(civilizacion.getSmithy() > herreriasAntesDeConstruir) {
 		        			mapa[columna][fila] = 3;
-		        			System.out.println("Se ha construido una herreria.");
-		      
+		        			//System.out.println("Se ha construido una herreria.");
+		        			menu.getAreaConsola().append("Herrería construida en " + "[" + columna + "]" + "[" + fila + "]. Tienes un total de: " + civilizacion.getSmithy() + " herrerías.\n");
+		        			menu.getAreaConsola().append("*********************************************************\n");
+
 		        		}
 		        	}
 		        	
@@ -81,7 +88,9 @@ public class PanelJuego extends JPanel {
 		        		
 		        		if(civilizacion.getMagicTower() > magicTowerAntesDeConstruir) {
 		        			mapa[columna][fila] = 4;
-		        			System.out.println("Se ha construido una torre mágica.");
+		        			//System.out.println("Se ha construido una torre mágica.");
+		        			menu.getAreaConsola().append("Torre mágica construida en " + "[" + columna + "]" + "[" + fila + "]. Tienes un total de: " + civilizacion.getMagicTower() + " torres mágicas.\n");
+		        			menu.getAreaConsola().append("*********************************************************\n");
 
 		        		}
 		        	}
@@ -95,6 +104,8 @@ public class PanelJuego extends JPanel {
 		        		if(civilizacion.getChurch() > churchAntesDeConstruir) {
 		        			mapa[columna][fila] = 5;
 		        			System.out.println("Se ha construido una iglesia (Amén).");
+		        			menu.getAreaConsola().append("Iglesia construida en " + "[" + columna + "]" + "[" + fila + "]. Tienes un total de: " + civilizacion.getChurch() + " iglesias.\n");
+		        			menu.getAreaConsola().append("*********************************************************\n");
 
 		        		}
 		        	}
@@ -102,6 +113,10 @@ public class PanelJuego extends JPanel {
 		        } 
 		        else if (mapa[columna][fila] > 0 && edificioSeleccionadoJuego > 0) {
 		        	System.out.println("Ya existe un edificio en esa cuadricula.");
+		        	menu.getAreaConsola().setFont(Color.red);
+		        	menu.getAreaConsola().append("Ya existe un edificio en esa cuadrícula.\n");
+        			menu.getAreaConsola().append("*********************************************************\n");
+
 		        }
 
 		        edificioSeleccionadoJuego = 0;

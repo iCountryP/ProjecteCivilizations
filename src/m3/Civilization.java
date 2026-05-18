@@ -3,7 +3,6 @@ package m3;
 import java.util.ArrayList;
 
 public class Civilization implements Variables {
-	private PanelMenu panelMenu;
 	private String name;
 	
 	private int technologyDefense;

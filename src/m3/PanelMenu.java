@@ -194,6 +194,8 @@ public class PanelMenu extends JPanel implements Variables {
 				mapaJuego.setEdificioSeleccionadoJuego(1);
 				areaConsola.append("Has seleccionado construir: Granja\n");
 				areaConsola.append("Coste {Madera: "+ WOOD_COST_FARM + ", Comida: " + FOOD_COST_FARM + ", Hierro: " + IRON_COST_FARM + "}\n");
+				areaConsola.append("*********************************************************\n");
+
 			}
 		});
     	add(crearGranja);
@@ -223,6 +225,7 @@ public class PanelMenu extends JPanel implements Variables {
 				mapaJuego.setEdificioSeleccionadoJuego(2);
 				areaConsola.append("Has seleccionado construir: Carpinteria\n");
 				areaConsola.append("Coste {Madera: "+ WOOD_COST_CARPENTRY + ", Comida: " + FOOD_COST_CARPENTRY + ", Hierro: " + IRON_COST_CARPENTRY + "}\n");
+				areaConsola.append("*********************************************************\n");
 
 			}
 		});
@@ -253,6 +256,8 @@ public class PanelMenu extends JPanel implements Variables {
 				mapaJuego.setEdificioSeleccionadoJuego(3);
 				areaConsola.append("Has seleccionado construir: Herreria\n");
 				areaConsola.append("Coste {Madera: "+ WOOD_COST_SMITHY + ", Comida: " + FOOD_COST_SMITHY + ", Hierro: " + IRON_COST_SMITHY + "}\n");
+				areaConsola.append("*********************************************************\n");
+
 
 			}
 		});
@@ -283,6 +288,8 @@ public class PanelMenu extends JPanel implements Variables {
 				mapaJuego.setEdificioSeleccionadoJuego(4);
 				areaConsola.append("Has seleccionado construir: Torre Mágica\n");
 				areaConsola.append("Coste {Madera: "+ WOOD_COST_MAGICTOWER + ", Comida: " + FOOD_COST_MAGICTOWER + ", Hierro: " + IRON_COST_MAGICTOWER + "}\n");
+				areaConsola.append("*********************************************************\n");
+
 
 			}
 		});
@@ -313,6 +320,8 @@ public class PanelMenu extends JPanel implements Variables {
 				mapaJuego.setEdificioSeleccionadoJuego(5);
 				areaConsola.append("Has seleccionado construir: Iglesia (Amén)\n");
 				areaConsola.append("Coste {Madera: "+ WOOD_COST_CHURCH + ", Comida: " + FOOD_COST_CHURCH + ", Hierro: " + IRON_COST_CHURCH + "}\n");
+				areaConsola.append("*********************************************************\n");
+
 
 			}
 		});
