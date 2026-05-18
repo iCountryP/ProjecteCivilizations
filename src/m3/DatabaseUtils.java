@@ -96,8 +96,8 @@ public final class DatabaseUtils {
         }
 	}
 	
-	public static boolean checkCivilization(int id) {
-		boolean exists = false;
+	public static int checkCivilization(int id) {
+		int valid = 0;
         try {
             // Cargar el driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -108,7 +108,7 @@ public final class DatabaseUtils {
             System.out.println("Conexión creada correctamente");
             
             String sql = """
-					SELECT civilization_id
+					SELECT civilization_id, game_over
 					FROM CIVILIZATION
 					WHERE civilization_id = ?
                 """;
@@ -119,7 +119,13 @@ public final class DatabaseUtils {
             
             // Comprobar si la query ha dado resultados
             if (rs.next()) {
-            	exists = true;	
+            	valid = 1;
+                boolean gameOver = rs.getBoolean("game_over");
+                if (gameOver) {
+                    valid = -2;
+                }
+            } else {
+            	valid = -1;
             }
             
             rs.close();
@@ -132,7 +138,7 @@ public final class DatabaseUtils {
             System.out.println("Excepción del tipo SQL");
             e.printStackTrace();
         }
-		return exists;
+		return valid;
 	}
 	
 }

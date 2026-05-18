@@ -28,7 +28,7 @@ public class VentanaJuego extends JFrame implements Variables {
 		PanelJuego panelJuego = new PanelJuego(this.civilization);
 		panelJuego.setBounds(0, 0, 600, 600);
 		PanelMenu panelMenu = new PanelMenu(panelJuego, this.civilization, objetoMain);
-		panelMenu.setBounds(600,0, 200,600);
+		panelMenu.setBounds(600,0, 800,600);
 		panelJuego.setMenu(panelMenu);
 		
 		add(panelJuego);
@@ -62,7 +62,7 @@ public class VentanaJuego extends JFrame implements Variables {
 		        // cuando el tiempo se acaba
 		        else {
 		            panelMenu.setTiempoRestante(180);
-		            Battle batalla = new Battle(miCivilizacion.getArmy(), objetoMain.getEnemyArmy());
+		            Battle batalla = new Battle(civilization.getArmy(), objetoMain.getEnemyArmy());
 		            batalla.startBattle();
 		            String reporte = batalla.getBattleReport(1);
 		            String battleDevelopment = batalla.getBattleDevelopment();
