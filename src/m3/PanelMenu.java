@@ -228,7 +228,6 @@ public class PanelMenu extends JPanel {
 		});
     	add(crearIglesia);
     	
-    	
     	// ---------------- ZONA RECLUTAR TROPAS ----------------
     	
     	// Titulo Etiqueta Reclutar

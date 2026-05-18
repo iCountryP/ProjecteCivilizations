@@ -108,9 +108,9 @@ public final class DatabaseUtils {
             System.out.println("Conexión creada correctamente");
             
             String sql = """
-					SELECT c.civilization_id
-					FROM civilization c
-					WHERE c.civilization_id = ?
+					SELECT civilization_id
+					FROM CIVILIZATION
+					WHERE civilization_id = ?
                 """;
 
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -119,7 +119,6 @@ public final class DatabaseUtils {
             
             // Comprobar si la query ha dado resultados
             if (rs.next()) {
-            	System.out.println("Civilización encontrada");
             	exists = true;	
             }
             
