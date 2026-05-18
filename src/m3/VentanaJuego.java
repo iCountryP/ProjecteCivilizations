@@ -8,19 +8,27 @@ import javax.swing.JOptionPane;
 
 public class VentanaJuego extends JFrame implements Variables {
 	private Main objetoMain = new Main();
-	// Constructor
-	public VentanaJuego() {
+	private Civilization civilization;
+	
+	// Constructor para nuevo juego
+	public VentanaJuego(String new_name) {
 		super();
+		this.civilization = new Civilization(new_name);
+		DatabaseUtils.saveNewCivilization(civilization);
+		System.out.println("ID de la nueva civilización generada: "+this.civilization.getID());
+		this.initializeGame();
+	}
+	
+	public void initializeGame() {
 		setLayout(null);
 		setBounds(75,100,1414,637);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Dominion");
 		setResizable(false);
-		Civilization miCivilizacion = new Civilization();
-		PanelJuego panelJuego = new PanelJuego(miCivilizacion);
+		PanelJuego panelJuego = new PanelJuego(this.civilization);
 		panelJuego.setBounds(0, 0, 600, 600);
-		PanelMenu panelMenu = new PanelMenu(panelJuego, miCivilizacion, objetoMain);
-		panelMenu.setBounds(600,0, 800,600);
+		PanelMenu panelMenu = new PanelMenu(panelJuego, this.civilization, objetoMain);
+		panelMenu.setBounds(600,0, 200,600);
 		panelJuego.setMenu(panelMenu);
 		
 		add(panelJuego);
@@ -28,9 +36,9 @@ public class VentanaJuego extends JFrame implements Variables {
 		setVisible(true);
 		
 		// Timer que aumenta y actualiza los recursos (cambiar el primer parametro para aumentar los ms)
-		Timer reloj = new Timer(500, new ActionListener() {
+		Timer reloj = new Timer(1000, new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        miCivilizacion.aumentoRecursos();
+		        civilization.aumentoRecursos();
 		        panelMenu.actualizarRecursos();
 		    }
 		});
@@ -77,7 +85,5 @@ public class VentanaJuego extends JFrame implements Variables {
 		relojTiempoRestanteInvasion.start(); 
 		
 	}
-	
-	
 	
 }

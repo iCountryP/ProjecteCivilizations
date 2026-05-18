@@ -3,7 +3,8 @@ package m3;
 import java.util.ArrayList;
 
 public class Civilization implements Variables {
-	private PanelMenu panelMenu;
+
+	private int id;
 	private String name;
 	
 	private int technologyDefense;
@@ -21,6 +22,7 @@ public class Civilization implements Variables {
 	private int carpentry;
 
 	private int battles;
+	private boolean gameOver;
 	
 	private ArrayList<MilitaryUnit>[] army = new ArrayList[9];
 	// army[0] --> Swordsman
@@ -33,8 +35,12 @@ public class Civilization implements Variables {
 	// army[7] --> Magician
 	// army[8] --> Priest
 	
-	public Civilization() {
+	// Constructor para nuevas civilizaciones
+	public Civilization(String name) {
 		// Ver que onda con esto, instanciacion de las unidades
+		this.name = name;
+		System.out.println("Nueva civilizacion: " + this.name);
+		
 		this.technologyAttack = 0;
 		this.technologyDefense = 0;
 		
@@ -54,6 +60,7 @@ public class Civilization implements Variables {
 		for (int i = 0; i < army.length; i++) {
 		    army[i] = new ArrayList<MilitaryUnit>();
 		}
+		
 	}
 	
 	public void addWood(int quantity) {
@@ -722,5 +729,17 @@ public class Civilization implements Variables {
 	public int getPriestCount() {
 		return this.army[8].size();
 
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public void setID(int id) {
+		this.id = id;
+	}
+	
+	public int getID() {
+		return this.id;
 	}
 }
