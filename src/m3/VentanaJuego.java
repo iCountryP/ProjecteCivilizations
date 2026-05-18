@@ -54,6 +54,8 @@ public class VentanaJuego extends JFrame implements Variables {
 		            String tiempoFormateado = String.format("%02d:%02d", minutos, segundos);
 		            if(panelMenu.getTiempoRestante() == 60) {
 		                JOptionPane.showMessageDialog(null, objetoMain.viewThreat(tiempoFormateado), "¡INVASIÓN INMINENTE!", JOptionPane.WARNING_MESSAGE);
+						panelMenu.getAreaConsola().append(objetoMain.viewThreat(tiempoFormateado));
+
 		            }
 		            panelMenu.setTiempoRestante(panelMenu.getTiempoRestante() - 1);
 		            panelMenu.getProximoAtaque().setText("Próximo Ataque: " + tiempoFormateado);
