@@ -1,32 +1,97 @@
-<main class="civilizaciones marmol linea">
-    <section class="cartel">
-        <div class="cartel_contenido">
-            <a href="/civilizacion">Civilización 1 Civilización 1 Civilización 1 Civilización 1</a>
+<!-- Indice -->
+{{#if (eq modo "index")}}
+    <main class="civilizaciones marmol ffijado linea">
+        <section class="libro">
+            <img src="/img/libro_interior.png" alt="libro">
+            <div class="texto_indice">
+                {{#each civilizaciones}}
+                    <a href="/civilizaciones?pagina={{this.id}}">
+                        {{this.nombre}}
+                    </a>
+                {{/each}}
+            </div>
+        </section>
+        <!-- PAGINACIÓN INDEX -->
+        <section class="navegacion">
+
+            {{#if anteriorIndex}}
+                <a
+                    class="nav-btn"
+                    href="/civilizaciones?index={{anteriorIndex}}"
+                >
+                    ←
+                </a>
+            {{/if}}
+
+            {{#each paginasIndex}}
+
+                <a
+                    class="nav-btn {{#if this.activa}}activa{{/if}}"
+                    href="/civilizaciones?index={{this.numero}}"
+                >
+                    {{this.numero}}
+                </a>
+
+            {{/each}}
+
+            {{#if siguienteIndex}}
+                <a
+                    class="nav-btn"
+                    href="/civilizaciones?index={{siguienteIndex}}"
+                >
+                    →
+                </a>
+            {{/if}}
+        </section>
+    </main>
+{{/if}}
+
+<!-- Info de cada civilización -->
+{{#if (eq modo "detalle")}}
+    <main class="civilizacion_detalle marmol linea">
+
+        <h1>{{civilizacion.nombre}}</h1>
+
+        <img src="{{civilizacion.imagen}}" />
+
+        <p>{{civilizacion.descripcion}}</p>
+
+        <div class="historia">
+            {{civilizacion.historia}}
         </div>
-    </section>
-    <section class="cartel">
-        <div class="cartel_contenido">
-            <a href="/civilizacion">Civilización 1</a>
+
+        <!-- ================= NAV ================= -->
+
+        <div class="navegacion">
+
+            <a class="nav-btn centro" href="/civilizaciones">
+                Índice
+            </a>
+
+            {{#if anterior}}
+                <a class="nav-btn" href="/civilizaciones?pagina={{anterior}}">
+                    ←
+                </a>
+            {{/if}}
+
+            {{#each paginas}}
+
+                <a
+                    class="nav-btn {{#if this.activa}}activa{{/if}}"
+                    href="/civilizaciones?pagina={{this.numero}}"
+                >
+                    {{this.numero}}
+                </a>
+
+            {{/each}}
+
+            {{#if siguiente}}
+                <a class="nav-btn" href="/civilizaciones?pagina={{siguiente}}">
+                    →
+                </a>
+            {{/if}}
+
         </div>
-    </section>
-    <section class="cartel">
-        <div class="cartel_contenido">
-            <a href="/civilizacion">Civilización 1</a>
-        </div>
-    </section>
-    <section class="cartel">
-        <div class="cartel_contenido">
-            <a href="/civilizacion">Civilización 1</a>
-        </div>
-    </section>
-    <section class="cartel">
-        <div class="cartel_contenido">
-            <a href="/civilizacion">Civilización 1</a>
-        </div>
-    </section>
-    <section class="cartel">
-        <div class="cartel_contenido">
-            <a href="/civilizacion">Civilización 1111111111111111111111111111111111111111111</a>
-        </div>
-    </section>
-</main>
+
+    </main>
+{{/if}}

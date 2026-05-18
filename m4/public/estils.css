@@ -24,6 +24,11 @@ a{
     user-select: none;
 }
 
+.ffijado{
+    background-attachment: fixed;
+}
+
+/* ------------------------ partials ------------------------ */
 header{
     background-color: rgba(0, 0, 0, 0.85);
     padding-top: 10px;
@@ -67,7 +72,7 @@ main{
     flex: 1;
 }
 
-
+/* ------------------------ fondos y elementos decorativos generales ------------------------ */
 .marmol{
     background-image: url("./img/fondo_marmol.jpg");
     background-size: cover;
@@ -284,7 +289,7 @@ body:has(#slide3:checked) .dots label:nth-child(3){
     margin: 30px 50px 100px;
 }
 
-/* ------------------------ batallas ------------------------ */
+/* ------------------------ batallasCivil ------------------------ */
 .registros_batallas{
     padding: 10px 0 100px;
     display: flex;
@@ -294,7 +299,7 @@ body:has(#slide3:checked) .dots label:nth-child(3){
 }
 
 .registros_batallas .madera{
-    width: 40%;
+    min-width: 700px;
     min-height: 100px;
     box-shadow: 0 30px 40px rgba(0, 0, 0, 0.8);
     margin-bottom: 50px;
@@ -311,13 +316,13 @@ body:has(#slide3:checked) .dots label:nth-child(3){
     flex-direction: column;
 }
 
-.registros_batallas h1{
-    margin-top: 50px;
-}
-
-.registros_batallas h2{
+.registros_batallas .cabecera{
     width: 100%;
     text-align: center;
+    margin: 50px 0;
+}
+
+.registros_batallas .cabecera h2{
     margin: 10px 0 30px;
 }
 
@@ -335,6 +340,9 @@ body:has(#slide3:checked) .dots label:nth-child(3){
     letter-spacing: 1px;
 }
 
+.volver{
+    font-size: x-large;
+}
 
 /* ------------------------ informe ------------------------ */
 .fondo_informe{
@@ -357,12 +365,8 @@ body:has(#slide3:checked) .dots label:nth-child(3){
     margin: 0;
 }
 
-.volver{
-    font-size: x-large;
-}
-
-/* ------------------------ civilizacion ------------------------ */
-.civilizaciones{
+/* ------------------------ batallas ------------------------ */
+.batallas{
     display: flex;
     flex-wrap: wrap;
     padding-bottom: 100px;
@@ -405,4 +409,34 @@ body:has(#slide3:checked) .dots label:nth-child(3){
 .cartel_contenido a:hover{
     color: rgb(114, 46, 46);
     transform: scale(1.05);
+}
+
+/* ------------------------ civilizaciones ------------------------ */
+.civilizaciones{
+
+}
+
+.libro{
+    position: relative;
+
+    width: 100%;
+    max-width: 1200px;
+
+    margin: auto;
+}
+
+/* IMAGEN DEL LIBRO */
+.libro img{
+    width: 100%;
+    height: auto;
+
+    display: block;
+}
+
+.texto_indice{
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
 }

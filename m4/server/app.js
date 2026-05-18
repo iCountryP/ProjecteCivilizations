@@ -7,6 +7,25 @@ const hbs = require('hbs');
 const app = express();
 const port = 3000;
 
+
+
+// ======================================================
+// DATOS FAKE
+// ======================================================
+
+const civilizacionesFake = [];
+
+for (let i = 1; i <= 100; i++) {
+
+    civilizacionesFake.push({
+        id: i,
+        nombre: `Civilización ${i}`,
+        descripcion: `Descripción de la civilización ${i}`,
+        historia: `Historia completa de la civilización ${i}`,
+    });
+
+}
+
 // Detectar si estem al Proxmox (si és pm2)
 const isProxmox = !!process.env.PM2_HOME;
 /*
@@ -64,16 +83,163 @@ app.get('/batallas', async (req, res) => {
   res.render('batallas');
 });
 
+
+app.get('/batallasCivil', async (req, res) => {
+  res.render('batallasCivil');
+});
+
 app.get('/informe', async (req, res) => {
   res.render('informe');
 });
-
+/*
 app.get('/civilizaciones', async (req, res) => {
   res.render('civilizaciones');
 });
+*/
 
-app.get('/civilizacion', async (req, res) => {
-  res.render('civilizacion');
+
+// ======================================================
+// RUTA PRINCIPAL
+// ======================================================
+
+app.get('/civilizaciones', (req, res) => {
+
+    const pagina = parseInt(req.query.pagina);
+
+    // ==================================================
+    // ÍNDICE PAGINADO
+    // ==================================================
+
+    if (!pagina) {
+
+        // página del índice
+        const indexPagina = parseInt(req.query.index) || 1;
+
+        // máximo 10 nombres por página
+        const limitIndex = 20;
+
+        // OFFSET
+        const offsetIndex = (indexPagina - 1) * limitIndex;
+
+        // slice del índice
+        const civilizacionesIndex = civilizacionesFake.slice(
+            offsetIndex,
+            offsetIndex + limitIndex
+        );
+
+        // total páginas índice
+        const totalIndex = civilizacionesFake.length;
+
+        const totalPaginasIndex = Math.ceil(
+            totalIndex / limitIndex
+        );
+
+        // navegación índice
+        const paginasIndex = [];
+
+        let inicio = indexPagina - 2;
+        let fin = indexPagina + 2;
+
+        if (inicio < 1) {
+            inicio = 1;
+            fin = 5;
+        }
+
+        if (fin > totalPaginasIndex) {
+            fin = totalPaginasIndex;
+            inicio = totalPaginasIndex - 4;
+        }
+
+        if (inicio < 1) inicio = 1;
+
+        for (let i = inicio; i <= fin; i++) {
+
+            paginasIndex.push({
+                numero: i,
+                activa: i === indexPagina
+            });
+
+        }
+
+        return res.render('civilizaciones', {
+
+            modo: 'index',
+
+            civilizaciones: civilizacionesIndex,
+
+            paginasIndex,
+
+            anteriorIndex:
+                indexPagina > 1
+                    ? indexPagina - 1
+                    : null,
+
+            siguienteIndex:
+                indexPagina < totalPaginasIndex
+                    ? indexPagina + 1
+                    : null
+
+        });
+
+    }
+
+    // =========================
+    // DETALLE
+    // =========================
+
+    const civilizacion = civilizacionesFake.find(
+        c => c.id === pagina
+    );
+
+    if (!civilizacion) {
+        return res.status(404).send('No existe esa civilización');
+    }
+
+    const total = civilizacionesFake.length;
+    const totalPaginas = total;
+
+    const paginas = [];
+
+    // ===============================
+    // VENTANA: -2 ... +2
+    // ===============================
+
+    let inicio = pagina - 2;
+    let fin = pagina + 2;
+
+    // Ajustes si estás cerca del inicio
+    if (inicio < 1) {
+        inicio = 1;
+        fin = 5;
+    }
+
+    // Ajustes si estás cerca del final
+    if (fin > totalPaginas) {
+        fin = totalPaginas;
+        inicio = totalPaginas - 4;
+    }
+
+    // Evitar negativos
+    if (inicio < 1) inicio = 1;
+
+    for (let i = inicio; i <= fin; i++) {
+        paginas.push({
+            numero: i,
+            activa: i === pagina
+        });
+    }
+
+    const anterior = pagina > 1 ? pagina - 1 : null;
+    const siguiente = pagina < totalPaginas ? pagina + 1 : null;
+
+    res.render('civilizaciones', {
+        modo: 'detalle',
+        civilizacion,
+        anterior,
+        siguiente,
+        paginas
+    });
+
 });
 
 app.get('/programadores', async (req, res) => {
