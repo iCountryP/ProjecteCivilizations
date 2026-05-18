@@ -18,7 +18,6 @@ public class Main implements Variables {
 		new VentanaInicio();
 	}
 	
-	
 	// Método para crear el ejército enemigo
 	public void createEnemyArmy() {
 		// aqui rellenamos el array de militaryunti

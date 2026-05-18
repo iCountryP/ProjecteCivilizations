@@ -54,14 +54,9 @@ public final class DatabaseUtils {
                         iron_amount,
                         food_amount,
                         mana_amount,
-                        magic_tower_amount,
-                        church_amount,
-                        farm_amount,
-                        smithy_amount,
-                        carpentry_amount,
                         technology_defense_level,
                         technology_attack_level
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
                 """;
 
             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -72,14 +67,8 @@ public final class DatabaseUtils {
             stmt.setInt(4, civilization.getFood());
             stmt.setInt(5, civilization.getMana());
 
-            stmt.setInt(6, civilization.getMagicTower());
-            stmt.setInt(7, civilization.getChurch());
-            stmt.setInt(8, civilization.getFarm());
-            stmt.setInt(9, civilization.getSmithy());
-            stmt.setInt(10, civilization.getCarpentry());
-
-            stmt.setInt(11, civilization.getTechnologyDefense());
-            stmt.setInt(12, civilization.getTechnologyAttack());
+            stmt.setInt(6, civilization.getTechnologyDefense());
+            stmt.setInt(7, civilization.getTechnologyAttack());
 
             stmt.executeUpdate();
             
@@ -107,7 +96,7 @@ public final class DatabaseUtils {
         }
 	}
 	
-	public static boolean loadCivilization(int id) {
+	public static boolean checkCivilization(int id) {
 		boolean exists = false;
         try {
             // Cargar el driver
@@ -119,11 +108,7 @@ public final class DatabaseUtils {
             System.out.println("Conexión creada correctamente");
             
             String sql = """
-					SELECT c.civilization_id, c.name, c.wood_amount, c.iron_amount, c.food_amount, c.mana_amount, c.magic_tower_amount, c.church_amount, c.farm_amount, c.smithy_amount, c.carpentry_amount, c.technology_defense_level, c.technology_attack_level, c.game_over,
-						   (SELECT COUNT(*)
-					        FROM battle b
-					        WHERE b.civilization_id = c.civilization_id
-							) AS battle_count
+					SELECT c.civilization_id
 					FROM civilization c
 					WHERE c.civilization_id = ?
                 """;
@@ -135,8 +120,7 @@ public final class DatabaseUtils {
             // Comprobar si la query ha dado resultados
             if (rs.next()) {
             	System.out.println("Civilización encontrada");
-            	exists = true;
-            	
+            	exists = true;	
             }
             
             rs.close();

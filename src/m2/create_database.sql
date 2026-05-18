@@ -15,12 +15,6 @@ CREATE TABLE CIVILIZATION (
     food_amount INT UNSIGNED NOT NULL DEFAULT 0,
     mana_amount INT UNSIGNED NOT NULL DEFAULT 0,
 
-    magic_tower_amount INT UNSIGNED NOT NULL DEFAULT 0,
-    church_amount INT UNSIGNED NOT NULL DEFAULT 0,
-    farm_amount INT UNSIGNED NOT NULL DEFAULT 0,
-    smithy_amount INT UNSIGNED NOT NULL DEFAULT 0,
-    carpentry_amount INT UNSIGNED NOT NULL DEFAULT 0,
-
     technology_defense_level INT UNSIGNED NOT NULL DEFAULT 0,
     technology_attack_level INT UNSIGNED NOT NULL DEFAULT 0,
 
@@ -32,6 +26,26 @@ CREATE TABLE CIVILIZATION (
     updated_by VARCHAR(50) NULL,
 
     PRIMARY KEY (civilization_id)
+);
+
+CREATE TABLE BUILDING_TYPE (
+    building_type_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50) UNIQUE,
+
+    PRIMARY KEY (building_type_id)
+);
+
+CREATE TABLE CIVILIZATION_BUILDING (
+	building_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	civilization_id BIGINT UNSIGNED NOT NULL,
+    building_type_id BIGINT UNSIGNED NOT NULL,
+    pos_x INT UNSIGNED NOT NULL,
+    pos_y INT UNSIGNED NOT NULL,
+
+    PRIMARY KEY (building_id),
+    CONSTRAINT fk_building_civilization FOREIGN KEY (civilization_id) REFERENCES CIVILIZATION(civilization_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
 -- =========================================================
@@ -129,3 +143,11 @@ VALUES
     ('rocket_launcher'),
     ('magician'),
     ('priest');
+
+INSERT INTO BUILDING_TYPE (name)
+VALUES 
+    ('magic_tower'),
+    ('church'),
+    ('farm'),
+    ('smithy'),
+    ('carpentry');
