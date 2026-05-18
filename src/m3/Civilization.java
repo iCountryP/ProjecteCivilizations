@@ -82,6 +82,7 @@ public class Civilization implements Variables {
 				this.church++;
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
+				
 			}
 		} catch (ResourceException e) {
 			System.out.println(e);
