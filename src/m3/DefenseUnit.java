@@ -1,14 +1,16 @@
 package m3;
 
 public abstract class DefenseUnit implements MilitaryUnit, Variables {
-	private int armor, initialArmor, baseDamage, experience;
+	private int id, armor, initialArmor, baseDamage, experience;
 	private boolean sanctified;
 	
-	public DefenseUnit(int initialArmor, int baseDamage) {
+	public DefenseUnit(int id, int initialArmor, int baseDamage) {
+		this.id = id;
 		this.initialArmor = initialArmor;
 		this.baseDamage = baseDamage;
 		this.armor = initialArmor;
 		this.experience = 0;
+		this.sanctified = false;
 	}
 	
 	// Devuelve el ataque de la unidad
@@ -40,5 +42,9 @@ public abstract class DefenseUnit implements MilitaryUnit, Variables {
 	public int getExperience() {
 		return this.experience;
 	};
+	
+	public void sanctify() {
+		this.sanctified = true;
+	}
 	
 }

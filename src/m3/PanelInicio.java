@@ -92,10 +92,19 @@ public class PanelInicio extends JPanel {
 				    String idStr = JOptionPane.showInputDialog(null,"Introduce la ID de la civilización:","Cargar partida",JOptionPane.PLAIN_MESSAGE);
 
 				    int id = Integer.parseInt(idStr);
-					if (DatabaseUtils.checkCivilization(id)) {
+				    int validation = DatabaseUtils.checkCivilization(id);
+					if (validation == 1) {
 						System.out.println("Civilizacion encontrada con la id: "+id);
+						// Cerrar la ventana actual
+						Window window = SwingUtilities.getWindowAncestor(nuevaPartida);
+						window.dispose();
+						
+						// Abrir el juego
+						new VentanaJuego(id);
+					} else if (validation == -1) {
+						JOptionPane.showMessageDialog(null, "Civilizacion no encontrada.");
 					} else {
-						System.out.println("No se encontro ninguna civilizacion con esta id.");
+						JOptionPane.showMessageDialog(null, "Esta civilizacion ya ha perdido.");
 					}
 
 				} catch (NumberFormatException exception) {

@@ -39,7 +39,7 @@ public class PanelJuego extends JPanel {
 		        	if(edificioSeleccionadoJuego == 1) {
 		        		int granjasAntesDeConstruir = civilizacion.getFarm();
 		        		
-		        		civilizacion.newFarm();
+		        		civilizacion.newFarm(columna, fila);
 		        		
 		        		if(civilizacion.getFarm() > granjasAntesDeConstruir) {
 		        			mapa[columna][fila] = 1;
@@ -53,7 +53,7 @@ public class PanelJuego extends JPanel {
 		        	else if(edificioSeleccionadoJuego == 2) {
 		        		int carpinteriasAntesDeConstruir = civilizacion.getCarpentry();
 		        		
-		        		civilizacion.newCarpentry();
+		        		civilizacion.newCarpentry(columna, fila);
 		        		
 		        		if(civilizacion.getCarpentry() > carpinteriasAntesDeConstruir) {
 		        			mapa[columna][fila] = 2;
@@ -69,7 +69,7 @@ public class PanelJuego extends JPanel {
 		        	else if(edificioSeleccionadoJuego == 3) {
 		        		int herreriasAntesDeConstruir = civilizacion.getSmithy();
 		        		
-		        		civilizacion.newSmithy();
+		        		civilizacion.newSmithy(columna, fila);
 		        		
 		        		if(civilizacion.getSmithy() > herreriasAntesDeConstruir) {
 		        			mapa[columna][fila] = 3;
@@ -84,7 +84,7 @@ public class PanelJuego extends JPanel {
 		        	else if(edificioSeleccionadoJuego == 4) {
 		        		int magicTowerAntesDeConstruir = civilizacion.getMagicTower();
 		        		
-		        		civilizacion.newMagicTower();
+		        		civilizacion.newMagicTower(columna, fila);
 		        		
 		        		if(civilizacion.getMagicTower() > magicTowerAntesDeConstruir) {
 		        			mapa[columna][fila] = 4;
@@ -99,7 +99,7 @@ public class PanelJuego extends JPanel {
 		        	else if(edificioSeleccionadoJuego == 5) {
 		        		int churchAntesDeConstruir = civilizacion.getChurch();
 		        		
-		        		civilizacion.newChurch();
+		        		civilizacion.newChurch(columna, fila);
 		        		
 		        		if(civilizacion.getChurch() > churchAntesDeConstruir) {
 		        			mapa[columna][fila] = 5;

@@ -2,8 +2,16 @@ package m3;
 
 public class RocketLauncherTower extends DefenseUnit implements MilitaryUnit, Variables {
 
-	public RocketLauncherTower(int initialArmor, int baseDamage) {
-		super(initialArmor, baseDamage);
+	public RocketLauncherTower(int id, int initialArmor, int baseDamage) {
+		super(id, initialArmor, baseDamage);
+	}
+	
+	public RocketLauncherTower(int id, int initialArmor, int baseDamage, int experience, boolean sanctified) {
+		super(id, initialArmor, baseDamage);
+		this.gainExperience(experience);
+		if (sanctified) {
+			this.sanctify();
+		}
 	}
 
 	public int getFoodCost() {
