@@ -7,6 +7,14 @@ public class Cannon extends AttackUnit {
 		super(id, initialArmor, baseDamage);
 	}
 	
+	public Cannon(int id, int initialArmor, int baseDamage, int experience, boolean sanctified) {
+		super(id, initialArmor, baseDamage);
+		this.gainExperience(experience);
+		if (sanctified) {
+			this.sanctify();
+		}
+	}
+	
 	// Constructor 2 (sin parametros)
 	public Cannon() {
 		super(0, ARMOR_CANNON, BASE_DAMAGE_CANNON);

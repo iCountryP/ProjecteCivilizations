@@ -12,6 +12,14 @@ public class Spearman extends AttackUnit {
 		super(0, ARMOR_SPEARMAN, BASE_DAMAGE_SPEARMAN);
 	}
 	
+	public Spearman(int id, int initialArmor, int baseDamage, int experience, boolean sanctified) {
+		super(id, initialArmor, baseDamage);
+		this.gainExperience(experience);
+		if (sanctified) {
+			this.sanctify();
+		}
+	}
+	
 	// Devuelve el coste de comida para crear la unidad
 	public int getFoodCost() {
 		return FOOD_COST_SPEARMAN;

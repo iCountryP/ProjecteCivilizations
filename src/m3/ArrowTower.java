@@ -5,6 +5,14 @@ public class ArrowTower extends DefenseUnit implements MilitaryUnit, Variables {
 	public ArrowTower(int id, int initialArmor, int baseDamage) {
 		super(id, initialArmor, baseDamage);
 	}
+	
+	public ArrowTower(int id, int initialArmor, int baseDamage, int experience, boolean sanctified) {
+		super(id, initialArmor, baseDamage);
+		this.gainExperience(experience);
+		if (sanctified) {
+			this.sanctify();
+		}
+	}
 
 	public int getFoodCost() {
 		return FOOD_COST_ARROWTOWER;

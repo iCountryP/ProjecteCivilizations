@@ -12,6 +12,15 @@ public class Swordsman extends AttackUnit {
 		super(0, ARMOR_SWORDSMAN, BASE_DAMAGE_SWORDSMAN);
 	}
 	
+	// Constructor 3 (para cargar desde la base de datos)
+	public Swordsman(int id, int initialArmor, int baseDamage, int experience, boolean sanctified) {
+		super(id, initialArmor, baseDamage);
+		this.gainExperience(experience);
+		if (sanctified) {
+			this.sanctify();
+		}
+	}
+	
 	// Devuelve el coste de comida para crear la unidad
 	public int getFoodCost() {
 		return FOOD_COST_SWORDSMAN;

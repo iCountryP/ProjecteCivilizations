@@ -5,6 +5,11 @@ public class Magician extends SpecialUnit implements MilitaryUnit, Variables {
 	public Magician(int id, int initialArmor, int baseDamage) {
 		super(id, initialArmor, baseDamage);
 	}
+	
+	public Magician(int id, int initialArmor, int baseDamage, int experience) {
+		super(id, initialArmor, baseDamage);
+		this.gainExperience(experience);
+	}
 
 	public int getFoodCost() {
 		return FOOD_COST_MAGICIAN;

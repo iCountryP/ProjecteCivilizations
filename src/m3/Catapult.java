@@ -5,6 +5,14 @@ public class Catapult extends DefenseUnit implements MilitaryUnit, Variables {
 	public Catapult(int id, int initialArmor, int baseDamage) {
 		super(id, initialArmor, baseDamage);
 	}
+	
+	public Catapult(int id, int initialArmor, int baseDamage, int experience, boolean sanctified) {
+		super(id, initialArmor, baseDamage);
+		this.gainExperience(experience);
+		if (sanctified) {
+			this.sanctify();
+		}
+	}
 
 	public int getFoodCost() {
 		return FOOD_COST_CATAPULT;

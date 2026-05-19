@@ -12,6 +12,14 @@ public class Crossbow extends AttackUnit {
 		super(0, ARMOR_CROSSBOW, BASE_DAMAGE_CROSSBOW);
 	}
 	
+	public Crossbow(int id, int initialArmor, int baseDamage, int experience, boolean sanctified) {
+		super(id, initialArmor, baseDamage);
+		this.gainExperience(experience);
+		if (sanctified) {
+			this.sanctify();
+		}
+	}
+	
 	// Devuelve el coste de comida para crear la unidad
 	public int getFoodCost() {
 		return FOOD_COST_CROSSBOW;

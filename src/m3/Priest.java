@@ -5,6 +5,11 @@ public class Priest extends SpecialUnit implements MilitaryUnit, Variables {
 	public Priest(int id, int initialArmor, int baseDamage) {
 		super(id, initialArmor, baseDamage);
 	}
+	
+	public Priest(int id, int initialArmor, int baseDamage, int experience) {
+		super(id, initialArmor, baseDamage);
+		this.gainExperience(experience);
+	}
 
 	public int getFoodCost() {
 		return FOOD_COST_PRIEST;

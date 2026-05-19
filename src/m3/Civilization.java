@@ -247,6 +247,10 @@ public class Civilization implements Variables {
 		
 	}
 	
+	public void loadSwordsman() {
+		
+	}
+	
 	public void newSpearman(int n) {
 		try {
 			if (n <= 0) {
@@ -592,7 +596,6 @@ public class Civilization implements Variables {
 			System.out.println("Se agregaron "+n+" sacerdotes al ejercito.");
 		}
 	}
-	
 	
 	// método que controla el aumento de recuroos y teniendo en cuenta la cantidad de edificios que hay
 	public void aumentoRecursos() {

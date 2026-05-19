@@ -10,6 +10,7 @@ public abstract class DefenseUnit implements MilitaryUnit, Variables {
 		this.baseDamage = baseDamage;
 		this.armor = initialArmor;
 		this.experience = 0;
+		this.sanctified = false;
 	}
 	
 	// Devuelve el ataque de la unidad
@@ -41,5 +42,9 @@ public abstract class DefenseUnit implements MilitaryUnit, Variables {
 	public int getExperience() {
 		return this.experience;
 	};
+	
+	public void sanctify() {
+		this.sanctified = true;
+	}
 	
 }

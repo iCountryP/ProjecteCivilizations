@@ -242,8 +242,8 @@ public final class DatabaseUtils {
             
 			// Cargar las unidades de la army de la civilizacion
             String sql_army = """
-					SELECT building_type_id, pos_x, pos_y
-					FROM CIVILIZATION_BUILDING
+					SELECT unit_id, unit_type_id, initialArmor, armor, baseDamage, experience, sanctified
+					FROM UNIT
 					WHERE civilization_id = ?
                 """;
 
@@ -251,7 +251,47 @@ public final class DatabaseUtils {
             stmt_army.setInt(1, id);
             ResultSet rs_army = stmt_army.executeQuery();
             
+            // Recorrer el rs y lo vamos insertando en la army de la civilizacion
+            while (rs_army.next()) {
+                int unit_id = rs_army.getInt("unit_id");
+                int unit_type_id = rs_army.getInt("unit_type_id");
+                int initialArmor = rs_army.getInt("initialArmor");
+                int armor = rs_army.getInt("armor");
+                int baseDamage = rs_army.getInt("baseDamage");
+                int experience = rs_army.getInt("experience");
+                String sanctified = rs_army.getString("sanctified");
+
+                switch (unit_type_id) {
+	                case 1:
+	                	// magic_tower
+	                    break;
+
+	                case 2:
+	                	// church
+	                    break;
+	
+	                case 3:
+	                	// farm
+	                    break;
+	
+	                case 4:
+	                	// smithy
+	                    break;
+	                    
+	                case 5:
+	                	// carpentry
+	                    break;
+	
+	                default:
+	                	// hubo un error
+	                    System.out.println("Unidad desconocida");
+	                    break;
+                }
+            }
             
+            // Cerramos recursos
+            rs_army.close();
+            stmt_army.close();
             
             connection.close();
             

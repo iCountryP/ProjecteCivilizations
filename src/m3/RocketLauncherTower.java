@@ -5,6 +5,14 @@ public class RocketLauncherTower extends DefenseUnit implements MilitaryUnit, Va
 	public RocketLauncherTower(int id, int initialArmor, int baseDamage) {
 		super(id, initialArmor, baseDamage);
 	}
+	
+	public RocketLauncherTower(int id, int initialArmor, int baseDamage, int experience, boolean sanctified) {
+		super(id, initialArmor, baseDamage);
+		this.gainExperience(experience);
+		if (sanctified) {
+			this.sanctify();
+		}
+	}
 
 	public int getFoodCost() {
 		return FOOD_COST_ROCKETLAUNCHERTOWER;
