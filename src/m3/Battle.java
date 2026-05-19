@@ -7,7 +7,7 @@ public class Battle implements Variables {
 	private ArrayList<MilitaryUnit>[] civilizationArmy; // Tu army
 	private ArrayList<MilitaryUnit>[] enemyArmy; // Army enemiga
 	private ArrayList<MilitaryUnit>[][] armies;
-	private String[] troopsNames = {"Swordsman", "Spearman", "Crossbow", "Cannon", "Arrow Tower", "Catapult", "Rocket Launcher", "Magician", "Priest"}; // Diccionario con las unidades.
+	private String[] troopsNames = {"Swordsman", "Spearman", "Crossbow", "Cannon   ", "Arrow Tower", "Catapult", "Rocket Launcher", "Magician", "Priest   "}; // Diccionario con las unidades.
 	
 	private int[][] initialArmies; // Matriz de 2 filas 9 columnas del numero de tropas por grupo inicial
 	private int[][] currentArmies; // Matriz de 2 filas 9 columnas del numero de tropas por grupo actual
