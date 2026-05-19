@@ -330,4 +330,125 @@ public final class DatabaseUtils {
 		return loaded_civilization;
 	}
 	
+	public static void saveCivilization(Civilization civilization) {
+        try {
+            // Cargar el driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            System.out.println("Driver cargado correctamente");
+            
+            // Crear conexion con la base de datos
+            Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            System.out.println("Conexión creada correctamente");
+            
+            // Guardar stats base
+            String sql_stats = """
+					UPDATE CIVILIZATION
+					SET
+					    wood_amount = ?,
+					    iron_amount = ?,
+					    food_amount = ?,
+					    mana_amount = ?,
+					    technology_defense_level = ?,
+					    technology_attack_level = ?,
+					    game_over = ?,
+					    updated_at = CURRENT_TIMESTAMP,
+					    updated_by = CURRENT_USER()
+					WHERE civilization_id = ?
+                """;
+
+            PreparedStatement stmt_stats = connection.prepareStatement(sql_stats);
+            
+            stmt_stats.setInt(1, civilization.getWood());
+            stmt_stats.setInt(2, civilization.getIron());
+            stmt_stats.setInt(3, civilization.getFood());
+            stmt_stats.setInt(4, civilization.getMana());
+
+            stmt_stats.setInt(5, civilization.getTechnologyDefense());
+            stmt_stats.setInt(6, civilization.getTechnologyAttack());
+            stmt_stats.setBoolean(7, civilization.getGameOver());
+            
+            stmt_stats.setInt(8, civilization.getID());
+            
+            stmt_stats.executeUpdate();
+            
+            stmt_stats.close();
+            
+            // Guardar edificios
+            String sql_buildings = """
+					INSERT INTO CIVILIZATION_BUILDING (civilization_id, building_type_id, pos_x, pos_y)
+					VALUES (?, ?, ?, ?);
+                """;
+            
+            PreparedStatement stmt_buildings = connection.prepareStatement(sql_buildings);
+            stmt_stats.setInt(1, civilization.getID());
+            
+            stmt_stats.setInt(2, 1);
+        	ArrayList<int[]> magicTower = civilization.getMagicTowerPositions();
+        	for (int[] position : magicTower) {
+        		if (position[0] == 0) {
+            	    stmt_buildings.setInt(3, position[1]);
+            	    stmt_buildings.setInt(4, position[2]);
+
+            	    stmt_buildings.executeUpdate();
+        		}
+        	}
+        	
+        	stmt_stats.setInt(2, 2);
+        	ArrayList<int[]> church = civilization.getChurchPositions();
+        	for (int[] position : church) {
+        		if (position[0] == 0) {
+            	    stmt_buildings.setInt(3, position[1]);
+            	    stmt_buildings.setInt(4, position[2]);
+
+            	    stmt_buildings.executeUpdate();
+        		}
+        	}
+        	
+        	stmt_stats.setInt(2, 3);
+        	ArrayList<int[]> farm = civilization.getFarmPositions();
+        	for (int[] position : farm) {
+        		if (position[0] == 0) {
+            	    stmt_buildings.setInt(3, position[1]);
+            	    stmt_buildings.setInt(4, position[2]);
+
+            	    stmt_buildings.executeUpdate();
+        		}
+        	}
+        	
+        	stmt_stats.setInt(2, 4);
+        	ArrayList<int[]> smithy = civilization.getSmithyPositions();
+        	for (int[] position : smithy) {
+        		if (position[0] == 0) {
+            	    stmt_buildings.setInt(3, position[1]);
+            	    stmt_buildings.setInt(4, position[2]);
+
+            	    stmt_buildings.executeUpdate();
+        		}
+        	}
+        	
+        	stmt_stats.setInt(2, 5);
+        	ArrayList<int[]> carpentry = civilization.getCarpentryPositions();
+        	for (int[] position : carpentry) {
+        		if (position[0] == 0) {
+            	    stmt_buildings.setInt(3, position[1]);
+            	    stmt_buildings.setInt(4, position[2]);
+
+            	    stmt_buildings.executeUpdate();
+        		}
+        	}
+            
+            stmt_buildings.close();
+            
+            // Guardar unidades
+            
+            connection.close();
+            
+        } catch(ClassNotFoundException ex) {
+            System.out.println("No se ha encontrado el Driver MySQL para JDBC.");
+        } catch (SQLException e) {
+            System.out.println("Excepción del tipo SQL");
+            e.printStackTrace();
+        }
+	}
+	
 }

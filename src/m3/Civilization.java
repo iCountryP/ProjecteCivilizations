@@ -56,6 +56,7 @@ public class Civilization implements Variables {
 		this.carpentry = new ArrayList<int[]>();
 		
 		this.battles = 0;
+		this.gameOver = false;
 		
 		for (int i = 0; i < this.army.length; i++) {
 		    this.army[i] = new ArrayList<MilitaryUnit>();
@@ -806,7 +807,6 @@ public class Civilization implements Variables {
 	
 	public int getPriestCount() {
 		return this.army[8].size();
-
 	}
 	
 	public String getName() {
@@ -823,5 +823,29 @@ public class Civilization implements Variables {
 	
 	public int getID() {
 		return this.id;
+	}
+	
+	public boolean getGameOver() {
+		return this.gameOver;
+	}
+	
+	public ArrayList<int[]> getMagicTowerPositions() {
+		return this.magicTower;
+	}
+	
+	public ArrayList<int[]> getChurchPositions() {
+		return this.church;
+	}
+	
+	public ArrayList<int[]> getFarmPositions() {
+		return this.farm;
+	}
+	
+	public ArrayList<int[]> getSmithyPositions() {
+		return this.smithy;
+	}
+	
+	public ArrayList<int[]> getCarpentryPositions() {
+		return this.carpentry;
 	}
 }
