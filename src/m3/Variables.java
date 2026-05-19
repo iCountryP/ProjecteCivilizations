@@ -7,12 +7,12 @@ public interface Variables {
 	public final int FOOD_BASE_ENEMY_ARMY = 70000;
 	
 	// % de incremento de los recursos del ejercito enemigo despues de cada batalla
-	public final int ENEMY_FLEET_INCREASE = 6;
+	public final int ENEMY_ARMY_INCREASE = 6;
 	
-	// Incremento de recursos por minuto
-	public final int CIVILIZATION_IRON_GENERATED = 1500;
-	public final int CIVILIZATION_WOOD_GENERATED = 5000;
-	public final int CIVILIZATION_FOOD_GENERATED = 8000;
+	// Incremento de recursos por segundo
+	public final int CIVILIZATION_IRON_GENERATED = 1;
+	public final int CIVILIZATION_WOOD_GENERATED = 5;
+	public final int CIVILIZATION_FOOD_GENERATED = 8;
 	
 	public final int CIVILIZATION_IRON_GENERATED_PER_SMITHY = (int) (0.5*CIVILIZATION_IRON_GENERATED);
 	public final int CIVILIZATION_WOOD_GENERATED_PER_CARPENTRY = (int) (0.5*CIVILIZATION_WOOD_GENERATED);
@@ -21,15 +21,14 @@ public interface Variables {
 	
 	// Costes de la tecnologia
 	public final int UPGRADE_BASE_DEFENSE_TECHNOLOGY_IRON_COST = 2000;
-	public final int UPGRADE_BASE_ATTACK_TECHNOLOGY_IRON_COST = 2000;
-	public final int UPGRADE_PLUS_DEFENSE_TECHNOLOGY_IRON_COST = 60;
-	public final int UPGRADE_PLUS_ATTACK_TECHNOLOGY_IRON_COST = 60;
-	
 	public final int UPGRADE_BASE_DEFENSE_TECHNOLOGY_WOOD_COST = 0;
-	public final int UPGRADE_BASE_ATTACK_TECHNOLOGY_WOOD_COST = 0;
+	public final int UPGRADE_PLUS_DEFENSE_TECHNOLOGY_IRON_COST = 60;
 	public final int UPGRADE_PLUS_DEFENSE_TECHNOLOGY_WOOD_COST = 0;
-	public final int UPGRADE_PLUS_ATTACK_TECHNOLOGY_WOOD_COST = 0;
 	
+	public final int UPGRADE_BASE_ATTACK_TECHNOLOGY_IRON_COST = 2000;
+	public final int UPGRADE_BASE_ATTACK_TECHNOLOGY_WOOD_COST = 0;
+	public final int UPGRADE_PLUS_ATTACK_TECHNOLOGY_IRON_COST = 60;
+	public final int UPGRADE_PLUS_ATTACK_TECHNOLOGY_WOOD_COST = 0;
 	
 	// Coste de las unidades ofensivas
 	public final int FOOD_COST_SWORDSMAN = 8000;
@@ -51,7 +50,6 @@ public interface Variables {
 	public final int MANA_COST_SPEARMAN = 0;
 	public final int MANA_COST_CROSSBOW = 0;
 	public final int MANA_COST_CANNON = 0;
-	
 	
 	// Coste de las unidades defensivas
 	public final int IRON_COST_ARROWTOWER = 0;
@@ -89,26 +87,25 @@ public interface Variables {
 	public final int[] FOOD_COST_UNITS = {FOOD_COST_SWORDSMAN, FOOD_COST_SPEARMAN, FOOD_COST_CROSSBOW, FOOD_COST_CANNON, FOOD_COST_ARROWTOWER, FOOD_COST_CATAPULT, FOOD_COST_ROCKETLAUNCHERTOWER, FOOD_COST_MAGICIAN, FOOD_COST_PRIEST};
 	
 	// Coste de las construcciones
-	public final int  FOOD_COST_FARM = 5000;
-	public final int  WOOD_COST_FARM = 10000;
-	public final int  IRON_COST_FARM = 12000;
+	public final int FOOD_COST_FARM = 5000;
+	public final int WOOD_COST_FARM = 10000;
+	public final int IRON_COST_FARM = 12000;
 	
-	public final int  FOOD_COST_CARPENTRY = 5000;
-	public final int  WOOD_COST_CARPENTRY = 10000;
-	public final int  IRON_COST_CARPENTRY = 12000;
+	public final int FOOD_COST_CARPENTRY = 5000;
+	public final int WOOD_COST_CARPENTRY = 10000;
+	public final int IRON_COST_CARPENTRY = 12000;
 	
-	public final int  FOOD_COST_SMITHY = 5000;
-	public final int  WOOD_COST_SMITHY = 10000;
-	public final int  IRON_COST_SMITHY = 12000;
+	public final int FOOD_COST_SMITHY = 5000;
+	public final int WOOD_COST_SMITHY = 10000;
+	public final int IRON_COST_SMITHY = 12000;
 	
-	public final int  FOOD_COST_CHURCH = 5000;
-	public final int  WOOD_COST_CHURCH = 10000;
-	public final int  IRON_COST_CHURCH = 12000;
+	public final int FOOD_COST_CHURCH = 5000;
+	public final int WOOD_COST_CHURCH = 10000;
+	public final int IRON_COST_CHURCH = 12000;
 	
-	public final int  FOOD_COST_MAGICTOWER = 5000;
-	public final int  WOOD_COST_MAGICTOWER = 10000;
-	public final int  IRON_COST_MAGICTOWER = 12000;
-	
+	public final int FOOD_COST_MAGICTOWER = 5000;
+	public final int WOOD_COST_MAGICTOWER = 10000;
+	public final int IRON_COST_MAGICTOWER = 12000;
 	
 	// Ataque base de las unidades ofensivas
 	public final int BASE_DAMAGE_SWORDSMAN = 80;
@@ -120,7 +117,10 @@ public interface Variables {
 	public final int BASE_DAMAGE_ARROWTOWER = 80;
 	public final int BASE_DAMAGE_CATAPULT = 250;
 	public final int BASE_DAMAGE_ROCKETLAUNCHERTOWER = 2000;
+	
+	// Ataque base de las unidades especiales
 	public final int BASE_DAMAGE_MAGICIAN = 3000;
+	public final int BASE_DAMAGE_PRIEST = 0;
 		
 	// Armadura base de las unidades ofensivas
 	public final int ARMOR_SWORDSMAN = 400;
@@ -128,11 +128,14 @@ public interface Variables {
 	public final int ARMOR_CROSSBOW = 6000;
 	public final int ARMOR_CANNON = 8000;
 	
-	
 	// Armadura base de las unidades defensivas
 	public final int ARMOR_ARROWTOWER = 200;
 	public final int ARMOR_CATAPULT = 1200;
 	public final int ARMOR_ROCKETLAUNCHERTOWER = 7000;
+	
+	// Armadura base de las unidades especiales
+	public final int ARMOR_MAGICIAN = 1;
+	public final int ARMOR_PRIEST = 0;
 	
 	// % de incremento de armadura por nivel de tecnologia
 	public final int PLUS_ARMOR_SWORDSMAN_BY_TECHNOLOGY = 5;
@@ -144,7 +147,9 @@ public interface Variables {
 	public final int PLUS_ARMOR_CATAPULT_BY_TECHNOLOGY = 5;
 	public final int PLUS_ARMOR_ROCKETLAUNCHERTOWER_BY_TECHNOLOGY = 5;
 	
-
+	public final int PLUS_ARMOR_MAGICIAN_BY_TECHNOLOGY = 0;
+	public final int PLUS_ARMOR_PRIEST_BY_TECHNOLOGY = 0;
+	
 	// % de incremento de ataque por nivel de tecnologia
 	public final int PLUS_ATTACK_SWORDSMAN_BY_TECHNOLOGY = 5;
 	public final int PLUS_ATTACK_SPEARMAN_BY_TECHNOLOGY = 5;
@@ -155,7 +160,8 @@ public interface Variables {
 	public final int PLUS_ATTACK_CATAPULT_BY_TECHNOLOGY = 5;
 	public final int PLUS_ATTACK_ROCKETLAUNCHERTOWER_BY_TECHNOLOGY = 5;
 	
-	public final int PLUS_ATTACK_MAGICIAN_BY_TECHNOLOGY  = 6;
+	public final int PLUS_ATTACK_MAGICIAN_BY_TECHNOLOGY = 6;
+	public final int PLUS_ATTACK_PRIEST_BY_TECHNOLOGY = 0;
 	
 	// % de incremento de stats por nivel de experiencia
 	public final int PLUS_ARMOR_UNIT_PER_EXPERIENCE_POINT = 4;
@@ -165,23 +171,22 @@ public interface Variables {
 	public final int PLUS_ARMOR_UNIT_SANCTIFIED = 7;
 	public final int PLUS_ATTACK_UNIT_SANCTIFIED = 7;
 	
-	// Probabilidad (%) de que un mago resucite (lol)
-	public final int CHANCE_MAGICIAN_RESSURECT = 2;
-	
 	// Probabilidad (%) de que una unidad ofensiva genere escombros
-	public final int CHANCE_GENERATNG_WASTE_SWORDSMAN = 55;
-	public final int CHANCE_GENERATNG_WASTE_SPEARMAN = 65;
-	public final int CHANCE_GENERATNG_WASTE_CROSSBOW = 80;
-	public final int CHANCE_GENERATNG_WASTE_CANNON = 90;
+	public final int CHANCE_GENERATING_WASTE_SWORDSMAN = 55;
+	public final int CHANCE_GENERATING_WASTE_SPEARMAN = 65;
+	public final int CHANCE_GENERATING_WASTE_CROSSBOW = 80;
+	public final int CHANCE_GENERATING_WASTE_CANNON = 90;
 	
 	// Probabilidad (%) de que una unidad defensiva genere escombros
-	public final int CHANCE_GENERATNG_WASTE_ARROWTOWER = 55;
-	public final int CHANCE_GENERATNG_WASTE_CATAPULT = 65;
-	public final int CHANCE_GENERATNG_WASTE_ROCKETLAUNCHERTOWER = 75;
+	public final int CHANCE_GENERATING_WASTE_ARROWTOWER = 55;
+	public final int CHANCE_GENERATING_WASTE_CATAPULT = 65;
+	public final int CHANCE_GENERATING_WASTE_ROCKETLAUNCHERTOWER = 75;
 	
 	// Probabilidad (%) de que una unidad especial genere escombros
-	public final int CHANCE_GENERATNG_WASTE_PRIEST = 0;
-	public final int CHANCE_GENERATNG_WASTE_MAGICIAN = 0;
+	public final int CHANCE_GENERATING_WASTE_MAGICIAN = 0;
+	public final int CHANCE_GENERATING_WASTE_PRIEST = 0;
+	
+	public final int[] CHANCE_GENERATING_WASTE_UNITS = {CHANCE_GENERATING_WASTE_SWORDSMAN, CHANCE_GENERATING_WASTE_SPEARMAN, CHANCE_GENERATING_WASTE_CROSSBOW, CHANCE_GENERATING_WASTE_CANNON, CHANCE_GENERATING_WASTE_ARROWTOWER, CHANCE_GENERATING_WASTE_CATAPULT, CHANCE_GENERATING_WASTE_ROCKETLAUNCHERTOWER, CHANCE_GENERATING_WASTE_MAGICIAN};
 	
 	// Probabilidad (%) de que una unidad ofensiva vuelva a atacar
 	public final int CHANCE_ATTACK_AGAIN_SWORDSMAN = 3;
@@ -198,15 +203,25 @@ public interface Variables {
 	public final int CHANCE_ATTACK_AGAIN_MAGICIAN = 75;
 	public final int CHANCE_ATTACK_AGAIN_PRIEST = 0;
 	
+	public final int[] CHANCE_ATTACK_AGAIN_UNITS = {CHANCE_ATTACK_AGAIN_SWORDSMAN, CHANCE_ATTACK_AGAIN_SPEARMAN, CHANCE_ATTACK_AGAIN_CROSSBOW, CHANCE_ATTACK_AGAIN_CANNON, CHANCE_ATTACK_AGAIN_ARROWTOWER, CHANCE_ATTACK_AGAIN_CATAPULT, CHANCE_ATTACK_AGAIN_ROCKETLAUNCHERTOWER, CHANCE_ATTACK_AGAIN_MAGICIAN};
+	
 	// Probabilidad de atacar de cada unidad
 
 	// Unidades del jugador
-	public final int[] CHANCE_ATTACK_CIVILIZATION_UNITS = {4,9,13,37,4,9,14,10,0};
-
-	// Unidades del enemigo
-	public final int[] CHANCE_ATTACK_ENEMY_UNITS = {10,20,30,40};
+	public final int[] CHANCE_ATTACK_ARMY_UNITS = {4,9,13,37,4,9,14,10};
 	
 	// % de perdidas que genera una unidad respecto a su coste
 	public final int PERCENTATGE_WASTE = 70;
-
+	
+	public final int DEFEAT_PERCENTAGE = 20;
+	
+	// Mensajes de excepciones
+	public final String RESOURCE_EXCEPTION_MESSAGE = "Recursos insuficientes";
+	public final String INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE = "Valor inválido de unidades";
+	public final String BUILDING_EXCEPTION_MESSAGE = "Estructuras requeridas insuficientes";
+	
+	
+	// MAX VALUE (Para las unidades que tienen 0 de coste en algun tipo de recurso)
+	public final int MAX_VALUE = 9999999;
+	
 }
