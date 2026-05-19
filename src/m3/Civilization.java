@@ -24,6 +24,8 @@ public class Civilization implements Variables {
 	private int battles;
 	private boolean gameOver;
 	
+	private PanelMenu panelMenu; // Para appendear mensajes en la consola.
+	
 	private ArrayList<MilitaryUnit>[] army = new ArrayList[9];
 	// army[0] --> Swordsman
 	// army[1] --> Spearman
@@ -228,7 +230,7 @@ public class Civilization implements Variables {
 				n = 0;
 			}
 		} finally {
-			System.out.println("N VALE ESTO "+n);
+
 			if (n > 0) {
 				this.food -= FOOD_COST_SWORDSMAN*n;
 				this.wood -= WOOD_COST_SWORDSMAN*n;
@@ -243,6 +245,7 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" espadachines al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " espadachines al ejercito.\n");
 		}
 		
 	}
@@ -290,6 +293,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" lanceros al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " lanceros al ejercito.\n");
+
 		}
 	}
 	
@@ -332,6 +337,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" ballestas al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " ballestas al ejercito.\n");
+
 		}
 	}
 	
@@ -339,6 +346,7 @@ public class Civilization implements Variables {
 		try {
 			if (n <= 0) {
 				throw new InvalidUnitAmountException(INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE);
+
 			} else if (this.food < FOOD_COST_CANNON*n || this.wood < WOOD_COST_CANNON*n || this.iron < IRON_COST_CANNON*n || this.mana < MANA_COST_CANNON*n) {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
 			}
@@ -374,6 +382,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" cañones al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " cañones al ejercito.\n");
+
 		}
 	}
 	
@@ -416,6 +426,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" torres arqueras al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " torres arqueras al ejercito.\n");
+
 		}
 	}
 	
@@ -458,6 +470,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" catapultas al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " catapultas al ejercito.\n");
+
 		}
 	}
 	
@@ -500,6 +514,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" torres lanzacohetes al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " lanzacohetes al ejercito.\n");
+
 		}
 	}
 	
@@ -547,6 +563,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" magos al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " magos al ejercito.\n");
+
 		}
 	}
 	
@@ -594,6 +612,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" sacerdotes al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " sacerdotes al ejercito.\n");
+
 		}
 	}
 	
@@ -764,4 +784,11 @@ public class Civilization implements Variables {
 	public int getID() {
 		return this.id;
 	}
+
+
+	public void setPanelMenu(PanelMenu panelMenu) {
+		this.panelMenu = panelMenu;
+	}
+	
+	
 }
