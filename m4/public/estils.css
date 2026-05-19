@@ -412,31 +412,149 @@ body:has(#slide3:checked) .dots label:nth-child(3){
 }
 
 /* ------------------------ civilizaciones ------------------------ */
-.civilizaciones{
-
-}
-
 .libro{
     position: relative;
-
     width: 100%;
     max-width: 1200px;
-
     margin: auto;
+    animation: animacion_entrada 0.4s ease-in;
 }
 
-/* IMAGEN DEL LIBRO */
 .libro img{
     width: 100%;
     height: auto;
-
     display: block;
 }
 
+/* CONTENIDO SOBRE EL LIBRO */
+.libro_contenido{
+    position: absolute;
+
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 80%;
+    height: 70%;
+
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+}
+
+/* TÍTULO */
+.libro_contenido h1{
+    margin: 0;
+    font-size: 3rem;
+}
+
+/* SUBTÍTULO */
+.libro_contenido h2{
+    margin: 5px 0 15px 0;
+    font-weight: normal;
+}
+
+/* GRID DE CIVILIZACIONES */
 .texto_indice{
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
     gap: 20px;
+
+    overflow: hidden;
+    flex: 1;
+}
+
+.texto_indice a{
+    display: inline-block;
+    
+    justify-self: center;    /* si estás en grid */
+    align-self: center;
+
+    text-align: center;
+
+    font-size: 1.5rem;
+    color: black;
+    word-break: break-word;
+    transition: all 0.3s ease-in-out;
+}
+.texto_indice a:hover{
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: rgb(114, 46, 46);
+}
+
+.navegacion{
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-bottom: 50px;
+    gap: 15px;
+}
+
+.navegacion a{
+    color: black;
+    font-size: 1.5rem;
+    transition: all 0.3s ease-in-out;
+}
+.navegacion a:hover{
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: rgb(114, 46, 46);
+}
+
+.index-nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+}
+
+/* Botón índice arriba centrado */
+.nav-index{
+    display: inline-block;
+}
+
+/* Bloque de paginación centrado */
+.nav-paginacion{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.civilizacion_stats{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+
+    width: 100%;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.stats_recursos, .stats_combate{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-content: center;
+    align-items: center;
+}
+
+.recurso{
+    display: flex;
+    align-items: center;
+}
+
+.recurso img{
+    width: 35px;
+    height: 35px;
+
+    object-fit: contain;
 }

@@ -1,97 +1,138 @@
-<!-- Indice -->
-{{#if (eq modo "index")}}
-    <main class="civilizaciones marmol ffijado linea">
-        <section class="libro">
-            <img src="/img/libro_interior.png" alt="libro">
-            <div class="texto_indice">
-                {{#each civilizaciones}}
-                    <a href="/civilizaciones?pagina={{this.id}}">
-                        {{this.nombre}}
-                    </a>
-                {{/each}}
-            </div>
-        </section>
-        <!-- PAGINACIÓN INDEX -->
-        <section class="navegacion">
+<main class="civilizaciones marmol ffijado linea">
+    <!-- LIBRO -->
+    <section class="libro">
+        <img src="/img/libro_interior.png" alt="libro">
 
-            {{#if anteriorIndex}}
-                <a
-                    class="nav-btn"
-                    href="/civilizaciones?index={{anteriorIndex}}"
-                >
-                    ←
-                </a>
+        <div class="libro_contenido">
+
+            {{#if (eq modo "index")}}
+
+                <h1>Índice</h1>
+                <h2>Página {{paginaActual}}</h2>
+
+                <div class="texto_indice">
+                    {{#each civilizaciones}}
+                        <a href="/civilizaciones?pagina={{this.id}}">
+                            {{this.nombre}}
+                        </a>
+                    {{/each}}
+                </div>
+
             {{/if}}
 
-            {{#each paginasIndex}}
+            {{#if (eq modo "detalle")}}
 
-                <a
-                    class="nav-btn {{#if this.activa}}activa{{/if}}"
-                    href="/civilizaciones?index={{this.numero}}"
-                >
-                    {{this.numero}}
-                </a>
+                <h1>{{civilizacion.nombre}}</h1>
 
-            {{/each}}
+                <h2>ID {{civilizacion.id}}</h2>
 
-            {{#if siguienteIndex}}
-                <a
-                    class="nav-btn"
-                    href="/civilizaciones?index={{siguienteIndex}}"
-                >
-                    →
-                </a>
+                <div class="civilizacion_stats">
+
+                    <!-- COLUMNA IZQUIERDA -->
+                    <div class="stats_recursos">
+
+                        <div class="recurso">
+                            <img src="/img/iconoMadera.png" alt="madera">
+                            <p>Madera: {{civilizacion.wood_amount}}</p>
+                        </div>
+
+                        <div class="recurso">
+                            <img src="/img/iconoHierro.png" alt="hierro">
+                            <p>Hierro: {{civilizacion.iron_amount}}</p>
+                        </div>
+
+                        <div class="recurso">
+                            <img src="/img/iconoComida.png" alt="comida">
+                            <p>Comida: {{civilizacion.food_amount}}</p>
+                        </div>
+
+                        <div class="recurso">
+                            <img src="/img/iconoMana.png" alt="mana">
+                            <p>Mana: {{civilizacion.mana_amount}}</p>
+                        </div>
+
+                    </div>
+
+                    <!-- COLUMNA DERECHA -->
+                    <div class="stats_combate">
+
+                        <p>Nivel Defensa: {{civilizacion.technology_defense_level}}</p>
+                        <p>Nivel Ataque: {{civilizacion.technology_attack_level}}</p>
+
+                        <p>
+                            Estado:
+                            {{#if civilizacion.game_over}}
+                                Game Over
+                            {{else}}
+                                Sigue vivo
+                            {{/if}}
+                        </p>
+
+                    </div>
+
+                </div>
+
             {{/if}}
-        </section>
-    </main>
-{{/if}}
-
-<!-- Info de cada civilización -->
-{{#if (eq modo "detalle")}}
-    <main class="civilizacion_detalle marmol linea">
-
-        <h1>{{civilizacion.nombre}}</h1>
-
-        <img src="{{civilizacion.imagen}}" />
-
-        <p>{{civilizacion.descripcion}}</p>
-
-        <div class="historia">
-            {{civilizacion.historia}}
         </div>
+    </section>
+    <!-- NAVEGACIÓN INDEX -->
+    {{#if (eq modo "index")}}
+    <section class="navegacion index-nav">
 
-        <!-- ================= NAV ================= -->
-
-        <div class="navegacion">
-
-            <a class="nav-btn centro" href="/civilizaciones">
-                Índice
+        {{#if anteriorIndex}}
+            <a class="nav-btn" href="/civilizaciones?index={{anteriorIndex}}">
+                &lt;
             </a>
+        {{/if}}
+
+        {{#each paginasIndex}}
+            <a class="nav-btn {{#if this.activa}}activa{{/if}}"
+               href="/civilizaciones?index={{this.numero}}">
+                {{this.numero}}
+            </a>
+        {{/each}}
+
+        {{#if siguienteIndex}}
+            <a class="nav-btn" href="/civilizaciones?index={{siguienteIndex}}">
+                &gt;
+            </a>
+        {{/if}}
+
+    </section>
+    {{/if}}
+
+    <!-- NAVEGACIÓN DETALLE -->
+    {{#if (eq modo "detalle")}}
+    <section class="navegacion">
+
+        <a class="nav-btn nav-index" href="/civilizaciones">
+            Índice
+        </a>
+
+        <div class="nav-paginacion">
 
             {{#if anterior}}
                 <a class="nav-btn" href="/civilizaciones?pagina={{anterior}}">
-                    ←
+                    &lt;
                 </a>
             {{/if}}
 
             {{#each paginas}}
-
-                <a
-                    class="nav-btn {{#if this.activa}}activa{{/if}}"
-                    href="/civilizaciones?pagina={{this.numero}}"
-                >
+                <a class="nav-btn {{#if this.activa}}activa{{/if}}"
+                   href="/civilizaciones?pagina={{this.numero}}">
                     {{this.numero}}
                 </a>
-
             {{/each}}
 
             {{#if siguiente}}
                 <a class="nav-btn" href="/civilizaciones?pagina={{siguiente}}">
-                    →
+                    &gt;
                 </a>
             {{/if}}
 
         </div>
 
-    </main>
-{{/if}}
+    </section>
+    {{/if}}
+
+</main>
