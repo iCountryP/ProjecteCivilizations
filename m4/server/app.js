@@ -55,7 +55,58 @@ hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 
 // routes
 app.get('/', async (req, res) => {
-  res.render('index');
+  try {
+
+    // =========================
+    // ÚLTIMAS 2 BATALLAS
+    // =========================
+    const battlesRows = await db.query(`
+      SELECT
+        b.battle_id,
+        b.civilization_id,
+        c.name AS civilization_name,
+        b.num_battle,
+        b.winner,
+        b.wood_waste,
+        b.iron_waste,
+        b.created_at
+      FROM BATTLE b
+      INNER JOIN CIVILIZATION c
+        ON c.civilization_id = b.civilization_id
+      ORDER BY b.created_at DESC
+      LIMIT 2;
+    `);
+
+    const battlesJson = db.table_to_json(battlesRows, {
+      battle_id: 'number',
+      civilization_id: 'number',
+      civilization_name: 'string',
+      num_battle: 'number',
+      winner: 'string',
+      wood_waste: 'number',
+      iron_waste: 'number',
+      created_at: 'date'
+    });
+
+    // =========================
+    // COMMON DATA (si lo usas)
+    // =========================
+    const commonData = JSON.parse(
+      fs.readFileSync(path.join(__dirname, 'data', 'common.json'), 'utf8')
+    );
+
+    // =========================
+    // RENDER
+    // =========================
+    res.render('index', {
+      battles: battlesJson,
+      common: commonData
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error consultando las batallas');
+  }
 });
 
 app.get('/batallas', async (req, res) => {
