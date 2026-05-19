@@ -263,23 +263,48 @@ public final class DatabaseUtils {
 
                 switch (unit_type_id) {
 	                case 1:
-	                	// magic_tower
+	                	// swordsman (1)
+	                	loaded_civilization.loadSwordsman(unit_id, initialArmor, baseDamage, experience, sanctified);
 	                    break;
 
 	                case 2:
-	                	// church
+	                	// spearman (2)
+	                	loaded_civilization.loadSpearman(unit_id, initialArmor, baseDamage, experience, sanctified);
 	                    break;
 	
 	                case 3:
-	                	// farm
+	                	// crossbow (3)
+	                	loaded_civilization.loadCrossbow(unit_id, initialArmor, baseDamage, experience, sanctified);
 	                    break;
 	
 	                case 4:
-	                	// smithy
+	                	// cannon (4)
+	                	loaded_civilization.loadCannon(unit_id, initialArmor, baseDamage, experience, sanctified);
 	                    break;
 	                    
 	                case 5:
-	                	// carpentry
+	                	// arrow_tower (5)
+	                	loaded_civilization.loadArrowTower(unit_id, initialArmor, baseDamage, experience, sanctified);
+	                    break;
+	                    
+	                case 6:
+	                	// catapult (6)
+	                	loaded_civilization.loadCatapult(unit_id, initialArmor, baseDamage, experience, sanctified);
+	                    break;
+	                    
+	                case 7:
+	                	// rocket_launcher (7)
+	                	loaded_civilization.loadRocketLauncher(unit_id, initialArmor, baseDamage, experience, sanctified);
+	                    break;
+	                    
+	                case 8:
+	                	// magician (8)
+	                	loaded_civilization.loadMagician(unit_id, initialArmor, baseDamage, experience);
+	                    break;
+	                    
+	                case 9:
+	                	// priest (9)
+	                	loaded_civilization.loadPriest(unit_id, initialArmor, baseDamage, experience);
 	                    break;
 	
 	                default:

@@ -247,8 +247,12 @@ public class Civilization implements Variables {
 		
 	}
 	
-	public void loadSwordsman() {
-		
+	public void loadSwordsman(int unit_id, int initialArmor, int baseDamage, int experience, String sanctified) {
+		boolean sanctifiedBool = false;
+		if (sanctified.equals("TRUE")) {
+			sanctifiedBool = true;
+		}
+		this.army[0].add(new Swordsman(unit_id, initialArmor, baseDamage, experience, sanctifiedBool));
 	}
 	
 	public void newSpearman(int n) {
@@ -293,6 +297,14 @@ public class Civilization implements Variables {
 		}
 	}
 	
+	public void loadSpearman(int unit_id, int initialArmor, int baseDamage, int experience, String sanctified) {
+		boolean sanctifiedBool = false;
+		if (sanctified.equals("TRUE")) {
+			sanctifiedBool = true;
+		}
+		this.army[1].add(new Spearman(unit_id, initialArmor, baseDamage, experience, sanctifiedBool));
+	}
+	
 	public void newCrossbow(int n) {
 		try {
 			if (n <= 0) {
@@ -333,6 +345,14 @@ public class Civilization implements Variables {
 			}
 			System.out.println("Se agregaron "+n+" ballestas al ejercito.");
 		}
+	}
+	
+	public void loadCrossbow(int unit_id, int initialArmor, int baseDamage, int experience, String sanctified) {
+		boolean sanctifiedBool = false;
+		if (sanctified.equals("TRUE")) {
+			sanctifiedBool = true;
+		}
+		this.army[2].add(new Crossbow(unit_id, initialArmor, baseDamage, experience, sanctifiedBool));
 	}
 	
 	public void newCannon(int n) {
@@ -377,6 +397,14 @@ public class Civilization implements Variables {
 		}
 	}
 	
+	public void loadCannon(int unit_id, int initialArmor, int baseDamage, int experience, String sanctified) {
+		boolean sanctifiedBool = false;
+		if (sanctified.equals("TRUE")) {
+			sanctifiedBool = true;
+		}
+		this.army[3].add(new Cannon(unit_id, initialArmor, baseDamage, experience, sanctifiedBool));
+	}
+	
 	public void newArrowTower(int n) {
 		try {
 			if (n <= 0) {
@@ -417,6 +445,14 @@ public class Civilization implements Variables {
 			}
 			System.out.println("Se agregaron "+n+" torres arqueras al ejercito.");
 		}
+	}
+	
+	public void loadArrowTower(int unit_id, int initialArmor, int baseDamage, int experience, String sanctified) {
+		boolean sanctifiedBool = false;
+		if (sanctified.equals("TRUE")) {
+			sanctifiedBool = true;
+		}
+		this.army[4].add(new ArrowTower(unit_id, initialArmor, baseDamage, experience, sanctifiedBool));
 	}
 	
 	public void newCatapult(int n) {
@@ -461,6 +497,14 @@ public class Civilization implements Variables {
 		}
 	}
 	
+	public void loadCatapult(int unit_id, int initialArmor, int baseDamage, int experience, String sanctified) {
+		boolean sanctifiedBool = false;
+		if (sanctified.equals("TRUE")) {
+			sanctifiedBool = true;
+		}
+		this.army[5].add(new Catapult(unit_id, initialArmor, baseDamage, experience, sanctifiedBool));
+	}
+	
 	public void newRocketLauncher(int n) {
 		try {
 			if (n <= 0) {
@@ -501,6 +545,14 @@ public class Civilization implements Variables {
 			}
 			System.out.println("Se agregaron "+n+" torres lanzacohetes al ejercito.");
 		}
+	}
+	
+	public void loadRocketLauncher(int unit_id, int initialArmor, int baseDamage, int experience, String sanctified) {
+		boolean sanctifiedBool = false;
+		if (sanctified.equals("TRUE")) {
+			sanctifiedBool = true;
+		}
+		this.army[6].add(new RocketLauncherTower(unit_id, initialArmor, baseDamage, experience, sanctifiedBool));
 	}
 	
 	public void newMagician(int n) {
@@ -550,6 +602,10 @@ public class Civilization implements Variables {
 		}
 	}
 	
+	public void loadMagician(int unit_id, int initialArmor, int baseDamage, int experience) {
+		this.army[7].add(new Magician(unit_id, initialArmor, baseDamage, experience));
+	}
+	
 	public void newPriest(int n) {
 		try {
 			if (n <= 0) {
@@ -595,6 +651,10 @@ public class Civilization implements Variables {
 			}
 			System.out.println("Se agregaron "+n+" sacerdotes al ejercito.");
 		}
+	}
+	
+	public void loadPriest(int unit_id, int initialArmor, int baseDamage, int experience) {
+		this.army[8].add(new Priest(unit_id, initialArmor, baseDamage, experience));
 	}
 	
 	// método que controla el aumento de recuroos y teniendo en cuenta la cantidad de edificios que hay
