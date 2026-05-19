@@ -172,7 +172,7 @@ public class Battle implements Variables {
 	}
 	
 	public String getBattleReport(int battles) {
-	    String reporte = "BATTLE NUMBER: " + battles + "\nBATTLE STATISTICS\n\n";
+	    String reporte = "\nBATTLE NUMBER: " + battles + "\nBATTLE STATISTICS\n\n";
 	    reporte += "Civ. Army\tUnits\tDrops\tEnemy Army\tUnits\tDrops\n";
 
 	    // Civilizacion

@@ -603,17 +603,31 @@ public class Civilization implements Variables {
 				this.wood -= WOOD_COST_PRIEST*n;
 				this.iron -= IRON_COST_PRIEST*n;
 				this.mana -= MANA_COST_PRIEST*n;
-				
+
 				int current_armor_plus = (int) Math.ceil(ARMOR_PRIEST* Math.pow((1+PLUS_ARMOR_PRIEST_BY_TECHNOLOGY*0.01), technologyDefense));
 				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_PRIEST* Math.pow((1+PLUS_ATTACK_PRIEST_BY_TECHNOLOGY*0.01), technologyAttack));
 				
+				// añadimos sacerodtes al ejercito
 				for (int i = 0; i < n; i++) {
 					this.army[8].add(new Priest(0, current_armor_plus, current_attack_plus));
+				}
+				
+				// santificacion (ameeeeeen)
+				for (int i = 0; i <= 6; i++) {
+					// extramos las unidades militares con el bucle que tenemos reclutadas
+					for (MilitaryUnit unidad : this.army[i]) {	
+						// si la unidad es attackunit la santificamos
+						if (unidad instanceof AttackUnit) {
+							((AttackUnit) unidad).sanctify();
+						} // si es defense unit tambien
+						else if (unidad instanceof DefenseUnit) {
+							((DefenseUnit) unidad).sanctify();
+						}
+					}
 				}
 			}
 			System.out.println("Se agregaron "+n+" sacerdotes al ejercito.");
 			panelMenu.getAreaConsola().append("Se agregaron " + n + " sacerdotes al ejercito.\n");
-
 		}
 	}
 	
