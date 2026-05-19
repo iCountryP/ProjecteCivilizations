@@ -15,11 +15,11 @@ public class Civilization implements Variables {
 	private int food;
 	private int mana;
 	
-	private int magicTower;
-	private int church;
-	private int farm;
-	private int smithy;
-	private int carpentry;
+	private ArrayList<int[]> magicTower;
+	private ArrayList<int[]> church;
+	private ArrayList<int[]> farm;
+	private ArrayList<int[]> smithy;
+	private ArrayList<int[]> carpentry;
 
 	private int battles;
 	private boolean gameOver;
@@ -49,11 +49,11 @@ public class Civilization implements Variables {
 		this.food = 50000;
 		this.mana = 0;
 		
-		this.magicTower = 0;
-		this.church = 0;
-		this.farm = 0;
-		this.smithy = 0;
-		this.carpentry = 0;
+		this.magicTower = new ArrayList<int[]>();
+		this.church = new ArrayList<int[]>();
+		this.farm = new ArrayList<int[]>();
+		this.smithy = new ArrayList<int[]>();
+		this.carpentry = new ArrayList<int[]>();
 		
 		this.battles = 0;
 		
@@ -82,13 +82,13 @@ public class Civilization implements Variables {
 	
 	// Metodos para añadir estructuras a la civilizacion
 	
-	public void newChurch() {
+	public void newChurch(int x, int y) {
 		try {
 			if (this.food >= FOOD_COST_CHURCH && this.wood >= WOOD_COST_CHURCH && this.iron >= IRON_COST_CHURCH) {
 				this.food -= FOOD_COST_CHURCH;
 				this.wood -= WOOD_COST_CHURCH;
 				this.iron -= IRON_COST_CHURCH;
-				this.church++;
+				this.church.add(new int[]{x, y});
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
 				
@@ -98,13 +98,13 @@ public class Civilization implements Variables {
 		}
 	}
 	
-	public void newMagicTower() {
+	public void newMagicTower(int x, int y) {
 		try {
 			if (this.food >= FOOD_COST_MAGICTOWER && this.wood >= WOOD_COST_MAGICTOWER && this.iron >= IRON_COST_MAGICTOWER) {
 				this.food -= FOOD_COST_MAGICTOWER;
 				this.wood -= WOOD_COST_MAGICTOWER;
 				this.iron -= IRON_COST_MAGICTOWER;
-				this.magicTower++;
+				this.magicTower.add(new int[]{x, y});
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
 			}
@@ -113,13 +113,13 @@ public class Civilization implements Variables {
 		}
 	}
 	
-	public void newFarm() {
+	public void newFarm(int x, int y) {
 		try {
 			if (this.food >= FOOD_COST_FARM && this.wood >= WOOD_COST_FARM && this.iron >= IRON_COST_FARM) {
 				this.food -= FOOD_COST_FARM;
 				this.wood -= WOOD_COST_FARM;
 				this.iron -= IRON_COST_FARM;
-				this.farm++;
+				this.farm.add(new int[]{x, y});
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
 			}
@@ -128,13 +128,13 @@ public class Civilization implements Variables {
 		}
 	}
 	
-	public void newCarpentry() {
+	public void newCarpentry(int x, int y) {
 		try {
 			if (this.food >= FOOD_COST_CARPENTRY && this.wood >= WOOD_COST_CARPENTRY && this.iron >= IRON_COST_CARPENTRY) {
 				this.food -= FOOD_COST_CARPENTRY;
 				this.wood -= WOOD_COST_CARPENTRY;
 				this.iron -= IRON_COST_CARPENTRY;
-				this.carpentry++;
+				this.carpentry.add(new int[]{x, y});
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
 			}
@@ -143,13 +143,13 @@ public class Civilization implements Variables {
 		}
 	}
 	
-	public void newSmithy() {
+	public void newSmithy(int x, int y) {
 		try {
 			if (this.food >= FOOD_COST_SMITHY && this.wood >= WOOD_COST_SMITHY && this.iron >= IRON_COST_SMITHY) {
 				this.food -= FOOD_COST_SMITHY;
 				this.wood -= WOOD_COST_SMITHY;
 				this.iron -= IRON_COST_SMITHY;
-				this.smithy++;
+				this.smithy.add(new int[]{x, y});
 			} else {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
 			}
@@ -499,7 +499,7 @@ public class Civilization implements Variables {
 				throw new InvalidUnitAmountException(INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE);
 			} else if (this.food < FOOD_COST_MAGICIAN*n || this.wood < WOOD_COST_MAGICIAN*n || this.iron < IRON_COST_MAGICIAN*n || this.mana < MANA_COST_MAGICIAN*n) {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
-			} else if (this.magicTower == 0) {
+			} else if (this.magicTower.size() == 0) {
 				throw new BuildingException(BUILDING_EXCEPTION_MESSAGE);
 			}
 		} catch (InvalidUnitAmountException e) {
@@ -546,7 +546,7 @@ public class Civilization implements Variables {
 				throw new InvalidUnitAmountException(INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE);
 			} else if (this.food < FOOD_COST_PRIEST*n || this.wood < WOOD_COST_PRIEST*n || this.iron < IRON_COST_PRIEST*n || this.mana < MANA_COST_PRIEST*n) {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
-			} else if (this.church < this.army[8].size() + 1) {
+			} else if (this.church.size() < this.army[8].size() + 1) {
 				throw new BuildingException(BUILDING_EXCEPTION_MESSAGE);
 			}
 		} catch (InvalidUnitAmountException e) {
@@ -590,10 +590,10 @@ public class Civilization implements Variables {
 	
 	// método que controla el aumento de recuroos y teniendo en cuenta la cantidad de edificios que hay
 	public void aumentoRecursos() {
-	    this.food = this.food + CIVILIZATION_FOOD_GENERATED + (this.farm * CIVILIZATION_FOOD_GENERATED_PER_FARM);
-	    this.wood = this.wood + CIVILIZATION_WOOD_GENERATED + (this.carpentry * CIVILIZATION_WOOD_GENERATED_PER_CARPENTRY);
-	    this.iron = this.iron + CIVILIZATION_IRON_GENERATED + (this.smithy * CIVILIZATION_IRON_GENERATED_PER_SMITHY);
-	    this.mana = this.mana + (this.magicTower * CIVILIZATION_MANA_GENERATED_PER_MAGIC_TOWER);
+	    this.food = this.food + CIVILIZATION_FOOD_GENERATED + (this.farm.size() * CIVILIZATION_FOOD_GENERATED_PER_FARM);
+	    this.wood = this.wood + CIVILIZATION_WOOD_GENERATED + (this.carpentry.size() * CIVILIZATION_WOOD_GENERATED_PER_CARPENTRY);
+	    this.iron = this.iron + CIVILIZATION_IRON_GENERATED + (this.smithy.size() * CIVILIZATION_IRON_GENERATED_PER_SMITHY);
+	    this.mana = this.mana + (this.magicTower.size() * CIVILIZATION_MANA_GENERATED_PER_MAGIC_TOWER);
 	    //System.out.println(this.magicTower);
 	}
 	
@@ -648,43 +648,23 @@ public class Civilization implements Variables {
 	}
 
 	public int getMagicTower() {
-		return magicTower;
-	}
-
-	public void setMagicTower(int magicTower) {
-		this.magicTower = magicTower;
+		return this.magicTower.size();
 	}
 
 	public int getChurch() {
-		return church;
-	}
-
-	public void setChurch(int church) {
-		this.church = church;
+		return this.church.size();
 	}
 
 	public int getFarm() {
-		return farm;
-	}
-
-	public void setFarm(int farm) {
-		this.farm = farm;
+		return this.farm.size();
 	}
 
 	public int getSmithy() {
-		return smithy;
-	}
-
-	public void setSmithy(int smithy) {
-		this.smithy = smithy;
+		return this.smithy.size();
 	}
 
 	public int getCarpentry() {
-		return carpentry;
-	}
-
-	public void setCarpentry(int carpentry) {
-		this.carpentry = carpentry;
+		return this.carpentry.size();
 	}
 
 	public int getBattles() {
