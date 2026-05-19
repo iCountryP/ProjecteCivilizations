@@ -21,8 +21,8 @@ public class VentanaJuego extends JFrame implements Variables {
 	
 	public VentanaJuego(int game_id) {
 		super();
-		this.civilization = new Civilization(game_id);
-		System.out.println("ID de la civilización cargada: "+this.civilization.getID());
+		this.civilization = DatabaseUtils.loadCivilization(game_id);
+		System.out.println("Cargando la civilización con la id: "+this.civilization.getID());
 		this.initializeGame();
 	}
 	

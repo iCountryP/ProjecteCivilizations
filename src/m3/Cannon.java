@@ -3,13 +3,13 @@ package m3;
 public class Cannon extends AttackUnit {
 	
 	// Constructor 1 (con parametros)
-	public Cannon(int initialArmor, int baseDamage) {
-		super(initialArmor, baseDamage);
+	public Cannon(int id, int initialArmor, int baseDamage) {
+		super(id, initialArmor, baseDamage);
 	}
 	
 	// Constructor 2 (sin parametros)
 	public Cannon() {
-		super(ARMOR_CANNON, BASE_DAMAGE_CANNON);
+		super(0, ARMOR_CANNON, BASE_DAMAGE_CANNON);
 	}
 	
 	// Devuelve el coste de comida para crear la unidad

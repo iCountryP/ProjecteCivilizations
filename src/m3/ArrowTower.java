@@ -2,8 +2,8 @@ package m3;
 
 public class ArrowTower extends DefenseUnit implements MilitaryUnit, Variables {
 
-	public ArrowTower(int initialArmor, int baseDamage) {
-		super(initialArmor, baseDamage);
+	public ArrowTower(int id, int initialArmor, int baseDamage) {
+		super(id, initialArmor, baseDamage);
 	}
 
 	public int getFoodCost() {

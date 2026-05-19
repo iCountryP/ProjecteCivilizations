@@ -182,18 +182,76 @@ public final class DatabaseUtils {
 				System.out.println("Algo ha salido mal...");
 			}
 			
-			// Cerramos la consulta anterior
+			// Cerramos recursos
 			rs_stats.close();
 			rs_stats.close();
 			
 			// Cargar las building de la civilizacion
             String sql_buildings = """
-					SELECT
+					SELECT building_type_id, pos_x, pos_y
+					FROM CIVILIZATION_BUILDING
+					WHERE civilization_id = ?
                 """;
 
             PreparedStatement stmt_buildings = connection.prepareStatement(sql_buildings);
             stmt_buildings.setInt(1, id);
             ResultSet rs_buildings = stmt_buildings.executeQuery();
+            
+            // Recorrer el rs y lo vamos insertando en la civilizacion
+            while (rs_buildings.next()) {
+                int buildingTypeId = rs_buildings.getInt("building_type_id");
+                int posX = rs_buildings.getInt("pos_x");
+                int posY = rs_buildings.getInt("pos_y");
+
+                switch (buildingTypeId) {
+	                case 1:
+	                	// magic_tower
+	                    loaded_civilization.loadMagicTower(posX, posY);
+	                    break;
+
+	                case 2:
+	                	// church
+	                	loaded_civilization.loadChurch(posX, posY);
+	                    break;
+	
+	                case 3:
+	                	// farm
+	                	loaded_civilization.loadFarm(posX, posY);
+	                    break;
+	
+	                case 4:
+	                	// smithy
+	                	loaded_civilization.loadSmithy(posX, posY);
+	                    break;
+	                    
+	                case 5:
+	                	// carpentry
+	                	loaded_civilization.loadCarpentry(posX, posY);
+	                    break;
+	
+	                default:
+	                	// hubo un error
+	                    System.out.println("Edificio desconocido");
+	                    break;
+                }
+            }
+
+            // Cerramos recursos
+            rs_buildings.close();
+            stmt_buildings.close();
+            
+			// Cargar las unidades de la army de la civilizacion
+            String sql_army = """
+					SELECT building_type_id, pos_x, pos_y
+					FROM CIVILIZATION_BUILDING
+					WHERE civilization_id = ?
+                """;
+
+            PreparedStatement stmt_army = connection.prepareStatement(sql_army);
+            stmt_army.setInt(1, id);
+            ResultSet rs_army = stmt_army.executeQuery();
+            
+            
             
             connection.close();
             

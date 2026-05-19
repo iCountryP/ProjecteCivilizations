@@ -1,9 +1,9 @@
 package m3;
 
-public class Priest extends DefenseUnit implements MilitaryUnit, Variables {
+public class Priest extends SpecialUnit implements MilitaryUnit, Variables {
 
-	public Priest(int initialArmor, int baseDamage) {
-		super(initialArmor, baseDamage);
+	public Priest(int id, int initialArmor, int baseDamage) {
+		super(id, initialArmor, baseDamage);
 	}
 
 	public int getFoodCost() {

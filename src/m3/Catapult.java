@@ -2,8 +2,8 @@ package m3;
 
 public class Catapult extends DefenseUnit implements MilitaryUnit, Variables {
 
-	public Catapult(int initialArmor, int baseDamage) {
-		super(initialArmor, baseDamage);
+	public Catapult(int id, int initialArmor, int baseDamage) {
+		super(id, initialArmor, baseDamage);
 	}
 
 	public int getFoodCost() {

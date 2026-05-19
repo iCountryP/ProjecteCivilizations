@@ -1,10 +1,11 @@
 package m3;
 
 public abstract class DefenseUnit implements MilitaryUnit, Variables {
-	private int armor, initialArmor, baseDamage, experience;
+	private int id, armor, initialArmor, baseDamage, experience;
 	private boolean sanctified;
 	
-	public DefenseUnit(int initialArmor, int baseDamage) {
+	public DefenseUnit(int id, int initialArmor, int baseDamage) {
+		this.id = id;
 		this.initialArmor = initialArmor;
 		this.baseDamage = baseDamage;
 		this.armor = initialArmor;

@@ -1,10 +1,11 @@
 package m3;
 
 public abstract class AttackUnit implements MilitaryUnit, Variables {
-	private int armor, initialArmor, baseDamage, experience;
+	private int id, armor, initialArmor, baseDamage, experience;
 	private boolean sanctified;
 	
-	public AttackUnit(int initialArmor, int baseDamage) {
+	public AttackUnit(int id, int initialArmor, int baseDamage) {
+		this.id = id;
 		this.initialArmor = initialArmor;
 		this.baseDamage = baseDamage;
 		this.armor = initialArmor;
