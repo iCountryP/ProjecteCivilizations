@@ -380,9 +380,9 @@ public final class DatabaseUtils {
                 """;
             
             PreparedStatement stmt_buildings = connection.prepareStatement(sql_buildings);
-            stmt_stats.setInt(1, civilization.getID());
+            stmt_buildings.setInt(1, civilization.getID());
             
-            stmt_stats.setInt(2, 1);
+            stmt_buildings.setInt(2, 1);
         	ArrayList<int[]> magicTower = civilization.getMagicTowerPositions();
         	for (int[] position : magicTower) {
         		if (position[0] == 0) {
@@ -393,7 +393,7 @@ public final class DatabaseUtils {
         		}
         	}
         	
-        	stmt_stats.setInt(2, 2);
+        	stmt_buildings.setInt(2, 2);
         	ArrayList<int[]> church = civilization.getChurchPositions();
         	for (int[] position : church) {
         		if (position[0] == 0) {
@@ -404,7 +404,7 @@ public final class DatabaseUtils {
         		}
         	}
         	
-        	stmt_stats.setInt(2, 3);
+        	stmt_buildings.setInt(2, 3);
         	ArrayList<int[]> farm = civilization.getFarmPositions();
         	for (int[] position : farm) {
         		if (position[0] == 0) {
@@ -415,7 +415,7 @@ public final class DatabaseUtils {
         		}
         	}
         	
-        	stmt_stats.setInt(2, 4);
+        	stmt_buildings.setInt(2, 4);
         	ArrayList<int[]> smithy = civilization.getSmithyPositions();
         	for (int[] position : smithy) {
         		if (position[0] == 0) {
@@ -426,7 +426,7 @@ public final class DatabaseUtils {
         		}
         	}
         	
-        	stmt_stats.setInt(2, 5);
+        	stmt_buildings.setInt(2, 5);
         	ArrayList<int[]> carpentry = civilization.getCarpentryPositions();
         	for (int[] position : carpentry) {
         		if (position[0] == 0) {
@@ -440,6 +440,19 @@ public final class DatabaseUtils {
             stmt_buildings.close();
             
             // Guardar unidades
+            String sql_unit_insert = """
+					INSERT
+                """;
+            
+            String sql_unit_update = """
+					UPDATE
+                """;
+            
+            PreparedStatement stmt_unit_insert = connection.prepareStatement(sql_unit_insert);
+            PreparedStatement stmt_unit_update = connection.prepareStatement(sql_unit_update);
+            
+            stmt_unit_insert.close();
+            stmt_unit_update.close();
             
             connection.close();
             
