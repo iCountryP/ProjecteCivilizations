@@ -49,7 +49,7 @@ public class VentanaJuego extends JFrame implements Variables {
 		setVisible(true);
 		
 		// Timer que aumenta y actualiza los recursos (cambiar el primer parametro para aumentar los ms)
-		Timer reloj = new Timer(500, new ActionListener() {
+		Timer reloj = new Timer(1, new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        civilization.aumentoRecursos();
 		        panelMenu.actualizarRecursos();
@@ -67,8 +67,10 @@ public class VentanaJuego extends JFrame implements Variables {
 		            String tiempoFormateado = String.format("%02d:%02d", minutos, segundos);
 		            if(panelMenu.getTiempoRestante() == 60) {
 		            	sonido.reproducirInvasion();
+		            	reloj.stop();
 		                JOptionPane.showMessageDialog(null, objetoMain.viewThreat(tiempoFormateado), "¡INVASIÓN INMINENTE!", JOptionPane.INFORMATION_MESSAGE);
 						panelMenu.getAreaConsola().append(objetoMain.viewThreat(tiempoFormateado));
+						reloj.start();
 		            }
 		            panelMenu.setTiempoRestante(panelMenu.getTiempoRestante() - 1);
 		            panelMenu.getProximoAtaque().setText("Próximo Ataque: " + tiempoFormateado);

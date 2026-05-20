@@ -71,12 +71,12 @@ public class Main implements Variables {
 
 	
 	public String viewThreat(String tiempoRestante) {
-		String informeEnemigo = "NEW THREAT INCOMING:"
+		String informeEnemigo = "Nueva amenaza en camino:"
 				+ "\nSwordsman: " + enemyArmy[0].size()  
 				+ "\nSpearman: " + enemyArmy[1].size()  
 				+ "\nCrossbow: " + enemyArmy[2].size() 
 				+ "\nCannon: " + enemyArmy[3].size()  
-				+ "\n\nLa invasión llegará en: " + tiempoRestante; 
+				+ "\n\nLa invasión llegará en: " + tiempoRestante + "\n"; 
 		return informeEnemigo;
 	}
 	

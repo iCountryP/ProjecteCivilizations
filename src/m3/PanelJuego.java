@@ -27,6 +27,9 @@ public class PanelJuego extends JPanel {
 		super();
 		mapa = new int[10][10];	
 		this.civilizacion = c;
+		cargarEdificios();
+		
+		
 		
 		// Metodo para poder encontrar la posicion de la cuadricula
 		addMouseListener(new MouseAdapter() {
@@ -277,6 +280,41 @@ public class PanelJuego extends JPanel {
 		this.menu = menu;
 	}
 	
-	
+	public void cargarEdificios() {
+		for (int[] coordenadas : civilizacion.getFarmPositions()) {
+			int x = coordenadas[1];
+		    int y = coordenadas[2];
+		    
+		    mapa[x][y] = 1;
+		}
+		
+		for (int[] coordenadas : civilizacion.getCarpentryPositions()) {
+			int x = coordenadas[1];
+		    int y = coordenadas[2];
+		    
+		    mapa[x][y] = 2;
+		}
+		
+		for (int[] coordenadas : civilizacion.getSmithyPositions()) {
+			int x = coordenadas[1];
+		    int y = coordenadas[2];
+		    
+		    mapa[x][y] = 3;
+		}
+		
+		for (int[] coordenadas : civilizacion.getMagicTowerPositions()) {
+			int x = coordenadas[1];
+		    int y = coordenadas[2];
+		    
+		    mapa[x][y] = 4;
+		}
+		
+		for (int[] coordenadas : civilizacion.getChurchPositions()) {
+			int x = coordenadas[1];
+		    int y = coordenadas[2];
+		    
+		    mapa[x][y] = 5;
+		}
+	}
 	
 }
