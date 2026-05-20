@@ -81,20 +81,20 @@
     <section class="navegacion index-nav">
 
         {{#if anteriorIndex}}
-            <a class="nav-btn" href="/civilizaciones?index={{anteriorIndex}}">
+            <a href="/civilizaciones?index={{anteriorIndex}}">
                 &lt;
             </a>
         {{/if}}
 
         {{#each paginasIndex}}
-            <a class="nav-btn {{#if this.activa}}activa{{/if}}"
+            <a class="{{#if this.activa}}activa{{/if}}"
                href="/civilizaciones?index={{this.numero}}">
                 {{this.numero}}
             </a>
         {{/each}}
 
         {{#if siguienteIndex}}
-            <a class="nav-btn" href="/civilizaciones?index={{siguienteIndex}}">
+            <a href="/civilizaciones?index={{siguienteIndex}}">
                 &gt;
             </a>
         {{/if}}
@@ -106,27 +106,27 @@
     {{#if (eq modo "detalle")}}
     <section class="navegacion">
 
-        <a class="nav-btn nav-index" href="/civilizaciones">
+        <a class="nav-index" href="/civilizaciones">
             Índice
         </a>
 
         <div class="nav-paginacion">
 
             {{#if anterior}}
-                <a class="nav-btn" href="/civilizaciones?pagina={{anterior}}">
+                <a href="/civilizaciones?pagina={{anterior}}">
                     &lt;
                 </a>
             {{/if}}
 
             {{#each paginas}}
-                <a class="nav-btn {{#if this.activa}}activa{{/if}}"
+                <a class="{{#if this.activa}}{{/if}}"
                    href="/civilizaciones?pagina={{this.numero}}">
                     {{this.numero}}
                 </a>
             {{/each}}
 
             {{#if siguiente}}
-                <a class="nav-btn" href="/civilizaciones?pagina={{siguiente}}">
+                <a href="/civilizaciones?pagina={{siguiente}}">
                     &gt;
                 </a>
             {{/if}}

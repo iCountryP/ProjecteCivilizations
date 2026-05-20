@@ -177,7 +177,7 @@ app.get('/batallas', async (req, res) => {
         wood_waste,
         iron_waste,
         log_text,
-        DATE_FORMAT(created_at, '%d/%m/%Y %H:%i') AS created_at
+        created_at
       FROM BATTLE
       WHERE civilization_id = ${civilizationId}
       ORDER BY created_at DESC
@@ -193,7 +193,7 @@ app.get('/batallas', async (req, res) => {
       wood_waste: 'number',
       iron_waste: 'number',
       log_text: 'string',
-      created_at: 'string'
+      created_at: 'date'
     });
 
     // =========================
@@ -274,11 +274,48 @@ app.get('/batallas', async (req, res) => {
 });
 
 app.get('/informe', async (req, res) => {
-  res.render('informe');
-});
+  try {
 
-app.get('/programadores', async (req, res) => {
-  res.render('programadores');
+    const battleId = parseInt(req.query.battleId, 10);
+    const civilizationId = parseInt(req.query.civilizationId, 10);
+    const page = parseInt(req.query.page, 10) || 1;
+
+    if (!Number.isInteger(battleId) || battleId <= 0) {
+      return res.status(400).send('ID de batalla inválido');
+    }
+
+    const battleRows = await db.query(`
+      SELECT
+        battle_id,
+        num_battle,
+        log_text,
+        created_at
+      FROM BATTLE
+      WHERE battle_id = ${battleId}
+      LIMIT 1;
+    `);
+
+    if (!battleRows || battleRows.length === 0) {
+      return res.status(404).send('Batalla no encontrada');
+    }
+
+    const battle = db.table_to_json(battleRows, {
+      battle_id: 'number',
+      num_battle: 'number',
+      log_text: 'string',
+      created_at: 'date'
+    })[0];
+
+    res.render('informe', {
+      battle,
+      civilizationId,
+      page
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error consultando la batalla');
+  }
 });
 
 app.get('/civilizaciones', async (req, res) => {
@@ -446,6 +483,11 @@ app.get('/civilizaciones', async (req, res) => {
     res.status(500).send('Error consultant la base de dades');
   }
 });
+
+app.get('/programadores', async (req, res) => {
+  res.render('programadores');
+});
+
 
 // ======================================================
 // SERVER

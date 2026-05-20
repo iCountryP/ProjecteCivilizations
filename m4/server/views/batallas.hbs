@@ -41,7 +41,7 @@
                     <p>
                         Hierro perdido: {{iron_waste}}
                     </p>
-                    <a href="/informe?id={{battle_id}}" class="verdetalles">
+                    <a href="/informe?battleId={{battle_id}}&civilizationId={{../civilizacion.civilization_id}}&page={{../paginaActual}}" class="verdetalles">
                         Ver detalles &gt;
                     </a>
 
@@ -49,22 +49,22 @@
             </div>
         {{/each}}
     </section>
-    <section class="navegacion">
+    <section class="navegacion index-nav">
         {{#if anterior}}
-            <a class="nav-btn" href="/batallas?id={{civilizacion.civilization_id}}&page={{anterior}}">
+            <a href="/batallas?id={{civilizacion.civilization_id}}&page={{anterior}}">
                 &lt;
             </a>
         {{/if}}
 
         {{#each paginas}}
-            <a class="nav-btn {{#if this.activa}}activa{{/if}}"
+            <a class="{{#if this.activa}}activa{{/if}}"
             href="/batallas?id={{../civilizacion.civilization_id}}&page={{this.numero}}">
                 {{this.numero}}
             </a>
         {{/each}}
 
         {{#if siguiente}}
-            <a class="nav-btn" href="/batallas?id={{civilizacion.civilization_id}}&page={{siguiente}}">
+            <a href="/batallas?id={{civilizacion.civilization_id}}&page={{siguiente}}">
                 &gt;
             </a>
         {{/if}}
