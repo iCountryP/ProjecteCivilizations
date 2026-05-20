@@ -25,26 +25,42 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 
+// ESTA CLASE GESTIONA EL PANEL COMPLETO DE MENÚ, INCLUIDA LA PARTE DE CREAR, RECLUTAR, CONSOLA, ETC.
 
 public class PanelMenu extends JPanel implements Variables {
+	// Iconos
+	private ImageIcon iconoMadera = new ImageIcon(new ImageIcon("./src/m3/iconoMadera.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));    	
+	private ImageIcon iconoComida = new ImageIcon(new ImageIcon("./src/m3/iconoComida.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));    	
+	private ImageIcon iconoHierro = new ImageIcon(new ImageIcon("./src/m3/iconoHierro.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));    	
+
 	private JLabel madera, comida, hierro, mana, nivelTecnologiaAtaque, nivelTecnologiaDefensa, reclutarTitulo;
 	private JButton crearGranja, crearCarpinteria, crearHerreria, crearTorreMagica, crearIglesia;
 	private JButton mejorarTecnologiaAtaque, mejorarTecnologiaDefensa;
-	private BufferedImage menu;
-	private int tamanoFuenteBotones = 14;
-	private int edificioSeleccionado;
-	private Civilization civilizacion;
-	private Main objetoMain;
-	private JComboBox<String> selectorTropas;
-	private JTextField cajaCantidadTropas;
-	private JButton btnReclutar, btnVerTropas, btnVerTropasEnemigas, btnGuardar;
+	// Etiquetas Coste Tropa
+			// Labels Coste (irán en el apartado de reclutar)
+	private JLabel costeTropaMadera, costeTropaComida, costeTropaHierro, costeTropaMana;
+	private BufferedImage menu, emperador; //Imagen del fondo del menú + emperador
+	private int tamanoFuenteBotones = 14; // Controla el tamaño de la fuente de los botones
+	private int edificioSeleccionado; // Controla el edificio que se selecciona cuando se clica un botón de crear
+	private Civilization civilizacion; // Clase civilizacion
+	private Main objetoMain; // Instanciamos el objeto MAIN para poder coger algunos métodos
+	private JComboBox<String> selectorTropas; // Para controlar los indices en el desplegable de RECLUTAR
+	private JTextField cajaCantidadTropas; // TextField donde se pondrá la cantidad de tropas
+	private JButton btnReclutar, btnMiImperio, btnVerTropasEnemigas, btnGuardar, btnAyuda; // Botones utiles
 	private int tiempoRestante = 180; // Para que sean 3 minutos.
 	private JLabel proximoAtaque = new JLabel("Próximo Ataque: 03:00"); // Label que indica cuanto falta para el próximo ataque	
 	// Rutas para los iconos de los materiales. el toUri().toString() lo que hace es añadir el file:// para q la etiqueta <img> lo entienda en Java
-	private String rutaMadera = new File("./src/m3/iconoMadera.png").toURI().toString();
-	private String rutaHierro = new File("./src/m3/iconoHierro.png").toURI().toString();
-	private String rutaComida = new File("./src/m3/iconoComida.png").toURI().toString();
-	private JTextArea areaConsola = new JTextArea();
+	private String rutaMadera = new File("./src/m3/iconoMadera.png").toURI().toString(); // Ruta imagen madera par ahacerla compatible con HTML
+	private String rutaHierro = new File("./src/m3/iconoHierro.png").toURI().toString(); // Ruta imagen madera par ahacerla compatible con HTML
+	private String rutaComida = new File("./src/m3/iconoComida.png").toURI().toString(); // Ruta imagen madera par ahacerla compatible con HTML
+	private JTextArea areaConsola = new JTextArea(); // Consola
+	// Labels de información
+	private JLabel civilizacionName, swordsmanCantidad, spearmanCantidad, crossbowCantidad, cannonCantidad, arrowTowerCantidad, catapultCantidad, rocketLauncherCantidad, magicianCantidad, priestCantidad;
+	// Gestor de sonido para controlar los sonidos
+	private GestorSonido sonido = new GestorSonido();
+	// Label de timer de invasion
+	private JLabel relojInvasion;
+
 
 	// Constructor
 	public PanelMenu(PanelJuego mapaJuego, Civilization c, Main m) {
@@ -55,6 +71,14 @@ public class PanelMenu extends JPanel implements Variables {
 		// Imagen Menú
     	try {
     		menu = ImageIO.read(new File("./src/m3/menu.png"));
+    		
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    	
+		// Imagen Emperador
+    	try {
+    		emperador = ImageIO.read(new File("./src/m3/imagenEmperador.jpeg"));
     		
     	} catch (IOException e) {
     		e.printStackTrace();
@@ -95,6 +119,7 @@ public class PanelMenu extends JPanel implements Variables {
     	mejorarTecnologiaAtaque.setForeground(Color.BLACK);
     	mejorarTecnologiaAtaque.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
+				sonido.reproducirClick();
     			civilizacion.upgradeTechnologyAttack();
     			actualizarRecursos();
     		}
@@ -121,6 +146,7 @@ public class PanelMenu extends JPanel implements Variables {
     	mejorarTecnologiaDefensa.setForeground(Color.BLACK);
     	mejorarTecnologiaDefensa.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
+				sonido.reproducirClick();
     			civilizacion.upgradeTechnologyDefense();
     			actualizarRecursos();
     		}
@@ -130,8 +156,6 @@ public class PanelMenu extends JPanel implements Variables {
     	
     	
     	// Etiqueta Madera (esto es lo que muestra los stats en el menú. La cantidad de madera disponible)
-    	//
-    	ImageIcon iconoMadera = new ImageIcon(new ImageIcon("./src/m3/iconoMadera.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));    	
     	madera = new JLabel("Madera: "+ civilizacion.getWood());
     	madera.setBounds(10,110,180,30);
     	madera.setFont(new Font("Arial", Font.BOLD, 15));
@@ -140,7 +164,6 @@ public class PanelMenu extends JPanel implements Variables {
     	add(madera);
     	
     	// Etiqueta comida (esto es lo que muestra los stats en el menú. La cantidad de comida disponible)
-    	ImageIcon iconoComida = new ImageIcon(new ImageIcon("./src/m3/iconoComida.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));    	
     	comida = new JLabel("Comida: "+ civilizacion.getFood());
     	comida.setBounds(10,135,180,30);
     	comida.setFont(new Font("Arial", Font.BOLD, 15));
@@ -149,7 +172,6 @@ public class PanelMenu extends JPanel implements Variables {
     	add(comida);
     	
     	// Etiqueta hierro (esto es lo que muestra los stats en el menú. La cantidad de hierro disponible)
-    	ImageIcon iconoHierro = new ImageIcon(new ImageIcon("./src/m3/iconoHierro.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));    	
     	hierro = new JLabel("Hierro: "+ civilizacion.getIron());
     	hierro.setBounds(10,160,180,30);
     	hierro.setFont(new Font("Arial", Font.BOLD, 15));
@@ -191,9 +213,12 @@ public class PanelMenu extends JPanel implements Variables {
     		// Establece el edificio a 1 para saber que queremos construir granja.
     	crearGranja.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				sonido.reproducirClick();
 				mapaJuego.setEdificioSeleccionadoJuego(1);
 				areaConsola.append("Has seleccionado construir: Granja\n");
 				areaConsola.append("Coste {Madera: "+ WOOD_COST_FARM + ", Comida: " + FOOD_COST_FARM + ", Hierro: " + IRON_COST_FARM + "}\n");
+				areaConsola.append("*********************************************************\n");
+
 			}
 		});
     	add(crearGranja);
@@ -220,9 +245,11 @@ public class PanelMenu extends JPanel implements Variables {
 			// Establece el edificio a 2 para saber que queremos construir carpinteria.
     	crearCarpinteria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				sonido.reproducirClick();
 				mapaJuego.setEdificioSeleccionadoJuego(2);
 				areaConsola.append("Has seleccionado construir: Carpinteria\n");
 				areaConsola.append("Coste {Madera: "+ WOOD_COST_CARPENTRY + ", Comida: " + FOOD_COST_CARPENTRY + ", Hierro: " + IRON_COST_CARPENTRY + "}\n");
+				areaConsola.append("*********************************************************\n");
 
 			}
 		});
@@ -250,9 +277,12 @@ public class PanelMenu extends JPanel implements Variables {
 			// Establece el edificio a 3 para saber que queremos construir herreria.
     	crearHerreria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				sonido.reproducirClick();
 				mapaJuego.setEdificioSeleccionadoJuego(3);
 				areaConsola.append("Has seleccionado construir: Herreria\n");
 				areaConsola.append("Coste {Madera: "+ WOOD_COST_SMITHY + ", Comida: " + FOOD_COST_SMITHY + ", Hierro: " + IRON_COST_SMITHY + "}\n");
+				areaConsola.append("*********************************************************\n");
+
 
 			}
 		});
@@ -280,9 +310,12 @@ public class PanelMenu extends JPanel implements Variables {
 			// Establece el edificio a 4 para saber que queremos construir torre magica.
     	crearTorreMagica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				sonido.reproducirClick();
 				mapaJuego.setEdificioSeleccionadoJuego(4);
 				areaConsola.append("Has seleccionado construir: Torre Mágica\n");
 				areaConsola.append("Coste {Madera: "+ WOOD_COST_MAGICTOWER + ", Comida: " + FOOD_COST_MAGICTOWER + ", Hierro: " + IRON_COST_MAGICTOWER + "}\n");
+				areaConsola.append("*********************************************************\n");
+
 
 			}
 		});
@@ -310,9 +343,12 @@ public class PanelMenu extends JPanel implements Variables {
 		// Establece el edificio a 5 para saber que queremos construir iglesia.
     	crearIglesia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				sonido.reproducirClick();
 				mapaJuego.setEdificioSeleccionadoJuego(5);
 				areaConsola.append("Has seleccionado construir: Iglesia (Amén)\n");
 				areaConsola.append("Coste {Madera: "+ WOOD_COST_CHURCH + ", Comida: " + FOOD_COST_CHURCH + ", Hierro: " + IRON_COST_CHURCH + "}\n");
+				areaConsola.append("*********************************************************\n");
+
 
 			}
 		});
@@ -322,7 +358,7 @@ public class PanelMenu extends JPanel implements Variables {
     	
     	// Titulo Etiqueta Reclutar
     	reclutarTitulo = new JLabel("-- RECLUTAR --");
-    	reclutarTitulo.setBounds(40,415,150,30);
+    	reclutarTitulo.setBounds(40,420,150,30);
     	reclutarTitulo.setFont(new Font("Arial", Font.BOLD, 16));
     	reclutarTitulo.setForeground(Color.WHITE);
     	add(reclutarTitulo);
@@ -330,31 +366,114 @@ public class PanelMenu extends JPanel implements Variables {
     	// Desplegable Reclutar
     	String[] tiposDeTropa = {"Swordsman", "Spearman", "Crossbow", "Cannon", "Arrow Tower", "Catapult", "Rocket Launcher", "Magician", "Priest"};
     	selectorTropas = new JComboBox<String>(tiposDeTropa);
-    	selectorTropas.setBounds(15,445,170,30);
-    	selectorTropas.setToolTipText("<html>"
-    		    + "<div style='margin: 5px; font-family: Arial;'>"
-    		    + "<b>--- TABLA DE COSTES (por unidad) ---</b><br><br>"
-    		    + "<b>Swordsman: </b>" + WOOD_COST_SWORDSMAN + " Madera, "+ IRON_COST_SWORDSMAN +" Hierro, " + FOOD_COST_SWORDSMAN +" Comida, " + MANA_COST_SWORDSMAN + " Mana<br>"
-    		    + "<b>Spearman: </b>"+ WOOD_COST_SPEARMAN + " Madera, "+ IRON_COST_SPEARMAN +" Hierro, " + FOOD_COST_SPEARMAN +" Comida, " + MANA_COST_SPEARMAN + " Mana<br>"
-    		    + "<b>Crossbow: </b>"+ WOOD_COST_CROSSBOW + " Madera, "+ IRON_COST_CROSSBOW +" Hierro, " + FOOD_COST_CROSSBOW +" Comida, " + MANA_COST_CROSSBOW + " Mana<br>"
-    		    + "<b>Cannon: </b>"+ WOOD_COST_CANNON + " Madera, "+ IRON_COST_CANNON +" Hierro, " + FOOD_COST_CANNON +" Comida, " + MANA_COST_CANNON + " Mana<br>"
-    		    + "<b>Arrow Tower: </b>"+ WOOD_COST_ARROWTOWER + " Madera, "+ IRON_COST_ARROWTOWER +" Hierro, " + FOOD_COST_ARROWTOWER +" Comida, " + MANA_COST_ARROWTOWER + " Mana<br>"
-    		    + "<b>Catapult: </b>"+ WOOD_COST_CATAPULT + " Madera, "+ IRON_COST_CATAPULT +" Hierro, " + FOOD_COST_CATAPULT +" Comida, " + MANA_COST_CATAPULT + " Mana<br>"
-    		    + "<b>Rocket Launcher: </b>"+ WOOD_COST_ROCKETLAUNCHERTOWER + " Madera, "+ IRON_COST_ROCKETLAUNCHERTOWER +" Hierro, " + FOOD_COST_ROCKETLAUNCHERTOWER +" Comida, " + MANA_COST_ROCKETLAUNCHERTOWER + " Mana<br>"
-    		    + "<b>Magician: </b>"+ WOOD_COST_MAGICIAN + " Madera, "+ IRON_COST_MAGICIAN +" Hierro, " + FOOD_COST_MAGICIAN +" Comida, " + MANA_COST_MAGICIAN + " Mana<br>"
-    		    + "<b>Priest: </b>"+ WOOD_COST_PRIEST + " Madera, "+ IRON_COST_PRIEST +" Hierro, " + FOOD_COST_PRIEST +" Comida, " + MANA_COST_PRIEST + " Mana<br>"
-    		    + "</div>"
-    		    + "</html>");
+    	selectorTropas.setBounds(15,515,170,30);
+    	// Listener que cambia los costes en funcion del desplegable
+    	selectorTropas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int indiceSeleccionado = selectorTropas.getSelectedIndex();
+		        // IFS PARA QUE LOS COSTES SE TENGAN EN CUENTA SEGUN TU ELECCIÓN
+		        if (indiceSeleccionado == 0) { // Swordsman
+		            costeTropaMadera.setText(String.valueOf(WOOD_COST_SWORDSMAN));
+		            costeTropaComida.setText(String.valueOf(FOOD_COST_SWORDSMAN));
+		            costeTropaHierro.setText(String.valueOf(IRON_COST_SWORDSMAN));
+		            costeTropaMana.setText(String.valueOf(MANA_COST_SWORDSMAN));
+
+		            
+		        } else if (indiceSeleccionado == 1) { // Spearman
+		            costeTropaMadera.setText(String.valueOf(WOOD_COST_SPEARMAN));
+		            costeTropaComida.setText(String.valueOf(FOOD_COST_SPEARMAN));
+		            costeTropaHierro.setText(String.valueOf(IRON_COST_SPEARMAN));
+		            costeTropaMana.setText(String.valueOf(MANA_COST_SPEARMAN));
+
+		            
+		        } else if (indiceSeleccionado == 2) { // Crossbow
+		            costeTropaMadera.setText(String.valueOf(WOOD_COST_CROSSBOW));
+		            costeTropaComida.setText(String.valueOf(FOOD_COST_CROSSBOW));
+		            costeTropaHierro.setText(String.valueOf(IRON_COST_CROSSBOW));
+		            costeTropaMana.setText(String.valueOf(MANA_COST_CROSSBOW));
+
+		        } else if (indiceSeleccionado == 3) { // Cannon
+		            costeTropaMadera.setText(String.valueOf(WOOD_COST_CANNON));
+		            costeTropaComida.setText(String.valueOf(FOOD_COST_CANNON));
+		            costeTropaHierro.setText(String.valueOf(IRON_COST_CANNON));
+		            costeTropaMana.setText(String.valueOf(MANA_COST_CANNON));
+
+		        } else if (indiceSeleccionado == 4) { // Arrow Tower
+		            costeTropaMadera.setText(String.valueOf(WOOD_COST_ARROWTOWER));
+		            costeTropaComida.setText(String.valueOf(FOOD_COST_ARROWTOWER));
+		            costeTropaHierro.setText(String.valueOf(IRON_COST_ARROWTOWER));
+		            costeTropaMana.setText(String.valueOf(MANA_COST_ARROWTOWER));
+
+		        } else if (indiceSeleccionado == 5) { // Catapult
+		            costeTropaMadera.setText(String.valueOf(WOOD_COST_CATAPULT));
+		            costeTropaComida.setText(String.valueOf(FOOD_COST_CATAPULT));
+		            costeTropaHierro.setText(String.valueOf(IRON_COST_CATAPULT));
+		            costeTropaMana.setText(String.valueOf(MANA_COST_CATAPULT));
+
+		        } else if (indiceSeleccionado == 6) { // Rocket Launcher
+		            costeTropaMadera.setText(String.valueOf(WOOD_COST_ROCKETLAUNCHERTOWER));
+		            costeTropaComida.setText(String.valueOf(FOOD_COST_ROCKETLAUNCHERTOWER));
+		            costeTropaHierro.setText(String.valueOf(IRON_COST_ROCKETLAUNCHERTOWER));
+		            costeTropaMana.setText(String.valueOf(MANA_COST_ROCKETLAUNCHERTOWER));
+
+		        } else if (indiceSeleccionado == 7) { // Magician
+		            costeTropaMadera.setText(String.valueOf(WOOD_COST_MAGICIAN));
+		            costeTropaComida.setText(String.valueOf(FOOD_COST_MAGICIAN));
+		            costeTropaHierro.setText(String.valueOf(IRON_COST_MAGICIAN));
+		            costeTropaMana.setText(String.valueOf(MANA_COST_MAGICIAN));
+
+		        } else if (indiceSeleccionado == 8) { // Priest
+		            costeTropaMadera.setText(String.valueOf(WOOD_COST_PRIEST));
+		            costeTropaComida.setText(String.valueOf(FOOD_COST_PRIEST));
+		            costeTropaHierro.setText(String.valueOf(IRON_COST_PRIEST));
+		            costeTropaMana.setText(String.valueOf(MANA_COST_PRIEST));
+
+		        } 
+		        
+			}
+    		
+    	});
     	add(selectorTropas);
     	
     	// Caja cantidad de tropas
     	cajaCantidadTropas = new JTextField("1");
-    	cajaCantidadTropas.setBounds(15,485,80,30); 
+    	cajaCantidadTropas.setBounds(15,557,80,30); 
     	add(cajaCantidadTropas);
     	
+    	// COSTE TROPAS
+		// Coste Madera
+    	costeTropaMadera = new JLabel(String.valueOf(WOOD_COST_SWORDSMAN));
+    	costeTropaMadera.setBounds(25,445,150,30);
+    	costeTropaMadera.setFont(new Font("Arial", Font.BOLD, 12));
+    	costeTropaMadera.setForeground(Color.WHITE);
+    	costeTropaMadera.setIcon(iconoMadera);
+    	add(costeTropaMadera);
+		// Coste Comida
+		costeTropaComida = new JLabel(String.valueOf(FOOD_COST_SWORDSMAN));
+		costeTropaComida.setBounds(95,445,150,30);
+		costeTropaComida.setFont(new Font("Arial", Font.BOLD, 12));
+		costeTropaComida.setForeground(Color.WHITE);
+		costeTropaComida.setIcon(iconoComida);
+		add(costeTropaComida);
+		// Coste Hierro
+		costeTropaHierro = new JLabel(String.valueOf(IRON_COST_SWORDSMAN));
+		costeTropaHierro.setBounds(25,475,150,30);
+		costeTropaHierro.setFont(new Font("Arial", Font.BOLD, 12));
+		costeTropaHierro.setForeground(Color.WHITE);
+		costeTropaHierro.setIcon(iconoHierro);
+		add(costeTropaHierro);
+		// Coste Mana
+		costeTropaMana = new JLabel(String.valueOf(MANA_COST_SWORDSMAN));
+		costeTropaMana.setBounds(95,475,150,30);
+		costeTropaMana.setFont(new Font("Arial", Font.BOLD, 12));
+		costeTropaMana.setForeground(Color.WHITE);
+		costeTropaMana.setIcon(iconoMana);
+		add(costeTropaMana);
+		
+		
     	// Boton Reclutar
     	btnReclutar = new JButton("Reclutar");
-    	btnReclutar.setBounds(100,485,85,30);
+    	btnReclutar.setBounds(100,557,85,30);
     	btnReclutar.setIcon(disenoDorado);
     	btnReclutar.setHorizontalTextPosition(SwingConstants.CENTER);
     	btnReclutar.setVerticalTextPosition(SwingConstants.CENTER);
@@ -365,6 +484,7 @@ public class PanelMenu extends JPanel implements Variables {
     	btnReclutar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					sonido.reproducirClick();
 					int cantidad = Integer.parseInt(cajaCantidadTropas.getText());
 					int indiceSeleccionado = selectorTropas.getSelectedIndex();
 					//areaConsola.append("Cantidad " + cantidad);
@@ -372,7 +492,7 @@ public class PanelMenu extends JPanel implements Variables {
 					if (indiceSeleccionado == 0) {
 					    civilizacion.newSwordsman(cantidad);
 					} else if (indiceSeleccionado == 1) {
-					    civilizacion.newSpearman(cantidad); 
+					    civilizacion.newSpearman(cantidad);
 					} else if (indiceSeleccionado == 2) {
 					    civilizacion.newCrossbow(cantidad); 
 					} else if (indiceSeleccionado == 3) {
@@ -390,26 +510,29 @@ public class PanelMenu extends JPanel implements Variables {
 					}
 				} 
 				catch(Exception arg0) {
-					areaConsola.append("Error obteniendo la cantidad.\n");
+					//areaConsola.append("Error obteniendo la cantidad.\n");
 				};
 
 			}
 		});
     	add(btnReclutar);
     	
+
+
     	// ---------------- ZONA VER TROPAS / EDIFICIOS ----------------
-    	btnVerTropas = new JButton("Ver Tropas / Edificios");
-    	btnVerTropas.setBounds(15,525,170,30); 
+    	btnMiImperio = new JButton("Mi Imperio");
+    	btnMiImperio.setBounds(590,465,100,30); 
     	ImageIcon disenoAzul = new ImageIcon("./src/m3/disenoBotonAzul.png"); 
-    	btnVerTropas.setIcon(disenoAzul);
-    	btnVerTropas.setHorizontalTextPosition(SwingConstants.CENTER);
-    	btnVerTropas.setVerticalTextPosition(SwingConstants.CENTER);
-    	btnVerTropas.setContentAreaFilled(false);
-    	btnVerTropas.setFocusPainted(false);
-    	btnVerTropas.setForeground(Color.BLACK);
+    	btnMiImperio.setIcon(disenoAzul);
+    	btnMiImperio.setHorizontalTextPosition(SwingConstants.CENTER);
+    	btnMiImperio.setVerticalTextPosition(SwingConstants.CENTER);
+    	btnMiImperio.setContentAreaFilled(false);
+    	btnMiImperio.setFocusPainted(false);
+    	btnMiImperio.setForeground(Color.BLACK);
 		
-    	btnVerTropas.addActionListener(new ActionListener() {
+    	btnMiImperio.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
+				sonido.reproducirClick();
     			String informe = "========== TROPAS ACTUALES ==========" + 
     					"\n--- Attack Units ---\n*******************************************************" +
     					"\nSwordsman: " + civilizacion.getSwordsmanCount() + 
@@ -433,11 +556,11 @@ public class PanelMenu extends JPanel implements Variables {
     		}
     		
     	});
-    	add(btnVerTropas);
+    	add(btnMiImperio);
     	
     	// ---------------- ZONA VER TROPAS ENEMIGAS ----------------
-    	btnVerTropasEnemigas = new JButton("Ver Tropas Enemigas");
-    	btnVerTropasEnemigas.setBounds(15,565,170,30); 
+    	btnVerTropasEnemigas = new JButton("Enemigos");
+    	btnVerTropasEnemigas.setBounds(590,505,100,30); 
     	btnVerTropasEnemigas.setIcon(disenoAzul);
     	btnVerTropasEnemigas.setHorizontalTextPosition(SwingConstants.CENTER);
     	btnVerTropasEnemigas.setVerticalTextPosition(SwingConstants.CENTER);
@@ -446,6 +569,7 @@ public class PanelMenu extends JPanel implements Variables {
     	btnVerTropasEnemigas.setForeground(Color.BLACK);
     	btnVerTropasEnemigas.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
+				sonido.reproducirClick();
     			int min = tiempoRestante / 60;
     			int seg = tiempoRestante % 60;
     			String textoTiempo = String.format("%02d:%02d", min, seg);
@@ -458,6 +582,69 @@ public class PanelMenu extends JPanel implements Variables {
     	
     	// ---------------- PANEL INFERIOR CONSOLA ----------------
     	
+    	//{"Swordsman", "Spearman", "Crossbow", "Cannon", "Arrow Tower", "Catapult", "Rocket Launcher", "Magician", "Priest"};
+    	civilizacionName = new JLabel("CIVILIZACION: " + civilizacion.getName());
+    	civilizacionName.setBounds(335,455,250,30);
+    	civilizacionName.setFont(new Font("Arial", Font.BOLD, 16));
+    	civilizacionName.setForeground(Color.WHITE);
+    	add(civilizacionName);
+    	
+    		// ATTACK UNITS
+    	swordsmanCantidad = new JLabel("Swordsman: " + civilizacion.getSwordsmanCount());
+    	swordsmanCantidad.setBounds(335,480,180,30);
+    	swordsmanCantidad.setFont(new Font("Arial", Font.BOLD, 13));
+    	swordsmanCantidad.setForeground(Color.WHITE);
+    	add(swordsmanCantidad);
+    	
+    	spearmanCantidad = new JLabel("Spearman: " + civilizacion.getSpearmanCount());
+    	spearmanCantidad.setBounds(335,500,180,30);
+    	spearmanCantidad.setFont(new Font("Arial", Font.BOLD, 13));
+    	spearmanCantidad.setForeground(Color.WHITE);
+    	add(spearmanCantidad);
+    	
+    	crossbowCantidad = new JLabel("Crossbow: " + civilizacion.getCrossbowCount());
+    	crossbowCantidad.setBounds(335,520,180,30);
+    	crossbowCantidad.setFont(new Font("Arial", Font.BOLD, 13));
+    	crossbowCantidad.setForeground(Color.WHITE);
+    	add(crossbowCantidad);
+    	
+    	cannonCantidad = new JLabel("Cannon: " + civilizacion.getCannonCount());
+    	cannonCantidad.setBounds(335,540,180,30);
+    	cannonCantidad.setFont(new Font("Arial", Font.BOLD, 13));
+    	cannonCantidad.setForeground(Color.WHITE);
+    	add(cannonCantidad);
+    	
+    		// DEFENSE UNITS 
+    	arrowTowerCantidad = new JLabel("Arrow Tower: " + civilizacion.getArrowTowerCount());
+    	arrowTowerCantidad.setBounds(335,560,180,30);
+    	arrowTowerCantidad.setFont(new Font("Arial", Font.BOLD, 13));
+    	arrowTowerCantidad.setForeground(Color.WHITE);
+    	add(arrowTowerCantidad);
+    	
+    	catapultCantidad = new JLabel("Catapult: " + civilizacion.getCatapultCount());
+    	catapultCantidad.setBounds(450,480,180,30);
+    	catapultCantidad.setFont(new Font("Arial", Font.BOLD, 13));
+    	catapultCantidad.setForeground(Color.WHITE);
+    	add(catapultCantidad);
+    	
+    	rocketLauncherCantidad = new JLabel("Rocket Launch: " + civilizacion.getRocketLauncherCount());
+    	rocketLauncherCantidad.setBounds(450,500,180,30);
+    	rocketLauncherCantidad.setFont(new Font("Arial", Font.BOLD, 13));
+    	rocketLauncherCantidad.setForeground(Color.WHITE);
+    	add(rocketLauncherCantidad);
+    	
+    		// SPECIAL UNITS
+    	magicianCantidad = new JLabel("Magician: " + civilizacion.getMagicianCount());
+    	magicianCantidad.setBounds(450,520,180,30);
+    	magicianCantidad.setFont(new Font("Arial", Font.BOLD, 13));
+    	magicianCantidad.setForeground(Color.WHITE);
+    	add(magicianCantidad);
+    	
+    	priestCantidad = new JLabel("Priest: " + civilizacion.getPriestCount());
+    	priestCantidad.setBounds(450,540,180,30);
+    	priestCantidad.setFont(new Font("Arial", Font.BOLD, 13));
+    	priestCantidad.setForeground(Color.WHITE);
+    	add(priestCantidad);
     	// ---------------- BOTON GUARDAR PARTIDA ----------------
     	btnGuardar = new JButton("Guardar");
     	btnGuardar.setBounds(700,465,80,30); 
@@ -474,13 +661,49 @@ public class PanelMenu extends JPanel implements Variables {
     	});
     	add(btnGuardar);
     	
+    	// ---------------- BOTON AYUDA ----------------
+    	btnAyuda = new JButton("Ayuda");
+    	btnAyuda.setBounds(700,505,80,30); 
+    	btnAyuda.setIcon(disenoAzul);
+    	btnAyuda.setHorizontalTextPosition(SwingConstants.CENTER);
+    	btnAyuda.setVerticalTextPosition(SwingConstants.CENTER);
+    	btnAyuda.setContentAreaFilled(false);
+    	btnAyuda.setFocusPainted(false);
+    	btnAyuda.setForeground(Color.BLACK);
+    	btnAyuda.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent e) {
+    			areaConsola.append("Bienvenido a Dominion:"
+    					+"\n- El objetivo de este juego es sobrevivir las máximas oleadas posibles "
+    					+"\nque irán atacando tu civilizacion cada cierto tiempo." 
+    					+ "\n\n - Puedes construir edifcios para mejorar tu producción de recursos."
+    					+ "\n Para ello, haz click en uno de los botones de creación y posteriormente"
+    					+ "\n en una casilla vacía para construir tu primer edificio."
+    					+ "\n\n - Recluta tropas desde el menú desplegable RECLUTAR para poder hacer"
+    					+ "\nfrente a todas las amenazas que ataquen tu civilización."
+    					+ "\nPuedes ver el coste por unidad de cada tropa justo encima del menú \ndesplegable"
+    					+ "\n\n- Pierde la batalla la civilización que haya tenido más perdidas."
+    					+ "\n ¡OJO! Si pierdes una batalla tu civilización será destruida y tendrás\nque volver a comenzar desde cero."
+    					+ "\n\nBuena suerte. La estrategia que sigas a la hora de reclutar y de \nconstruir tus edificios serán clave para poder sobrevivir a los ataques \nenemigos.\n\n\n");
+    			
+    		}
+    	});
+    	add(btnAyuda);
+    	
+    	// Ponemos le label
+    	proximoAtaque.setBounds(590,550,200,30); 
+    	proximoAtaque.setFont(new Font("Consolas", Font.BOLD, 16));
+    	proximoAtaque.setForeground(Color.RED); 
+    	add(proximoAtaque);
+    	
+    	
 	} // Fin del constructor
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.drawImage(menu, 0, 0, 200, 600, this);
-		g2d.drawImage(menu, 200, 0, 600, 600, this);
+		g2d.drawImage(menu, 0, 0, 200, 600, this); // Imagen menú vertical
+		g2d.drawImage(menu, 200, 0, 600, 600, this); // Imagen menú horizontal
+		g2d.drawImage(emperador, 200, 460, 130, 130, this);
 	}
 
 	
@@ -489,8 +712,20 @@ public class PanelMenu extends JPanel implements Variables {
 	    comida.setText("Comida: " + civilizacion.getFood()); // Actualiza el texto del food en el menú
 	    hierro.setText("Hierro: " + civilizacion.getIron()); // Actualiza el texto del iron en el menú
 	    mana.setText("Mana: " + civilizacion.getMana()); // Actualiza el texto del mana en el menú
+	    
+	    
+	    swordsmanCantidad.setText("Swordsman: " + civilizacion.getSwordsmanCount());
+	    spearmanCantidad.setText("Spearman: " + civilizacion.getSpearmanCount());
+	    crossbowCantidad.setText("Crossbow: " + civilizacion.getCrossbowCount());
+	    cannonCantidad.setText("Cannon: " + civilizacion.getCannonCount());
+	    arrowTowerCantidad.setText("Arrow Tower: " + civilizacion.getArrowTowerCount());
+	    catapultCantidad.setText("Catapult: " + civilizacion.getCatapultCount());
+	    rocketLauncherCantidad.setText("Rocket Launch: " + civilizacion.getRocketLauncherCount());
+	    magicianCantidad.setText("Magician: " + civilizacion.getMagicianCount());
+	    priestCantidad.setText("Priest: " + civilizacion.getPriestCount());
 
 
+	    
 	    nivelTecnologiaAtaque.setText("Nv. Atk: " + civilizacion.getTechnologyAttack());
 	    nivelTecnologiaDefensa.setText("Nv. Def: " + civilizacion.getTechnologyDefense());
 	}

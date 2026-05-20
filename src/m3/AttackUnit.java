@@ -3,7 +3,8 @@ package m3;
 public abstract class AttackUnit implements MilitaryUnit, Variables {
 	private int id, armor, initialArmor, baseDamage, experience;
 	private boolean sanctified;
-	
+	private GestorSonido sonido = new GestorSonido(); // Para manejar los sonidos.
+
 	public AttackUnit(int id, int initialArmor, int baseDamage) {
 		this.id = id;
 		this.initialArmor = initialArmor;
@@ -47,8 +48,16 @@ public abstract class AttackUnit implements MilitaryUnit, Variables {
 		return this.experience;
 	};
 	
+	
+	// Metodo que santifica y aumenta en % las stats de los pjs
 	public void sanctify() {
-		this.sanctified = true;
+		sonido.reproducirSantificado();
+	    if (!this.sanctified) {       
+	        this.sanctified = true;
+	        this.armor += (int) Math.ceil(this.armor * (PLUS_ARMOR_UNIT_SANCTIFIED / 100.0));
+	        this.initialArmor += (int) Math.ceil(this.initialArmor * (PLUS_ARMOR_UNIT_SANCTIFIED / 100.0));
+	        this.baseDamage += (int) Math.ceil(this.baseDamage * (PLUS_ATTACK_UNIT_SANCTIFIED / 100.0));
+	    }
 	}
 	
 	public int getID() {
