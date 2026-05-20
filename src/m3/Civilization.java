@@ -832,6 +832,10 @@ public class Civilization implements Variables {
 	public int getBattles() {
 		return battles;
 	}
+	
+	public void increseBattles() {
+		this.battles++;
+	}
 
 	public void setBattles(int battles) {
 		this.battles = battles;

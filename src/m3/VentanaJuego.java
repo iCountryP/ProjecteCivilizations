@@ -83,6 +83,16 @@ public class VentanaJuego extends JFrame implements Variables {
 		            Battle batalla = new Battle(civilization.getArmy(), objetoMain.getEnemyArmy());
 		            
 		            batalla.startBattle();
+		            civilization.increseBattles();
+		            String reporte = batalla.getBattleReport(civilization.getBattles());
+		            String battleDevelopment = batalla.getBattleDevelopment();
+		            
+		            DatabaseUtils.battleAutoSave(batalla, civilization);
+		            
+		            // Sumar waste a civilizacion, sumar 1 al contador de batallas de la civilizacion
+		            
+		            panelMenu.mostrarConsola(battleDevelopment);
+		            panelMenu.mostrarConsola(reporte);
 		            // si perdemos la batalla :
 		            if(batalla.isGameOver()) {
 		            	// si la batalla se pierde, paramos los relojes
