@@ -47,8 +47,15 @@ public abstract class AttackUnit implements MilitaryUnit, Variables {
 		return this.experience;
 	};
 	
+	
+	// Metodo que santifica y aumenta en % las stats de los pjs
 	public void sanctify() {
-		this.sanctified = true;
+	    if (!this.sanctified) {       
+	        this.sanctified = true;
+	        this.armor += (int) Math.ceil(this.armor * (PLUS_ARMOR_UNIT_SANCTIFIED / 100.0));
+	        this.initialArmor += (int) Math.ceil(this.initialArmor * (PLUS_ARMOR_UNIT_SANCTIFIED / 100.0));
+	        this.baseDamage += (int) Math.ceil(this.baseDamage * (PLUS_ATTACK_UNIT_SANCTIFIED / 100.0));
+	    }
 	}
 	
 }
