@@ -27,6 +27,7 @@ public class Civilization implements Variables {
 	private boolean gameOver;
 	
 	private PanelMenu panelMenu; // Para appendear mensajes en la consola.
+
 	
 	private ArrayList<MilitaryUnit>[] army = new ArrayList[9];
 	// army[0] --> Swordsman
