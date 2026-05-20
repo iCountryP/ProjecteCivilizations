@@ -121,11 +121,11 @@ public class Battle implements Variables {
 			// El atacante ataca a la unidad defensora
 			this.defendingUnit.takeDamage(this.attackingUnit.getAttack());
 			
-			// Comprobar si genera residuos
-			this.generateWaste();
-			
 			// Comprobar si se ha muerto la unidad defensora
 			if (this.defendingUnit.getActualArmor() == 0) {
+				// Comprobar si genera residuos
+				this.generateWaste();
+				
 				// Si la tropa muere, lo añadimos al battleDevelopment
 				this.battleDevelopment += "we eliminate " + troopsNames[this.defendingGroupIndex] + "\n";
 
@@ -341,6 +341,10 @@ public class Battle implements Variables {
 		}
 	}
 	
+	public boolean getBattleResult() {
+		return this.gameOver;
+	}
+	
 	private void handleExtraAttackingTurn() {
 		if (RandomUtils.chancePercent(CHANCE_ATTACK_AGAIN_UNITS[this.attackingGroupIndex])) {
 			this.attackAgain = true;
@@ -357,11 +361,73 @@ public class Battle implements Variables {
 		}
 	}
 	
-	
-	
 	public int[] getWaste() {
 		int[] waste = {this.wasteWood, this.wasteIron};
 		return waste;
+	}
+	
+	public int[][] getResourceLosses() {
+		
+		int[][] resource_losses = new int[2][6];
+		
+	    int costFoodCiv = 0, costWoodCiv = 0, costIronCiv = 0; // los costes de la civilizacion (nosotros)
+	    int lossFoodCiv = 0, lossWoodCiv = 0, lossIronCiv = 0; // las perdidas de la civilizacion (nosotros)
+	    // Enemigo 
+	    int costFoodEnemy = 0, costWoodEnemy = 0, costIronEnemy = 0; // los costes del enemigo
+	    int lossFoodEnemy = 0, lossWoodEnemy = 0, lossIronEnemy = 0; // los perdidas del enemigo
+		
+	    for (int i = 0; i < 9; i++) {
+	        
+	        // soldados caidos por faccion
+	        int soldadosPerdidosCiv = this.initialArmies[0][i] - this.currentArmies[0][i];
+	        int soldadosPerdidosEnemy = this.initialArmies[1][i] - this.currentArmies[1][i];
+
+	        // costes civilizacion
+	        costFoodCiv += this.initialArmies[0][i] * FOOD_COST_UNITS[i];
+	        costWoodCiv += this.initialArmies[0][i] * WOOD_COST_UNITS[i];
+	        costIronCiv += this.initialArmies[0][i] * IRON_COST_UNITS[i];
+	        // costes enemigo
+	        costFoodEnemy += this.initialArmies[1][i] * FOOD_COST_UNITS[i];
+	        costWoodEnemy += this.initialArmies[1][i] * WOOD_COST_UNITS[i];
+	        costIronEnemy += this.initialArmies[1][i] * IRON_COST_UNITS[i];
+
+	        // perdidas civilizacion
+	        lossFoodCiv += soldadosPerdidosCiv * FOOD_COST_UNITS[i];
+	        lossWoodCiv += soldadosPerdidosCiv * WOOD_COST_UNITS[i];
+	        lossIronCiv += soldadosPerdidosCiv * IRON_COST_UNITS[i];
+	        // perdidas enemigo
+	        lossFoodEnemy += soldadosPerdidosEnemy * FOOD_COST_UNITS[i];
+	        lossWoodEnemy += soldadosPerdidosEnemy * WOOD_COST_UNITS[i];
+	        lossIronEnemy += soldadosPerdidosEnemy * IRON_COST_UNITS[i];
+       
+	    }
+	    
+//		initial_iron_amount, initial_wood_amount, initial_food_amount,
+//		iron_losses, wood_losses, food_losses
+	    
+	    resource_losses[0][0] = costIronCiv;
+	    resource_losses[0][1] = costWoodCiv;
+	    resource_losses[0][2] = costFoodCiv;
+	    resource_losses[0][3] = lossIronCiv;
+	    resource_losses[0][4] = lossWoodCiv;
+	    resource_losses[0][5] = lossFoodCiv;
+	    
+	    resource_losses[1][0] = costIronEnemy;
+	    resource_losses[1][1] = costWoodEnemy;
+	    resource_losses[1][2] = costFoodEnemy;
+	    resource_losses[1][3] = lossIronEnemy;
+	    resource_losses[1][4] = lossWoodEnemy;
+	    resource_losses[1][5] = lossFoodEnemy;
+		
+		return resource_losses;
+	}
+
+	public int[][] getInitialArmies() {
+		return initialArmies;
+	}
+
+	public int[][] getCurrentArmies() {
+		return currentArmies;
 	}
 	
 	

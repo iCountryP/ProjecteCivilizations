@@ -494,7 +494,7 @@ public final class DatabaseUtils {
                     // INSERT
                     if (unit.getID() == 0) {
 
-                        stmt_unit_insert.setInt(2, i + 1);
+                        stmt_unit_insert.setInt(2, j + 1);
                         stmt_unit_insert.setInt(3, unit.getInitialArmor());
                         stmt_unit_insert.setInt(4, unit.getActualArmor());
                         stmt_unit_insert.setInt(5, unit.getAttack());
@@ -590,45 +590,117 @@ public final class DatabaseUtils {
             Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
             System.out.println("Conexión creada correctamente");
             
-            String sql = """
-                    INSERT INTO CIVILIZATION (
-                        name,
-                        wood_amount,
-                        iron_amount,
-                        food_amount,
-                        mana_amount,
-                        technology_defense_level,
-                        technology_attack_level
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            // Battle stats
+            String sql_battle_stats = """
+                    INSERT INTO BATTLE (civilization_id, num_battle, winner, wood_waste, iron_waste, log_text
+            		) VALUES (?, ?, ?, ?, ?, ?)
                 """;
 
-            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement stmt_battle_stats = connection.prepareStatement(sql_battle_stats, Statement.RETURN_GENERATED_KEYS);
 
-            stmt.setString(1, civilization.getName());
-            stmt.setInt(2, civilization.getWood());
-            stmt.setInt(3, civilization.getIron());
-            stmt.setInt(4, civilization.getFood());
-            stmt.setInt(5, civilization.getMana());
-
-            stmt.setInt(6, civilization.getTechnologyDefense());
-            stmt.setInt(7, civilization.getTechnologyAttack());
-
-            stmt.executeUpdate();
+            stmt_battle_stats.setInt(1, civilization.getID());
+            stmt_battle_stats.setInt(2, civilization.getBattles());
             
-            // Obtener la ID generada
-            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (battle.getBattleResult()) {
+            	// Ha perdido
+            	stmt_battle_stats.setString(3, "enemy");
+            } else {
+            	// Ha ganado
+            	stmt_battle_stats.setString(3, "civilization");
+            }
+            
+            stmt_battle_stats.setInt(4, battle.getWaste()[0]);
+            stmt_battle_stats.setInt(5, battle.getWaste()[1]);
+            
+            stmt_battle_stats.setString(6, battle.getBattleDevelopment()); // Log paso a paso
+            
+            // Ejecutar INSERT
+            stmt_battle_stats.executeUpdate();
+
+            // Obtener battle_id generado
+            ResultSet generatedKeys = stmt_battle_stats.getGeneratedKeys();
+            
+            int battleId = -1;
 
             if (generatedKeys.next()) {
-                int generatedId = generatedKeys.getInt(1);
-
-                // Settear la id al objeto
-                civilization.setID(generatedId);
-
-                System.out.println("ID generada: " + generatedId);
+                battleId = generatedKeys.getInt(1);
             }
 
             generatedKeys.close();
-            stmt.close();
+            stmt_battle_stats.close();
+            
+            // Battle drops
+            String sql_battle_losses = """
+                    INSERT INTO BATTLE_RESOURCE_LOSSES (battle_id, side,
+									initial_iron_amount, initial_wood_amount, initial_food_amount,
+									iron_losses, wood_losses, food_losses
+					) VALUES (?, ?, ?, ?, ?, ?, ?, ?),
+							 (?, ?, ?, ?, ?, ?, ?, ?)
+                """;
+            
+            int[][] resource_losses = battle.getResourceLosses();
+
+            PreparedStatement stmt_battle_losses = connection.prepareStatement(sql_battle_losses);
+            
+            stmt_battle_losses.setInt(1, battleId);
+            stmt_battle_losses.setString(2, "civilization");
+            
+            stmt_battle_losses.setInt(3, resource_losses[0][0]);
+            stmt_battle_losses.setInt(4, resource_losses[0][1]);
+            stmt_battle_losses.setInt(5, resource_losses[0][2]);
+            
+            stmt_battle_losses.setInt(6, resource_losses[0][3]);
+            stmt_battle_losses.setInt(7, resource_losses[0][4]);
+            stmt_battle_losses.setInt(8, resource_losses[0][5]);
+            
+            // ---
+            
+            stmt_battle_losses.setInt(9, battleId);
+            stmt_battle_losses.setString(10, "enemy");
+            
+            stmt_battle_losses.setInt(11, resource_losses[1][0]);
+            stmt_battle_losses.setInt(12, resource_losses[1][1]);
+            stmt_battle_losses.setInt(13, resource_losses[1][2]);
+            
+            stmt_battle_losses.setInt(14, resource_losses[1][3]);
+            stmt_battle_losses.setInt(15, resource_losses[1][4]);
+            stmt_battle_losses.setInt(16, resource_losses[1][5]);
+            
+            stmt_battle_losses.executeUpdate();
+            stmt_battle_losses.close();
+            
+            // Battle drops by groups
+            String sql_battle_drops = """
+                    INSERT INTO UNIT_GROUP (battle_id, side, unit_type_id, initial_amount, drops
+            		) VALUES (?, ?, ?, ?, ?)
+                """;
+            
+            int[][] initial_armies = battle.getInitialArmies();
+            int[][] current_armies = battle.getCurrentArmies();
+            
+            PreparedStatement stmt_battle_drops = connection.prepareStatement(sql_battle_drops);
+            stmt_battle_drops.setInt(1, battleId);
+            
+            for (int i = 0; i < 2; i++) {
+            	
+            	if (i == 0) {
+            		stmt_battle_drops.setString(2, "civilization");
+            	} else {
+            		stmt_battle_drops.setString(2, "enemy");
+            	}
+            	
+                for (int j = 0; j < 9; j++) {
+
+                	stmt_battle_drops.setInt(3, j+1);
+                	stmt_battle_drops.setInt(4, initial_armies[i][j]);
+                	stmt_battle_drops.setInt(5, initial_armies[i][j] - current_armies[i][j]);
+                	
+                	stmt_battle_drops.executeUpdate();
+                }
+            }
+            
+            stmt_battle_drops.close();
+            
             connection.close();
             
         } catch(ClassNotFoundException ex) {
