@@ -19,7 +19,7 @@ public interface Variables {
 	public final int CIVILIZATION_FOOD_GENERATED_PER_FARM = (int) (1.5*CIVILIZATION_FOOD_GENERATED);
 	public final int CIVILIZATION_MANA_GENERATED_PER_MAGIC_TOWER = 5;
 	
-	// Costes de la tecnologia (Ahora sube progresivamente en ambas ramas)
+	// Costes de la tecnologia
 	public final int UPGRADE_BASE_DEFENSE_TECHNOLOGY_IRON_COST = 1500;
 	public final int UPGRADE_BASE_DEFENSE_TECHNOLOGY_WOOD_COST = 1000;
 	public final int UPGRADE_PLUS_DEFENSE_TECHNOLOGY_IRON_COST = 80;

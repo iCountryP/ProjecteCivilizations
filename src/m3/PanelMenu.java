@@ -122,6 +122,7 @@ public class PanelMenu extends JPanel implements Variables {
 				sonido.reproducirClick();
     			civilizacion.upgradeTechnologyAttack();
     			actualizarRecursos();
+    			actualizarTooltipAtaque();
     		}
     	});
     	add(mejorarTecnologiaAtaque);
@@ -133,6 +134,8 @@ public class PanelMenu extends JPanel implements Variables {
     	nivelTecnologiaDefensa.setFont(new Font("Arial", Font.BOLD, 16));
     	nivelTecnologiaDefensa.setForeground(Color.WHITE);
     	add(nivelTecnologiaDefensa);
+    	
+    	// Método para actualizar
 
     	// Boton Subir Tecnologia Def
     	mejorarTecnologiaDefensa = new JButton("+");
@@ -149,6 +152,7 @@ public class PanelMenu extends JPanel implements Variables {
 				sonido.reproducirClick();
     			civilizacion.upgradeTechnologyDefense();
     			actualizarRecursos();
+    			actualizarTooltipDefensa();
     		}
     	});
     	add(mejorarTecnologiaDefensa);
@@ -695,7 +699,9 @@ public class PanelMenu extends JPanel implements Variables {
     	proximoAtaque.setForeground(Color.RED); 
     	add(proximoAtaque);
     	
-    	
+    	// Inicializamos el toolTip de los botones de defensa y ataque
+    	actualizarTooltipDefensa();
+    	actualizarTooltipAtaque();
 	} // Fin del constructor
 	
 	public void paintComponent(Graphics g) {
@@ -728,6 +734,33 @@ public class PanelMenu extends JPanel implements Variables {
 	    
 	    nivelTecnologiaAtaque.setText("Nv. Atk: " + civilizacion.getTechnologyAttack());
 	    nivelTecnologiaDefensa.setText("Nv. Def: " + civilizacion.getTechnologyDefense());
+	}
+	
+	public void actualizarTooltipDefensa() {
+	    int nivelDefensa = civilizacion.getTechnologyDefense();
+	    int costeHierro = (int) Math.ceil(UPGRADE_BASE_DEFENSE_TECHNOLOGY_IRON_COST * Math.pow((1 + UPGRADE_PLUS_DEFENSE_TECHNOLOGY_IRON_COST * 0.01), nivelDefensa));
+	    int costeMadera = (int) Math.ceil(UPGRADE_BASE_DEFENSE_TECHNOLOGY_WOOD_COST * Math.pow((1 + UPGRADE_PLUS_DEFENSE_TECHNOLOGY_WOOD_COST * 0.01), nivelDefensa));
+	    mejorarTecnologiaDefensa.setToolTipText("<html>"
+	        + "<div style='margin: 5px; font-family: Arial;'>"
+	        + "<b>Subir Defensa (Nivel " + (nivelDefensa + 1) + "):</b><br><br>"
+	        + "<img src='" + rutaMadera + "' width='25' height='25'> Madera: " + costeMadera + "<br>"
+	        + "<img src='" + rutaHierro + "' width='25' height='25'> Hierro: " + costeHierro + "<br>"
+	        + "</div>"
+	        + "</html>");
+	}
+	
+	
+	public void actualizarTooltipAtaque() {
+	    int nivelAtaque = civilizacion.getTechnologyAttack();
+	    int costeHierro = (int) Math.ceil(UPGRADE_BASE_ATTACK_TECHNOLOGY_IRON_COST * Math.pow((1 + UPGRADE_PLUS_ATTACK_TECHNOLOGY_IRON_COST * 0.01), nivelAtaque));
+	    int costeMadera = (int) Math.ceil(UPGRADE_BASE_ATTACK_TECHNOLOGY_WOOD_COST * Math.pow((1 + UPGRADE_PLUS_ATTACK_TECHNOLOGY_WOOD_COST * 0.01), nivelAtaque));
+	    mejorarTecnologiaAtaque.setToolTipText("<html>"
+	        + "<div style='margin: 5px; font-family: Arial;'>"
+	        + "<b>Subir Ataque (Nivel " + (nivelAtaque + 1) + "):</b><br><br>"
+	        + "<img src='" + rutaMadera + "' width='25' height='25'> Madera: " + costeMadera + "<br>"
+	        + "<img src='" + rutaHierro + "' width='25' height='25'> Hierro: " + costeHierro + "<br>"
+	        + "</div>"
+	        + "</html>");
 	}
 	
 	public void mostrarConsola(String mensaje) {
