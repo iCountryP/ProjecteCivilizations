@@ -2,6 +2,7 @@ package m3;
 
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class VentanaInicio extends JFrame {
@@ -12,6 +13,8 @@ public class VentanaInicio extends JFrame {
 		setBounds(300,100,700,435);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Dominion");
+		ImageIcon img = new ImageIcon("./src/m3/logo.png");
+		setIconImage(img.getImage());
 		setResizable(false);
 
 		PanelInicio panelInicio = new PanelInicio();

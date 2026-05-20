@@ -21,6 +21,7 @@ public class PanelJuego extends JPanel {
 	private int edificioSeleccionadoJuego;
 	private Civilization civilizacion;
 	private PanelMenu menu;
+	private GestorSonido sonido = new GestorSonido();
 	
 	public PanelJuego(Civilization c) {
 		super();
@@ -39,11 +40,12 @@ public class PanelJuego extends JPanel {
 		        	if(edificioSeleccionadoJuego == 1) {
 		        		int granjasAntesDeConstruir = civilizacion.getFarm();
 		        		
-		        		civilizacion.newFarm();
+		        		civilizacion.newFarm(columna, fila);
 		        		
 		        		if(civilizacion.getFarm() > granjasAntesDeConstruir) {
 		        			mapa[columna][fila] = 1;
 		        			System.out.println("Se ha construido una granja.");
+				        	sonido.reproducirConstruccion();
 		        			menu.getAreaConsola().append("Granja construida en " + "[" + columna + "]" + "[" + fila + "]. Tienes un total de: " + civilizacion.getFarm() + " granjas.\n");
 		        			menu.getAreaConsola().append("*********************************************************\n");
 		        		}
@@ -53,11 +55,12 @@ public class PanelJuego extends JPanel {
 		        	else if(edificioSeleccionadoJuego == 2) {
 		        		int carpinteriasAntesDeConstruir = civilizacion.getCarpentry();
 		        		
-		        		civilizacion.newCarpentry();
+		        		civilizacion.newCarpentry(columna, fila);
 		        		
 		        		if(civilizacion.getCarpentry() > carpinteriasAntesDeConstruir) {
 		        			mapa[columna][fila] = 2;
 		        			//System.out.println("Se ha construido una carpinteria.");
+				        	sonido.reproducirConstruccion();
 		        			menu.getAreaConsola().append("Carpinteria construida en " + "[" + columna + "]" + "[" + fila + "]. Tienes un total de: " + civilizacion.getCarpentry() + " carpinterías.\n");
 		        			menu.getAreaConsola().append("*********************************************************\n");
 
@@ -69,11 +72,12 @@ public class PanelJuego extends JPanel {
 		        	else if(edificioSeleccionadoJuego == 3) {
 		        		int herreriasAntesDeConstruir = civilizacion.getSmithy();
 		        		
-		        		civilizacion.newSmithy();
+		        		civilizacion.newSmithy(columna, fila);
 		        		
 		        		if(civilizacion.getSmithy() > herreriasAntesDeConstruir) {
 		        			mapa[columna][fila] = 3;
 		        			//System.out.println("Se ha construido una herreria.");
+				        	sonido.reproducirConstruccion();
 		        			menu.getAreaConsola().append("Herrería construida en " + "[" + columna + "]" + "[" + fila + "]. Tienes un total de: " + civilizacion.getSmithy() + " herrerías.\n");
 		        			menu.getAreaConsola().append("*********************************************************\n");
 
@@ -84,11 +88,12 @@ public class PanelJuego extends JPanel {
 		        	else if(edificioSeleccionadoJuego == 4) {
 		        		int magicTowerAntesDeConstruir = civilizacion.getMagicTower();
 		        		
-		        		civilizacion.newMagicTower();
+		        		civilizacion.newMagicTower(columna, fila);
 		        		
 		        		if(civilizacion.getMagicTower() > magicTowerAntesDeConstruir) {
 		        			mapa[columna][fila] = 4;
 		        			//System.out.println("Se ha construido una torre mágica.");
+				        	sonido.reproducirConstruccion();
 		        			menu.getAreaConsola().append("Torre mágica construida en " + "[" + columna + "]" + "[" + fila + "]. Tienes un total de: " + civilizacion.getMagicTower() + " torres mágicas.\n");
 		        			menu.getAreaConsola().append("*********************************************************\n");
 
@@ -99,21 +104,20 @@ public class PanelJuego extends JPanel {
 		        	else if(edificioSeleccionadoJuego == 5) {
 		        		int churchAntesDeConstruir = civilizacion.getChurch();
 		        		
-		        		civilizacion.newChurch();
+		        		civilizacion.newChurch(columna, fila);
 		        		
 		        		if(civilizacion.getChurch() > churchAntesDeConstruir) {
 		        			mapa[columna][fila] = 5;
 		        			System.out.println("Se ha construido una iglesia (Amén).");
+				        	sonido.reproducirConstruccion();
 		        			menu.getAreaConsola().append("Iglesia construida en " + "[" + columna + "]" + "[" + fila + "]. Tienes un total de: " + civilizacion.getChurch() + " iglesias.\n");
 		        			menu.getAreaConsola().append("*********************************************************\n");
 
 		        		}
 		        	}
-		        	
 		        } 
 		        else if (mapa[columna][fila] > 0 && edificioSeleccionadoJuego > 0) {
 		        	System.out.println("Ya existe un edificio en esa cuadricula.");
-		        	menu.getAreaConsola().setFont(Color.red);
 		        	menu.getAreaConsola().append("Ya existe un edificio en esa cuadrícula.\n");
         			menu.getAreaConsola().append("*********************************************************\n");
 

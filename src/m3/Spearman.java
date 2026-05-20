@@ -3,13 +3,21 @@ package m3;
 public class Spearman extends AttackUnit {
 	
 	// Constructor 1 (con parametros)
-	public Spearman(int initialArmor, int baseDamage) {
-		super(initialArmor, baseDamage);
+	public Spearman(int id, int initialArmor, int baseDamage) {
+		super(id, initialArmor, baseDamage);
 	}
 	
 	// Constructor 2 (sin parametros)
 	public Spearman() {
-		super(ARMOR_SPEARMAN, BASE_DAMAGE_SPEARMAN);
+		super(0, ARMOR_SPEARMAN, BASE_DAMAGE_SPEARMAN);
+	}
+	
+	public Spearman(int id, int initialArmor, int baseDamage, int experience, boolean sanctified) {
+		super(id, initialArmor, baseDamage);
+		this.gainExperience(experience);
+		if (sanctified) {
+			this.sanctify();
+		}
 	}
 	
 	// Devuelve el coste de comida para crear la unidad

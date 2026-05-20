@@ -3,13 +3,22 @@ package m3;
 public class Swordsman extends AttackUnit {
 	
 	// Constructor 1 (con parametros)
-	public Swordsman(int initialArmor, int baseDamage) {
-		super(initialArmor, baseDamage);
+	public Swordsman(int id, int initialArmor, int baseDamage) {
+		super(id, initialArmor, baseDamage);
 	}
 	
 	// Constructor 2 (sin parametros)
 	public Swordsman() {
-		super(ARMOR_SWORDSMAN, BASE_DAMAGE_SWORDSMAN);
+		super(0, ARMOR_SWORDSMAN, BASE_DAMAGE_SWORDSMAN);
+	}
+	
+	// Constructor 3 (para cargar desde la base de datos)
+	public Swordsman(int id, int initialArmor, int baseDamage, int experience, boolean sanctified) {
+		super(id, initialArmor, baseDamage);
+		this.gainExperience(experience);
+		if (sanctified) {
+			this.sanctify();
+		}
 	}
 	
 	// Devuelve el coste de comida para crear la unidad

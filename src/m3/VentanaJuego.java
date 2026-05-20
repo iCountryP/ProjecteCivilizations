@@ -1,5 +1,6 @@
 package m3;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
@@ -9,7 +10,8 @@ import javax.swing.JOptionPane;
 public class VentanaJuego extends JFrame implements Variables {
 	private Main objetoMain = new Main();
 	private Civilization civilization;
-	
+	private GestorSonido sonido = new GestorSonido();
+
 	// Constructor para nuevo juego
 	public VentanaJuego(String new_name) {
 		super();
@@ -19,24 +21,35 @@ public class VentanaJuego extends JFrame implements Variables {
 		this.initializeGame();
 	}
 	
+	public VentanaJuego(int game_id) {
+		super();
+		this.civilization = DatabaseUtils.loadCivilization(game_id);
+		System.out.println("Cargando la civilización con la id: "+this.civilization.getID());
+		this.initializeGame();
+	}
+	
 	public void initializeGame() {
-		setLayout(null);
+		setLayout(null); // No usamos ningun layout. Lo ponemos libre y lo posicionamos todos a posiciones exactas. 
 		setBounds(75,100,1414,637);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Dominion");
-		setResizable(false);
-		PanelJuego panelJuego = new PanelJuego(this.civilization);
+		ImageIcon img = new ImageIcon("./src/m3/logo.png"); // Imagen logotipo del juego
+		setIconImage(img.getImage()); // Establecemos el icono
+		setResizable(false); // No se resizea (asi no se nos rompe la estética)
+		PanelJuego panelJuego = new PanelJuego(this.civilization); 
 		panelJuego.setBounds(0, 0, 600, 600);
 		PanelMenu panelMenu = new PanelMenu(panelJuego, this.civilization, objetoMain);
-		panelMenu.setBounds(600,0, 200,600);
+		panelMenu.setBounds(600,0, 800,600);
 		panelJuego.setMenu(panelMenu);
 		
 		add(panelJuego);
 		add(panelMenu);
+		this.civilization.setPanelMenu(panelMenu);
+		sonido.reproducirMusica();
 		setVisible(true);
 		
 		// Timer que aumenta y actualiza los recursos (cambiar el primer parametro para aumentar los ms)
-		Timer reloj = new Timer(1000, new ActionListener() {
+		Timer reloj = new Timer(500, new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        civilization.aumentoRecursos();
 		        panelMenu.actualizarRecursos();
@@ -53,9 +66,9 @@ public class VentanaJuego extends JFrame implements Variables {
 		            int segundos = panelMenu.getTiempoRestante() % 60;
 		            String tiempoFormateado = String.format("%02d:%02d", minutos, segundos);
 		            if(panelMenu.getTiempoRestante() == 60) {
-		                JOptionPane.showMessageDialog(null, objetoMain.viewThreat(tiempoFormateado), "¡INVASIÓN INMINENTE!", JOptionPane.WARNING_MESSAGE);
+		            	sonido.reproducirInvasion();
+		                JOptionPane.showMessageDialog(null, objetoMain.viewThreat(tiempoFormateado), "¡INVASIÓN INMINENTE!", JOptionPane.INFORMATION_MESSAGE);
 						panelMenu.getAreaConsola().append(objetoMain.viewThreat(tiempoFormateado));
-
 		            }
 		            panelMenu.setTiempoRestante(panelMenu.getTiempoRestante() - 1);
 		            panelMenu.getProximoAtaque().setText("Próximo Ataque: " + tiempoFormateado);
@@ -64,7 +77,7 @@ public class VentanaJuego extends JFrame implements Variables {
 		        // cuando el tiempo se acaba
 		        else {
 		            panelMenu.setTiempoRestante(180);
-		            Battle batalla = new Battle(miCivilizacion.getArmy(), objetoMain.getEnemyArmy());
+		            Battle batalla = new Battle(civilization.getArmy(), objetoMain.getEnemyArmy());
 		            batalla.startBattle();
 		            String reporte = batalla.getBattleReport(1);
 		            String battleDevelopment = batalla.getBattleDevelopment();
