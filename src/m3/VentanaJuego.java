@@ -73,6 +73,9 @@ public class VentanaJuego extends JFrame implements Variables {
 		            batalla.startBattle();
 		            String reporte = batalla.getBattleReport(1);
 		            String battleDevelopment = batalla.getBattleDevelopment();
+		            
+		            DatabaseUtils.battleAutoSave(batalla, civilization);
+		            
 		            panelMenu.mostrarConsola(battleDevelopment);
 		            panelMenu.mostrarConsola(reporte);
 

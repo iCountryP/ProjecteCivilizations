@@ -470,7 +470,6 @@ public class PanelMenu extends JPanel implements Variables {
     	btnGuardar.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
     			DatabaseUtils.saveCivilization(civilizacion);
-    			System.out.println("Guardado con exito");
     		}
     	});
     	add(btnGuardar);

@@ -18,13 +18,11 @@ public class Battle implements Variables {
 	private String battleDevelopment; // Desarrollo de la batalla que tendra que mostrarse despues en algun sitio
 	
 	private int wasteWood, wasteIron; // Residuos generados en la batalla
-	private int enemyDrops, civilizationDrops; // Bajas de los ejercitos
 	
 	private int[] totalInitialUnits; // Array de 2 columnas, unidades totales iniciales tuyas y enemigas
 	private int[] totalCurrentUnits; // Array de 2 columnas, unidades totales actuales tuyas y enemigas
 	
 	// Variables para el loop de batalla
-	
 	private boolean battleFinished;
 	private boolean attackAgain;
 	private boolean gameOver;
@@ -49,8 +47,6 @@ public class Battle implements Variables {
 		// Valores por defecto antes de la batalla
 		this.wasteWood = 0;
 		this.wasteIron = 0;
-		this.enemyDrops = 0;
-		this.civilizationDrops = 0;
 		this.battleDevelopment = "";
 		
 		// Instanciación de las armys
@@ -206,7 +202,7 @@ public class Battle implements Variables {
 	        lossFoodEnemy += soldadosPerdidosEnemy * FOOD_COST_UNITS[i];
 	        lossWoodEnemy += soldadosPerdidosEnemy * WOOD_COST_UNITS[i];
 	        lossIronEnemy += soldadosPerdidosEnemy * IRON_COST_UNITS[i];
-	        // 	    reporte += "Army planet\tUnits\tDrops\tInitial Army Enemy\tUnits\tDrops\n";
+	        // reporte += "Army planet\tUnits\tDrops\tInitial Army Enemy\tUnits\tDrops\n";
 
 	        reporte += troopsNames[i] + "\t" + this.initialArmies[0][i] + "\t" + soldadosPerdidosCiv + "\t" + troopsNames[i] + "\t" + this.initialArmies[1][i] + "\t" + soldadosPerdidosEnemy + "\n";	        
 	    }
