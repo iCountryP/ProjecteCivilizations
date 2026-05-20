@@ -85,4 +85,21 @@ public class GestorSonido  {
 	        e.printStackTrace();
 	    }
 	}
+	
+	public void reproducirInvasion() {
+	    File sonidoInvasion = new File("./src/m3/sonidoInvasion.wav"); // hacemos un objeto tipo file para el sonido
+	    try { // obligatorio un try catch
+	        AudioInputStream stream = AudioSystem.getAudioInputStream(sonidoInvasion); // le pasamos a un objeto de tipo AudioInputStream el sonido
+	        Clip clip = AudioSystem.getClip(); // hacemos un objeto tipo Clip que coja el audio
+	        clip.open(stream); // le pasamos el objeto AudioInputStream que tiene el sonido
+	        clip.start(); // lo iniciamos
+	        
+	    } catch (UnsupportedAudioFileException e) {
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    } catch (LineUnavailableException e) {
+	        e.printStackTrace();
+	    }
+	}
 }
