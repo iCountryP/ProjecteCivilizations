@@ -232,6 +232,7 @@ public class Battle implements Variables {
 	        reporte += "Battle Won by Civilization, We Collect Rubble\n";
 	    } else { // si pierde
 	        reporte += "Battle Lost by Civilization\n";
+	        
 	    }
 	    
 	    return reporte;
@@ -366,6 +367,10 @@ public class Battle implements Variables {
 	public int[] getWaste() {
 		int[] waste = {this.wasteWood, this.wasteIron};
 		return waste;
+	}
+
+	public boolean isGameOver() {
+		return gameOver;
 	}
 	
 	
