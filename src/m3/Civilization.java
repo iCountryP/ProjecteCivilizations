@@ -2,6 +2,8 @@ package m3;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class Civilization implements Variables {
 
 	private int id;
@@ -23,6 +25,9 @@ public class Civilization implements Variables {
 
 	private int battles;
 	private boolean gameOver;
+	
+	private PanelMenu panelMenu; // Para appendear mensajes en la consola.
+
 	
 	private ArrayList<MilitaryUnit>[] army = new ArrayList[9];
 	// army[0] --> Swordsman
@@ -102,6 +107,8 @@ public class Civilization implements Variables {
 			}
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("ATENCIÓN: Recursos insuficientes para construir.\n");
+			JOptionPane.showMessageDialog(null, "No tienes suficientes recursos para este edificio.", "Faltan Recursos", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 	
@@ -117,6 +124,8 @@ public class Civilization implements Variables {
 			}
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("ATENCIÓN: Recursos insuficientes para construir.\n");
+			JOptionPane.showMessageDialog(null, "No tienes suficientes recursos para este edificio.", "Faltan Recursos", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 	
@@ -132,6 +141,8 @@ public class Civilization implements Variables {
 			}
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("ATENCIÓN: Recursos insuficientes para construir.\n");
+			JOptionPane.showMessageDialog(null, "No tienes suficientes recursos para este edificio.", "Faltan Recursos", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 	
@@ -147,6 +158,8 @@ public class Civilization implements Variables {
 			}
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("ATENCIÓN: Recursos insuficientes para construir.\n");
+			JOptionPane.showMessageDialog(null, "No tienes suficientes recursos para este edificio.", "Faltan Recursos", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 	
@@ -162,6 +175,8 @@ public class Civilization implements Variables {
 			}
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("ATENCIÓN: Recursos insuficientes para construir.\n");
+			JOptionPane.showMessageDialog(null, "No tienes suficientes recursos para este edificio.", "Faltan Recursos", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 	
@@ -181,6 +196,7 @@ public class Civilization implements Variables {
 			}
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("ATENCIÓN: Recursos insuficientes para mejorar la defensa.\n");
 		}
 	}
 	
@@ -197,6 +213,8 @@ public class Civilization implements Variables {
 			}
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("ATENCIÓN: Recursos insuficientes para mejorar el ataque.\n");
+
 		}
 	}
 	
@@ -215,6 +233,8 @@ public class Civilization implements Variables {
 			
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("No hay recursos suficientes para crear la unidad/todas las unidades \ndeseadas.\n");
+
 			int maxFood = this.food / FOOD_COST_SWORDSMAN;
 			int maxWood = this.wood / WOOD_COST_SWORDSMAN;
 			int maxIron = this.iron / IRON_COST_SWORDSMAN;
@@ -229,7 +249,7 @@ public class Civilization implements Variables {
 				n = 0;
 			}
 		} finally {
-			System.out.println("N VALE ESTO "+n);
+
 			if (n > 0) {
 				this.food -= FOOD_COST_SWORDSMAN*n;
 				this.wood -= WOOD_COST_SWORDSMAN*n;
@@ -244,6 +264,7 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" espadachines al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " espadachines al ejercito.\n");
 		}
 		
 	}
@@ -268,6 +289,8 @@ public class Civilization implements Variables {
 			n = 0;
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("No hay recursos suficientes para crear la unidad/todas las unidades \ndeseadas.\n");
+
 			int maxFood = this.food / FOOD_COST_SPEARMAN;
 			int maxWood = this.wood / WOOD_COST_SPEARMAN;
 			int maxIron = this.iron / IRON_COST_SPEARMAN;
@@ -295,6 +318,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" lanceros al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " lanceros al ejercito.\n");
+
 		}
 	}
 	
@@ -318,6 +343,8 @@ public class Civilization implements Variables {
 			n = 0;
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("No hay recursos suficientes para crear la unidad/todas las unidades \ndeseadas.\n");
+
 			int maxFood = MAX_VALUE;
 			int maxWood = this.wood / WOOD_COST_CROSSBOW;
 			int maxIron = this.iron / IRON_COST_CROSSBOW;
@@ -345,6 +372,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" ballestas al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " ballestas al ejercito.\n");
+
 		}
 	}
 	
@@ -360,6 +389,7 @@ public class Civilization implements Variables {
 		try {
 			if (n <= 0) {
 				throw new InvalidUnitAmountException(INVALID_UNIT_AMOUNT_EXCEPTION_MESSAGE);
+
 			} else if (this.food < FOOD_COST_CANNON*n || this.wood < WOOD_COST_CANNON*n || this.iron < IRON_COST_CANNON*n || this.mana < MANA_COST_CANNON*n) {
 				throw new ResourceException(RESOURCE_EXCEPTION_MESSAGE);
 			}
@@ -368,6 +398,8 @@ public class Civilization implements Variables {
 			n = 0;
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("No hay recursos suficientes para crear la unidad/todas las unidades \ndeseadas.\n");
+
 			int maxFood = MAX_VALUE;
 			int maxWood = this.wood / WOOD_COST_CANNON;
 			int maxIron = this.iron / IRON_COST_CANNON;
@@ -395,6 +427,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" cañones al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " cañones al ejercito.\n");
+
 		}
 	}
 	
@@ -418,6 +452,8 @@ public class Civilization implements Variables {
 			n = 0;
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("No hay recursos suficientes para crear la unidad/todas las unidades \ndeseadas.\n");
+
 			int maxFood = MAX_VALUE;
 			int maxWood = this.wood / WOOD_COST_ARROWTOWER;
 			int maxIron = MAX_VALUE;
@@ -445,6 +481,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" torres arqueras al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " torres arqueras al ejercito.\n");
+
 		}
 	}
 	
@@ -468,6 +506,8 @@ public class Civilization implements Variables {
 			n = 0;
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("No hay recursos suficientes para crear la unidad/todas las unidades \ndeseadas.\n");
+
 			int maxFood = MAX_VALUE;
 			int maxWood = this.wood / WOOD_COST_CATAPULT;
 			int maxIron = this.iron / IRON_COST_CATAPULT;
@@ -495,6 +535,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" catapultas al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " catapultas al ejercito.\n");
+
 		}
 	}
 	
@@ -518,6 +560,8 @@ public class Civilization implements Variables {
 			n = 0;
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("No hay recursos suficientes para crear la unidad/todas las unidades \ndeseadas.\n");
+
 			int maxFood = MAX_VALUE;
 			int maxWood = this.wood / WOOD_COST_ROCKETLAUNCHERTOWER;
 			int maxIron = this.iron / IRON_COST_ROCKETLAUNCHERTOWER;
@@ -545,6 +589,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" torres lanzacohetes al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " lanzacohetes al ejercito.\n");
+
 		}
 	}
 	
@@ -570,6 +616,8 @@ public class Civilization implements Variables {
 			n = 0;
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("No hay recursos suficientes para crear la unidad/todas las unidades \ndeseadas.\n");
+
 			int maxFood = this.food / FOOD_COST_MAGICIAN;
 			int maxWood = this.wood / WOOD_COST_MAGICIAN;
 			int maxIron = this.iron / IRON_COST_MAGICIAN;
@@ -584,6 +632,8 @@ public class Civilization implements Variables {
 			}
 		} catch (BuildingException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("No hay torres mágicas suficientes para crear esta unidad.\n");
+
 			n = 0;
 		} finally {
 			if (n > 0) {
@@ -600,6 +650,8 @@ public class Civilization implements Variables {
 				}
 			}
 			System.out.println("Se agregaron "+n+" magos al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " magos al ejercito.\n");
+
 		}
 	}
 	
@@ -621,6 +673,8 @@ public class Civilization implements Variables {
 			n = 0;
 		} catch (ResourceException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("No hay recursos suficientes para crear la unidad/todas las unidades \ndeseadas.\n");
+
 			int maxFood = this.food / FOOD_COST_PRIEST;
 			int maxWood = MAX_VALUE;
 			int maxIron = MAX_VALUE;
@@ -635,6 +689,8 @@ public class Civilization implements Variables {
 			}
 		} catch (BuildingException e) {
 			System.out.println(e);
+			panelMenu.getAreaConsola().append("No hay iglesias suficientes para crear esta unidad.\n");
+
 			n = 0;
 		} finally {
 			if (n > 0) {
@@ -642,15 +698,31 @@ public class Civilization implements Variables {
 				this.wood -= WOOD_COST_PRIEST*n;
 				this.iron -= IRON_COST_PRIEST*n;
 				this.mana -= MANA_COST_PRIEST*n;
-				
+
 				int current_armor_plus = (int) Math.ceil(ARMOR_PRIEST* Math.pow((1+PLUS_ARMOR_PRIEST_BY_TECHNOLOGY*0.01), technologyDefense));
 				int current_attack_plus = (int) Math.ceil(BASE_DAMAGE_PRIEST* Math.pow((1+PLUS_ATTACK_PRIEST_BY_TECHNOLOGY*0.01), technologyAttack));
 				
+				// añadimos sacerodtes al ejercito
 				for (int i = 0; i < n; i++) {
 					this.army[8].add(new Priest(0, current_armor_plus, current_attack_plus));
 				}
+				
+				// santificacion (ameeeeeen)
+				for (int i = 0; i <= 6; i++) {
+					// extramos las unidades militares con el bucle que tenemos reclutadas
+					for (MilitaryUnit unidad : this.army[i]) {	
+						// si la unidad es attackunit la santificamos
+						if (unidad instanceof AttackUnit) {
+							((AttackUnit) unidad).sanctify();
+						} // si es defense unit tambien
+						else if (unidad instanceof DefenseUnit) {
+							((DefenseUnit) unidad).sanctify();
+						}
+					}
+				}
 			}
 			System.out.println("Se agregaron "+n+" sacerdotes al ejercito.");
+			panelMenu.getAreaConsola().append("Se agregaron " + n + " sacerdotes al ejercito.\n");
 		}
 	}
 	
@@ -844,4 +916,11 @@ public class Civilization implements Variables {
 	public ArrayList<int[]> getCarpentryPositions() {
 		return this.carpentry;
 	}
+
+
+	public void setPanelMenu(PanelMenu panelMenu) {
+		this.panelMenu = panelMenu;
+	}
+	
+	
 }
