@@ -89,7 +89,7 @@ app.get('/', async (req, res) => {
     });
 
     // =========================
-    // COMMON DATA (si lo usas)
+    // COMMON DATA
     // =========================
     const commonData = JSON.parse(
       fs.readFileSync(path.join(__dirname, 'data', 'common.json'), 'utf8')
@@ -110,11 +110,167 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/batallas', async (req, res) => {
-  res.render('batallas');
-});
+  try {
 
-app.get('/batallasCivil', async (req, res) => {
-  res.render('batallasCivil');
+    // =========================
+    // ID CIVILIZACIÓN
+    // =========================
+    const civilizationId = parseInt(req.query.id, 10);
+
+    // Página actual
+    const paginaActual = parseInt(req.query.page, 10) || 1;
+
+    // Validación
+    if (!Number.isInteger(civilizationId) || civilizationId <= 0) {
+      return res.status(400).send('ID de civilización inválido');
+    }
+
+    // =========================
+    // CIVILIZACIÓN
+    // =========================
+    const civilizationRows = await db.query(`
+      SELECT
+        civilization_id,
+        name
+      FROM CIVILIZATION
+      WHERE civilization_id = ${civilizationId}
+      LIMIT 1;
+    `);
+
+    if (!civilizationRows || civilizationRows.length === 0) {
+      return res.status(404).send('Civilización no encontrada');
+    }
+
+    const civilizationJson = db.table_to_json(civilizationRows, {
+      civilization_id: 'number',
+      name: 'string'
+    })[0];
+
+    // =========================
+    // TOTAL BATALLAS
+    // =========================
+    const totalRows = await db.query(`
+      SELECT COUNT(*) AS total
+      FROM BATTLE
+      WHERE civilization_id = ${civilizationId};
+    `);
+
+    const totalBatallas = totalRows[0].total;
+
+    // =========================
+    // PAGINACIÓN
+    // =========================
+    const limit = 10;
+    const offset = (paginaActual - 1) * limit;
+
+    const totalPaginas = Math.ceil(totalBatallas / limit);
+
+    // =========================
+    // BATALLAS
+    // =========================
+    const battlesRows = await db.query(`
+      SELECT
+        battle_id,
+        civilization_id,
+        num_battle,
+        winner,
+        wood_waste,
+        iron_waste,
+        log_text,
+        DATE_FORMAT(created_at, '%d/%m/%Y %H:%i') AS created_at
+      FROM BATTLE
+      WHERE civilization_id = ${civilizationId}
+      ORDER BY created_at DESC
+      LIMIT ${limit}
+      OFFSET ${offset};
+    `);
+
+    const battlesJson = db.table_to_json(battlesRows, {
+      battle_id: 'number',
+      civilization_id: 'number',
+      num_battle: 'number',
+      winner: 'string',
+      wood_waste: 'number',
+      iron_waste: 'number',
+      log_text: 'string',
+      created_at: 'string'
+    });
+
+    // =========================
+    // VENTANA PAGINACIÓN
+    // =========================
+    const paginas = [];
+
+    let inicio = paginaActual - 2;
+    let fin = paginaActual + 2;
+
+    if (inicio < 1) {
+      inicio = 1;
+      fin = 5;
+    }
+
+    if (fin > totalPaginas) {
+      fin = totalPaginas;
+      inicio = totalPaginas - 4;
+    }
+
+    if (inicio < 1) inicio = 1;
+
+    for (let i = inicio; i <= fin; i++) {
+
+      paginas.push({
+        numero: i,
+        activa: i === paginaActual
+      });
+
+    }
+
+    // =========================
+    // COMMON DATA
+    // =========================
+    const commonData = JSON.parse(
+      fs.readFileSync(
+        path.join(__dirname, 'data', 'common.json'),
+        'utf8'
+      )
+    );
+
+    // =========================
+    // RENDER
+    // =========================
+    res.render('batallas', {
+
+      battles: battlesJson,
+
+      totalBatallas,
+
+      civilizacion: civilizationJson,
+
+      paginas,
+
+      paginaActual,
+
+      anterior:
+        paginaActual > 1
+          ? paginaActual - 1
+          : null,
+
+      siguiente:
+        paginaActual < totalPaginas
+          ? paginaActual + 1
+          : null,
+
+      common: commonData
+
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).send('Error consultando las batallas');
+
+  }
 });
 
 app.get('/informe', async (req, res) => {
@@ -297,9 +453,6 @@ app.get('/civilizaciones', async (req, res) => {
 
 const httpServer = app.listen(port, () => {
   console.log(`http://localhost:${port}`);
-  console.log(`http://localhost:${port}/batallas`);
-  console.log(`http://localhost:${port}/civilizaciones`);
-  console.log(`http://localhost:${port}/programadores`);
 });
 
 process.on('SIGINT', async () => {

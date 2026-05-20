@@ -38,7 +38,7 @@ header{
     position: sticky;
     top: 0;
     z-index: 100;
-    border-bottom: 2px solid beige;
+    border-bottom: 2px solid rgb(49, 104, 206);
 }
 
 nav{
@@ -59,6 +59,20 @@ nav a{
 nav a:hover{
     letter-spacing: 1.5px;
     color: rgb(150, 113, 20);
+}
+
+.navlogo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.navlogo img{
+    width: 50px;
+    height: 50px;
+
+    object-fit: contain;
 }
 
 footer{
@@ -158,20 +172,14 @@ main{
 
 .infojuego{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
     padding: 50px 100px;
 }
 
 .infojuego_texto{
-    width: 40%;
+    width: 60%;
     padding: 40px;
-}
-
-.infojuego_img{
-    width: 40%;
-    background-image: url("./img/lancero777.png");
-    background-size: cover;
-    background-position: center;
 }
 
 /* Carrusel */
@@ -287,18 +295,22 @@ body:has(#slide3:checked) .dots label:nth-child(3){
     width: 100%;
     min-height: 300px;
     margin: 30px 50px 100px;
+    display: flex;
+    justify-content: center;
 }
 
 .batalla_recien_info{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    
+    text-align: center;
     width: 100%;
     margin-top: 20px;
 }
 
-/* ------------------------ batallasCivil ------------------------ */
+.batalla_recien_info p{
+}
+
+/* ------------------------ batallas ------------------------ */
 .registros_batallas{
     padding: 10px 0 100px;
     display: flex;
@@ -372,52 +384,6 @@ body:has(#slide3:checked) .dots label:nth-child(3){
     width: 100%;
     text-align: center;
     margin: 0;
-}
-
-/* ------------------------ batallas ------------------------ */
-.batallas{
-    display: flex;
-    flex-wrap: wrap;
-    padding-bottom: 100px;
-    justify-content: center;
-}
-
-.cartel{
-    background-image: url("./img/cartel_colgado.png");
-    background-size: contain;
-    background-position: top;
-    background-repeat: no-repeat;
-    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.7));
-    width: 500px;
-    height: 370px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end; /* lo manda hacia la parte inferior */
-    animation: animacion_entrada 0.4s ease-in;
-}
-
-.cartel_contenido{
-    width: 69%;
-    height: 60%; /* solo zona del cartel */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    overflow: hidden;
-    word-break: break-word;
-}
-
-.cartel_contenido a{
-    font-size: 40px;
-    font-weight: bolder;
-    color: black;
-    transition: all 0.3s ease-in-out;
-}
-
-.cartel_contenido a:hover{
-    color: rgb(114, 46, 46);
-    transform: scale(1.05);
 }
 
 /* ------------------------ civilizaciones ------------------------ */
@@ -504,12 +470,12 @@ body:has(#slide3:checked) .dots label:nth-child(3){
     gap: 15px;
 }
 
-.navegacion a{
+.navegacion a, .civilizacion_stats a{
     color: black;
     font-size: 1.5rem;
     transition: all 0.3s ease-in-out;
 }
-.navegacion a:hover{
+.navegacion a:hover, .civilizacion_stats a:hover{
     letter-spacing: 2px;
     font-weight: bold;
     color: rgb(114, 46, 46);
