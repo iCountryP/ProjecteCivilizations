@@ -41,4 +41,20 @@ public abstract class SpecialUnit implements MilitaryUnit, Variables {
 		return this.experience;
 	};
 	
+	public int getID() {
+		return this.id;
+	}
+	
+	public int getInitialArmor() {
+		return this.initialArmor;
+	}
+	
+	public Boolean isSanctified() {
+		return null;
+	}
+	
+	public void setID(int generatedID) {
+		this.id = generatedID;
+	}
+	
 }

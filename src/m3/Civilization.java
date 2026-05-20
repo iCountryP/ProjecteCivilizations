@@ -768,10 +768,6 @@ public class Civilization implements Variables {
 	public ArrayList<MilitaryUnit>[] getArmy() {
 		return army;
 	}
-
-	public void setArmy(ArrayList<MilitaryUnit>[] army) {
-		this.army = army;
-	}
 	
 	public int getSwordsmanCount() {
 		return this.army[0].size();

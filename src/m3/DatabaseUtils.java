@@ -439,20 +439,135 @@ public final class DatabaseUtils {
             
             stmt_buildings.close();
             
-            // Guardar unidades
+         // Guardar unidades
             String sql_unit_insert = """
-					INSERT
+                    INSERT INTO UNIT (
+                        civilization_id,
+                        unit_type_id,
+                        initialArmor,
+                        armor,
+                        baseDamage,
+                        experience,
+                        sanctified
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
                 """;
-            
+
             String sql_unit_update = """
-					UPDATE
+                    UPDATE UNIT
+                    SET
+                        initialArmor = ?,
+                        armor = ?,
+                        baseDamage = ?,
+                        experience = ?,
+                        sanctified = ?,
+                        updated_at = CURRENT_TIMESTAMP,
+                        updated_by = CURRENT_USER()
+                    WHERE unit_id = ?;
                 """;
-            
-            PreparedStatement stmt_unit_insert = connection.prepareStatement(sql_unit_insert);
+
+            String sql_unit_delete = """
+                    DELETE FROM UNIT
+                    WHERE unit_id = ?;
+                """;
+
+            String sql_unit_select = """
+                    SELECT unit_id
+                    FROM UNIT
+                    WHERE civilization_id = ?;
+                """;
+
+            PreparedStatement stmt_unit_insert = connection.prepareStatement(
+                sql_unit_insert,
+                Statement.RETURN_GENERATED_KEYS
+            );
+
+            stmt_unit_insert.setInt(1, civilization.getID());
+
             PreparedStatement stmt_unit_update = connection.prepareStatement(sql_unit_update);
-            
+            PreparedStatement stmt_unit_delete = connection.prepareStatement(sql_unit_delete);
+            PreparedStatement stmt_unit_select = connection.prepareStatement(sql_unit_select);
+
+            ArrayList<MilitaryUnit>[] civilization_army = civilization.getArmy();
+            ArrayList<Integer> alive_units = new ArrayList<>();
+
+            for (int i = 0; i < civilization_army.length; i++) {
+                for (int j = 0; j < civilization_army[i].size(); j++) {
+                    MilitaryUnit unit = civilization_army[i].get(j);
+
+                    // INSERT
+                    if (unit.getID() == 0) {
+
+                        stmt_unit_insert.setInt(2, i + 1);
+                        stmt_unit_insert.setInt(3, unit.getInitialArmor());
+                        stmt_unit_insert.setInt(4, unit.getActualArmor());
+                        stmt_unit_insert.setInt(5, unit.getAttack());
+                        stmt_unit_insert.setInt(6, unit.getExperience());
+
+                        if (i < 7) {
+                        	if (unit.isSanctified()) {
+                        	    stmt_unit_insert.setString(7, "TRUE");
+                        	} else {
+                        	    stmt_unit_insert.setString(7, "FALSE");
+                        	}
+                        } else {
+                            stmt_unit_insert.setString(7, "NOT_APPLICABLE");
+                        }
+
+                        stmt_unit_insert.executeUpdate();
+
+                        ResultSet generatedKeys = stmt_unit_insert.getGeneratedKeys();
+
+                        if (generatedKeys.next()) {
+                            int generatedID = generatedKeys.getInt(1);
+                            unit.setID(generatedID);
+                            alive_units.add(generatedID);
+                        }
+
+                        generatedKeys.close();
+
+                    // UPDATE
+                    } else {
+
+                        stmt_unit_update.setInt(1, unit.getInitialArmor());
+                        stmt_unit_update.setInt(2, unit.getActualArmor());
+                        stmt_unit_update.setInt(3, unit.getAttack());
+                        stmt_unit_update.setInt(4, unit.getExperience());
+
+                        if (i < 7) {
+                        	if (unit.isSanctified()) {
+                        	    stmt_unit_update.setString(5, "TRUE");
+                        	} else {
+                        	    stmt_unit_update.setString(5, "FALSE");
+                        	}
+                        } else {
+                            stmt_unit_update.setString(5, "NOT_APPLICABLE");
+                        }
+
+                        stmt_unit_update.setInt(6, unit.getID());
+                        stmt_unit_update.executeUpdate();
+                        alive_units.add(unit.getID());
+                    }
+                }
+            }
+
+            // Buscar unidades muertas
+            stmt_unit_select.setInt(1, civilization.getID());
+            ResultSet rs_units = stmt_unit_select.executeQuery();
+
+            while (rs_units.next()) {
+                int db_unit_id = rs_units.getInt("unit_id");
+                if (!alive_units.contains(db_unit_id)) {
+                    stmt_unit_delete.setInt(1, db_unit_id);
+                    stmt_unit_delete.executeUpdate();
+                }
+            }
+
+            rs_units.close();
+
             stmt_unit_insert.close();
             stmt_unit_update.close();
+            stmt_unit_delete.close();
+            stmt_unit_select.close();
             
             connection.close();
             

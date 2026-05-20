@@ -37,5 +37,13 @@ public interface MilitaryUnit {
 
 	// Devuelve la experiencia actual de la unidad
 	abstract int getExperience();
+	
+	abstract int getID();
+	
+	abstract int getInitialArmor();
+	
+	abstract Boolean isSanctified();
+
+	abstract void setID(int generatedID);
 
 }

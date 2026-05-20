@@ -469,6 +469,8 @@ public class PanelMenu extends JPanel implements Variables {
     	btnGuardar.setForeground(Color.BLACK);
     	btnGuardar.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
+    			DatabaseUtils.saveCivilization(civilizacion);
+    			System.out.println("Guardado con exito");
     		}
     	});
     	add(btnGuardar);

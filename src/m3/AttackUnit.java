@@ -51,4 +51,20 @@ public abstract class AttackUnit implements MilitaryUnit, Variables {
 		this.sanctified = true;
 	}
 	
+	public int getID() {
+		return this.id;
+	}
+	
+	public int getInitialArmor() {
+		return this.initialArmor;
+	}
+	
+	public Boolean isSanctified() {
+		return this.sanctified;
+	}
+	
+	public void setID(int generatedID) {
+		this.id = generatedID;
+	}
+	
 }
