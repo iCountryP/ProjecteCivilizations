@@ -10,14 +10,14 @@ public interface Variables {
 	public final int ENEMY_ARMY_INCREASE = 20;
 	
 	// Incremento de recursos por segundo
-	public final int CIVILIZATION_IRON_GENERATED = 5; //3
-	public final int CIVILIZATION_WOOD_GENERATED = 7; //5
-	public final int CIVILIZATION_FOOD_GENERATED = 9; //7
+	public final int CIVILIZATION_IRON_GENERATED = 50; //3
+	public final int CIVILIZATION_WOOD_GENERATED = 75; //5
+	public final int CIVILIZATION_FOOD_GENERATED = 100; //7
 	
 	public final int CIVILIZATION_IRON_GENERATED_PER_SMITHY = (int) (2.5*CIVILIZATION_IRON_GENERATED);
 	public final int CIVILIZATION_WOOD_GENERATED_PER_CARPENTRY = (int) (2.5*CIVILIZATION_WOOD_GENERATED);
 	public final int CIVILIZATION_FOOD_GENERATED_PER_FARM = (int) (2.5*CIVILIZATION_FOOD_GENERATED);
-	public final int CIVILIZATION_MANA_GENERATED_PER_MAGIC_TOWER = 25;
+	public final int CIVILIZATION_MANA_GENERATED_PER_MAGIC_TOWER = 100;
 	
 	// Costes de la tecnologia
 	public final int UPGRADE_BASE_DEFENSE_TECHNOLOGY_IRON_COST = 1500;
