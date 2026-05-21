@@ -85,10 +85,10 @@ public class VentanaJuego extends JFrame implements Variables {
 		            batalla.startBattle();
 		            // si perdemos la batalla :
 		            if(batalla.isGameOver()) {
-		            	// si la batalla se pierde, paramos los relojes
+		            	// si la batalla se pierde, paramos los relojes y la musica
+		        		sonido.pararMusica();
 		            	reloj.stop();
 		            	relojTiempoRestanteInvasion.stop();
-
 		            	// limpiamos todasl as ventanas
 		            	getContentPane().removeAll();
 
@@ -122,7 +122,6 @@ public class VentanaJuego extends JFrame implements Variables {
 			            
 			            objetoMain.createEnemyArmy();
 		            }
-
 		        }
 		    }
 		});
