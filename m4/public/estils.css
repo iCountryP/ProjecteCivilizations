@@ -202,13 +202,20 @@ main{
 .slide{
     display: flex;
     justify-content: center;
+    align-items: center;
     min-height: 400px;
     min-width: 100%;
     padding: 60px 0;
 }
 
 .slide img{
-    box-shadow: 0 20px 100px rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 50px rgba(255, 255, 255, 0.8);
+    max-width: 100%;
+    max-height: 400px;
+
+    display: block;
+
+    object-fit: contain;
 }
 
 /* Slide positioning based on checked radio */
@@ -337,13 +344,13 @@ body:has(#slide3:checked) .dots label:nth-child(3){
     flex-direction: column;
 }
 
-.registros_batallas .cabecera{
+.cabecera{
     width: 100%;
     text-align: center;
     margin: 50px 0;
 }
 
-.registros_batallas .cabecera h2{
+.cabecera h2{
     margin: 10px 0 30px;
 }
 
@@ -544,4 +551,21 @@ body:has(#slide3:checked) .dots label:nth-child(3){
     height: 35px;
 
     object-fit: contain;
+}
+
+/* ------------------------ programadores ------------------------ */
+.autores{
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+}
+
+.autor{
+    width: 40%;
+    background-color: cadetblue;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
