@@ -80,7 +80,7 @@ Este proyecto ha sido desarrollado aplicando la **Programación Orientada a Obje
 
 5. Ejecutar los scripts .sql en el siguiente orden (Se pueden encontrar en M02)
    ```bash
-   sudo mysql -u root < create_schema.sql
+   sudo mysql -u root < create_database.sql
    ```
 
 6. Le damos permisos al usuario dentro de la base de datos recien creada
