@@ -555,17 +555,34 @@ body:has(#slide3:checked) .dots label:nth-child(3){
 
 /* ------------------------ programadores ------------------------ */
 .autores{
-    width: 90%;
+    width: 100%;
     display: flex;
     justify-content: space-around;
-    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 100px;
 }
 
 .autor{
-    width: 40%;
-    background-color: cadetblue;
-    text-align: center;
+    width: 400px;
+    background-color: beige;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+}
+
+.autor h2{
+    margin: 10% 0 0;
+    font-size: 2rem;
+}
+
+.autor h3{
+    margin: 0;
+    color: goldenrod;
+}
+
+.autor p{
+    margin-bottom: 50px;
 }

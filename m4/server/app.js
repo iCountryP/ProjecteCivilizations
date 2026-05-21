@@ -306,10 +306,21 @@ app.get('/informe', async (req, res) => {
       created_at: 'date'
     })[0];
 
+    // =========================
+    // COMMON DATA
+    // =========================
+    const commonData = JSON.parse(
+      fs.readFileSync(path.join(__dirname, 'data', 'common.json'), 'utf8')
+    );
+
+    // =========================
+    // RENDER
+    // =========================
     res.render('informe', {
       battle,
       civilizationId,
-      page
+      page,
+      common: commonData
     });
 
   } catch (err) {
@@ -380,13 +391,21 @@ app.get('/civilizaciones', async (req, res) => {
         });
       }
 
+      // =========================
+      // COMMON DATA
+      // =========================
+      const commonData = JSON.parse(
+        fs.readFileSync(path.join(__dirname, 'data', 'common.json'), 'utf8')
+      );
+
       const data = {
         modo: 'index',
         civilizaciones: civilizacionesJson,
         paginasIndex,
         anteriorIndex: indexPagina > 1 ? indexPagina - 1 : null,
         siguienteIndex: indexPagina < totalPaginasIndex ? indexPagina + 1 : null,
-        paginaActual: indexPagina
+        paginaActual: indexPagina,
+        common: commonData
       };
 
       return res.render('civilizaciones', data);
@@ -468,12 +487,20 @@ app.get('/civilizaciones', async (req, res) => {
     const anterior = paginaId > 1 ? paginaId - 1 : null;
     const siguiente = paginaId < totalPaginas ? paginaId + 1 : null;
 
+    // =========================
+    // COMMON DATA
+    // =========================
+    const commonData = JSON.parse(
+      fs.readFileSync(path.join(__dirname, 'data', 'common.json'), 'utf8')
+    );
+
     const data = {
       modo: 'detalle',
       civilizacion: civilizacionJson,
       paginas,
       anterior,
-      siguiente
+      siguiente,
+      common: commonData
     };
 
     return res.render('civilizaciones', data);
@@ -485,9 +512,19 @@ app.get('/civilizaciones', async (req, res) => {
 });
 
 app.get('/programadores', async (req, res) => {
-  res.render('programadores');
-});
 
+  const commonData = JSON.parse(
+    fs.readFileSync(
+      path.join(__dirname, 'data', 'common.json'),
+      'utf8'
+    )
+  );
+
+  res.render('programadores', {
+    common: commonData
+  });
+
+});
 
 // ======================================================
 // SERVER
