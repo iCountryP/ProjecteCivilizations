@@ -1,0 +1,72 @@
+<main class="marmol ffijado linea">
+    <section class="registros_batallas">
+        <!-- CABECERA -->
+        <div class="cabecera">
+            <h1 class="titulo_gold">
+                Registros de Batallas
+            </h1>
+            <h2>
+                Batallas jugadas: {{totalBatallas}}
+            </h2>
+            <a href="/civilizaciones?pagina={{civilizacion.civilization_id}}" class="volver">
+                &lt; Volver
+            </a>
+        </div>
+
+        <!-- LISTA DE BATALLAS -->
+        {{#each battles}}
+            <div class="madera">
+                <div class="poster">
+                    <h2>
+                        Batalla {{num_battle}}
+                    </h2>
+                    <p>
+                        Fecha: {{created_at}}
+                    </p>
+                    <p>
+                        Resultado:
+                        {{#if (eq winner "civilization")}}
+                            Victoria
+                        {{/if}}
+                        {{#if (eq winner "enemy")}}
+                            Derrota
+                        {{/if}}
+                        {{#if (eq winner "tie")}}
+                            Empate
+                        {{/if}}
+                    </p>
+                    <p>
+                        Madera perdida: {{wood_waste}}
+                    </p>
+                    <p>
+                        Hierro perdido: {{iron_waste}}
+                    </p>
+                    <a href="/informe?battleId={{battle_id}}&civilizationId={{../civilizacion.civilization_id}}&page={{../paginaActual}}" class="verdetalles">
+                        Ver detalles &gt;
+                    </a>
+
+                </div>
+            </div>
+        {{/each}}
+    </section>
+    <section class="navegacion index-nav">
+        {{#if anterior}}
+            <a href="/batallas?id={{civilizacion.civilization_id}}&page={{anterior}}">
+                &lt;
+            </a>
+        {{/if}}
+
+        {{#each paginas}}
+            <a class="{{#if this.activa}}activa{{/if}}"
+            href="/batallas?id={{../civilizacion.civilization_id}}&page={{this.numero}}">
+                {{this.numero}}
+            </a>
+        {{/each}}
+
+        {{#if siguiente}}
+            <a href="/batallas?id={{civilizacion.civilization_id}}&page={{siguiente}}">
+                &gt;
+            </a>
+        {{/if}}
+    </section>
+</main>

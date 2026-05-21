@@ -37,6 +37,30 @@ Este proyecto ha sido desarrollado aplicando la **Programación Orientada a Obje
 ---
 
 ## 🚀 Instalación y Ejecución
+
+## Instalación (Programa de java)
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/iCountryP/ProjecteCivilizations.git
+   ```
+
+2. Exportar la carpeta del proyecto en eclipse.
+
+3. Asegurarse de usar el jdk correspondiente (25.0.2) y el nivel de compilación de Java 25.
+
+4. Ajustar los parametros de las credenciales de tu base de datos:
+   ```java
+   public final class DatabaseUtils {
+
+    private static final String USER = "game";
+    private static final String PASSWORD = "lancero777";
+    private static final String DB_URL = "jdbc:mysql://localhost/dominion?serverTimezone=UTC";
+	
+	private DatabaseUtils() {
+
+	}
+   ```
+
 ## Instalación (Base de datos)
 
 *Nosotros hemos utilizado Ubuntu para hostear nuestra base de datos, así que el tutorial a continuación serán los pasos para Ubuntu o distribuciones parecidas.*
@@ -69,7 +93,7 @@ Este proyecto ha sido desarrollado aplicando la **Programación Orientada a Obje
 
 5. Ejecutar los scripts .sql en el siguiente orden (Se pueden encontrar en M02)
    ```bash
-   sudo mysql -u root < create_schema.sql
+   sudo mysql -u root < create_database.sql
    ```
 
 6. Le damos permisos al usuario dentro de la base de datos recien creada
