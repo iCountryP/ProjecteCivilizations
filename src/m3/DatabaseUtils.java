@@ -716,4 +716,153 @@ public final class DatabaseUtils {
         }
 	}
 	
+	public static String reconstruirReporteBatalla(int numBattleLocal, int civId) {
+		String reporte = "";
+		
+		int[][] initialUnits = new int[2][9];
+		int[][] dropsUnits = new int[2][9];
+
+		int[] costFood = new int[2];
+		int[] costWood = new int[2];
+		int[] costIron = new int[2];
+
+		int[] lossFood = new int[2];
+		int[] lossWood = new int[2];
+		int[] lossIron = new int[2];
+
+		int battleNum = 0;
+		int wasteWood = 0;
+		int wasteIron = 0;
+		String winner = "";
+		boolean encontrada = false;
+
+		String[] troopsNames = {"Swordsman", "Spearman", "Crossbow", "Cannon   ", "Arrow Tower", "Catapult", "Rocket Launcher", "Magician", "Priest   "};
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+
+			int battleIdGlobal = -1; 
+			String queryId = "SELECT battle_id FROM BATTLE WHERE num_battle = ? AND civilization_id = ?";
+			PreparedStatement pstmt0 = connection.prepareStatement(queryId);
+			pstmt0.setInt(1, numBattleLocal);
+			pstmt0.setInt(2, civId);
+			
+			ResultSet rs0 = pstmt0.executeQuery();
+			if(rs0.next()) {
+				battleIdGlobal = rs0.getInt("battle_id");
+			}
+			rs0.close();
+			pstmt0.close();
+
+			if (battleIdGlobal == -1) {
+				connection.close();
+				return null; 
+			}
+
+			String queryBattle = "SELECT num_battle, winner, wood_waste, iron_waste FROM BATTLE WHERE battle_id = ?";
+			PreparedStatement pstmt1 = connection.prepareStatement(queryBattle);
+			pstmt1.setInt(1, battleIdGlobal);
+			ResultSet rs1 = pstmt1.executeQuery();
+			
+			if(rs1.next()) {
+				encontrada = true;
+				battleNum = rs1.getInt("num_battle");
+				winner = rs1.getString("winner");
+				wasteWood = rs1.getInt("wood_waste");
+				wasteIron = rs1.getInt("iron_waste");
+			}
+			rs1.close();
+			pstmt1.close();
+
+			if (!encontrada) {
+				connection.close();
+				return null; 
+			}
+
+			String queryUnits = "SELECT side, unit_type_id, initial_amount, drops FROM UNIT_GROUP WHERE battle_id = ?";
+			PreparedStatement pstmt2 = connection.prepareStatement(queryUnits);
+			pstmt2.setInt(1, battleIdGlobal);
+			ResultSet rs2 = pstmt2.executeQuery();
+			
+			while(rs2.next()) {
+				String side = rs2.getString("side");
+				int typeIndex = rs2.getInt("unit_type_id") - 1; 
+				int sideIndex = 0; 
+				
+				if(side.equals("enemy")) {
+					sideIndex = 1;
+				}
+				
+				initialUnits[sideIndex][typeIndex] = rs2.getInt("initial_amount");
+				dropsUnits[sideIndex][typeIndex] = rs2.getInt("drops");
+			}
+			rs2.close();
+			pstmt2.close();
+
+			String queryLosses = "SELECT side, initial_food_amount, initial_wood_amount, initial_iron_amount, food_losses, wood_losses, iron_losses FROM BATTLE_RESOURCE_LOSSES WHERE battle_id = ?";
+			PreparedStatement pstmt3 = connection.prepareStatement(queryLosses);
+			pstmt3.setInt(1, battleIdGlobal);
+			ResultSet rs3 = pstmt3.executeQuery();
+			
+			while(rs3.next()) {
+				String side = rs3.getString("side");
+				int sideIndex = 0;
+				if(side.equals("enemy")) {
+					sideIndex = 1;
+				}
+				
+				costFood[sideIndex] = rs3.getInt("initial_food_amount");
+				costWood[sideIndex] = rs3.getInt("initial_wood_amount");
+				costIron[sideIndex] = rs3.getInt("initial_iron_amount");
+
+				lossFood[sideIndex] = rs3.getInt("food_losses");
+				lossWood[sideIndex] = rs3.getInt("wood_losses");
+				lossIron[sideIndex] = rs3.getInt("iron_losses");
+			}
+			rs3.close();
+			pstmt3.close();
+			
+			connection.close();
+			
+		} catch (ClassNotFoundException ex) {
+			System.out.println("No se ha encontrado el Driver MySQL para JDBC.");
+		} catch (SQLException e) {
+			System.out.println("Excepción del tipo SQL");
+			e.printStackTrace();
+		}
+
+		reporte += "\nBATTLE NUMBER: " + battleNum + "\nBATTLE STATISTICS\n\n";
+		reporte += "Civ. Army\tUnits\tDrops\tEnemy Army\tUnits\tDrops\n";
+
+		for (int i = 0; i < 9; i++) {
+			reporte += troopsNames[i] + "\t" + initialUnits[0][i] + "\t" + dropsUnits[0][i] + "\t" + troopsNames[i] + "\t" + initialUnits[1][i] + "\t" + dropsUnits[1][i] + "\n";
+		}
+
+		reporte += "\n*********************************************************\n";
+		reporte += "Cost Army Civilization\t\tCost Army Enemy\n\n";
+		reporte += "Food:\t" + costFood[0] + "\t\t\tFood:\t" + costFood[1] + "\n";
+		reporte += "Wood:\t" + costWood[0] + "\t\t\tWood:\t" + costWood[1] + "\n";
+		reporte += "Iron:\t" + costIron[0] + "\t\t\tIron:\t" + costIron[1] + "\n";
+
+		reporte += "\n*********************************************************\n";
+		reporte += "Losses Army Civilization\t\tLosses Army Enemy\n\n";
+		reporte += "Food:\t" + lossFood[0] + "\t\t\tFood:\t" + lossFood[1] + "\n";
+		reporte += "Wood:\t" + lossWood[0] + "\t\t\tWood:\t" + lossWood[1] + "\n";
+		reporte += "Iron:\t" + lossIron[0] + "\t\t\tIron:\t" + lossIron[1] + "\n";
+
+		reporte += "\n*********************************************************\n";
+		reporte += "Waste Generated:\nWood\t" + wasteWood + "\nIron\t" + wasteIron + "\n\n";
+
+		if (winner.equals("civilization")) {
+			reporte += "Battle Won by Civilization, We Collect Rubble\n";
+		} else if (winner.equals("enemy")) {
+			reporte += "Battle Lost by Civilization\n";
+		} else {
+			reporte += "Battle ended in a Tie\n";
+		}
+
+		return reporte;
+	}
+	
 }

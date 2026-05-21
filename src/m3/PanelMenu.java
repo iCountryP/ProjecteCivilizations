@@ -666,7 +666,7 @@ public class PanelMenu extends JPanel implements Variables {
     	add(btnGuardar);
     	
     	// ---------------- BOTON AYUDA ----------------
-    	btnAyuda = new JButton("Ayuda");
+    	btnAyuda = new JButton("Batallas");
     	btnAyuda.setBounds(700,505,80,30); 
     	btnAyuda.setIcon(disenoAzul);
     	btnAyuda.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -676,18 +676,28 @@ public class PanelMenu extends JPanel implements Variables {
     	btnAyuda.setForeground(Color.BLACK);
     	btnAyuda.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
-    			areaConsola.append("Bienvenido a Dominion:"
-    					+"\n- El objetivo de este juego es sobrevivir las máximas oleadas posibles "
-    					+"\nque irán atacando tu civilizacion cada cierto tiempo." 
-    					+ "\n\n - Puedes construir edifcios para mejorar tu producción de recursos."
-    					+ "\n Para ello, haz click en uno de los botones de creación y posteriormente"
-    					+ "\n en una casilla vacía para construir tu primer edificio."
-    					+ "\n\n - Recluta tropas desde el menú desplegable RECLUTAR para poder hacer"
-    					+ "\nfrente a todas las amenazas que ataquen tu civilización."
-    					+ "\nPuedes ver el coste por unidad de cada tropa justo encima del menú \ndesplegable"
-    					+ "\n\n- Pierde la batalla la civilización que haya tenido más perdidas."
-    					+ "\n ¡OJO! Si pierdes una batalla tu civilización será destruida y tendrás\nque volver a comenzar desde cero."
-    					+ "\n\nBuena suerte. La estrategia que sigas a la hora de reclutar y de \nconstruir tus edificios serán clave para poder sobrevivir a los ataques \nenemigos.\n\n\n");
+                String idStr = JOptionPane.showInputDialog(null, "Introduce el numero de oleada a consultar:", "Registros de la Civilizacion", JOptionPane.PLAIN_MESSAGE);
+
+                if (idStr != null) {
+                    if (idStr.length() > 0) {
+                        try {
+                            int numOleadaJugador = Integer.parseInt(idStr);
+                            int idMiCivilizacion = civilizacion.getID(); 
+                            
+                            String historialMatematicas = DatabaseUtils.reconstruirReporteBatalla(numOleadaJugador, idMiCivilizacion); 
+                            
+                            if (historialMatematicas != null) {
+                                areaConsola.setText(""); 
+                                areaConsola.append(historialMatematicas);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Tus eruditos no encuentran registros de esa oleada en tu historia.", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                            
+                        } catch (NumberFormatException exception) {
+                            JOptionPane.showMessageDialog(null, "Por favor, introduce un numero de oleada valido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+                }
     			
     		}
     	});
