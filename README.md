@@ -48,6 +48,19 @@ Este proyecto ha sido desarrollado aplicando la **Programación Orientada a Obje
 
 3. Asegurarse de usar el jdk correspondiente (25.0.2) y el nivel de compilación de Java 25.
 
+4. Ajustar los parametros de las credenciales de tu base de datos:
+   ```java
+   public final class DatabaseUtils {
+
+    private static final String USER = "game";
+    private static final String PASSWORD = "lancero777";
+    private static final String DB_URL = "jdbc:mysql://localhost/dominion?serverTimezone=UTC";
+	
+	private DatabaseUtils() {
+
+	}
+   ```
+
 ## Instalación (Base de datos)
 
 *Nosotros hemos utilizado Ubuntu para hostear nuestra base de datos, así que el tutorial a continuación serán los pasos para Ubuntu o distribuciones parecidas.*
