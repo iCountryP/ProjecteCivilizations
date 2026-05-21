@@ -84,15 +84,10 @@ public class VentanaJuego extends JFrame implements Variables {
 		            
 		            batalla.startBattle();
 		            civilization.increseBattles();
-		            String reporte = batalla.getBattleReport(civilization.getBattles());
-		            String battleDevelopment = batalla.getBattleDevelopment();
+		            civilization.setGameOver(batalla.isGameOver());
 		            
 		            DatabaseUtils.battleAutoSave(batalla, civilization);
 		            
-		            // Sumar waste a civilizacion, sumar 1 al contador de batallas de la civilizacion
-		            
-		            panelMenu.mostrarConsola(battleDevelopment);
-		            panelMenu.mostrarConsola(reporte);
 		            // si perdemos la batalla :
 		            if(batalla.isGameOver()) {
 		            	// si la batalla se pierde, paramos los relojes
@@ -116,7 +111,7 @@ public class VentanaJuego extends JFrame implements Variables {
 			            civilization.addIron(hierroRecuperado);
 			            
 			            panelMenu.getAreaConsola().append("Has recuperado " +maderaRecuperada + " de madera y " + hierroRecuperado + " de hierro de los escombros\n");
-			            String reporte = batalla.getBattleReport(1);
+			            String reporte = batalla.getBattleReport(civilization.getBattles());
 			            String battleDevelopment = batalla.getBattleDevelopment();
 			            panelMenu.mostrarConsola(battleDevelopment);
 			            panelMenu.mostrarConsola(reporte);

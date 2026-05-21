@@ -358,6 +358,11 @@ public final class DatabaseUtils {
 
             PreparedStatement stmt_stats = connection.prepareStatement(sql_stats);
             
+            System.out.println("wood: "+civilization.getWood());
+            System.out.println("iron: "+civilization.getIron());
+            System.out.println("food: "+civilization.getFood());
+            System.out.println("mana: "+civilization.getMana());
+            
             stmt_stats.setInt(1, civilization.getWood());
             stmt_stats.setInt(2, civilization.getIron());
             stmt_stats.setInt(3, civilization.getFood());
@@ -494,7 +499,7 @@ public final class DatabaseUtils {
                     // INSERT
                     if (unit.getID() == 0) {
 
-                        stmt_unit_insert.setInt(2, j + 1);
+                        stmt_unit_insert.setInt(2, i + 1);
                         stmt_unit_insert.setInt(3, unit.getInitialArmor());
                         stmt_unit_insert.setInt(4, unit.getActualArmor());
                         stmt_unit_insert.setInt(5, unit.getAttack());

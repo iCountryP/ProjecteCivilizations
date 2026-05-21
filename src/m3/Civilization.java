@@ -49,9 +49,9 @@ public class Civilization implements Variables {
 		this.technologyAttack = 0;
 		this.technologyDefense = 0;
 		
-		this.wood = 50000;
-		this.iron = 50000;
-		this.food = 50000;
+		this.wood = 4000;
+		this.iron = 5000;
+		this.food = 2000;
 		this.mana = 0;
 		
 		this.magicTower = new ArrayList<int[]>();
@@ -240,7 +240,6 @@ public class Civilization implements Variables {
 			int maxIron = this.iron / IRON_COST_SWORDSMAN;
 			//System.out.println("MINIMUM VALE ESTO ");
 			int maxMana = MAX_VALUE;
-
 
 			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
 			if (minimum > 0) {
@@ -899,6 +898,10 @@ public class Civilization implements Variables {
 	
 	public boolean getGameOver() {
 		return this.gameOver;
+	}
+	
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
 	}
 	
 	public ArrayList<int[]> getMagicTowerPositions() {

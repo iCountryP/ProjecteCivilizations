@@ -18,7 +18,11 @@ public abstract class SpecialUnit implements MilitaryUnit, Variables {
 	
 	// Resta receivedDamage a la armadura de la unidad
 	public void takeDamage(int receivedDamage) {
-		this.armor = this.armor - receivedDamage;
+		if (this.armor - receivedDamage < 0) {
+			this.armor = 0;
+		} else {
+			this.armor = this.armor - receivedDamage;
+		}
 	};
 	
 	// Devuelve la armadura actual de la unidad
