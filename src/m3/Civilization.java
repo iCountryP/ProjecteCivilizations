@@ -345,7 +345,7 @@ public class Civilization implements Variables {
 			System.out.println(e);
 			panelMenu.getAreaConsola().append("No hay recursos suficientes para crear la unidad/todas las unidades \ndeseadas.\n");
 
-			int maxFood = MAX_VALUE;
+			int maxFood = this.food / FOOD_COST_CROSSBOW;
 			int maxWood = this.wood / WOOD_COST_CROSSBOW;
 			int maxIron = this.iron / IRON_COST_CROSSBOW;
 			int maxMana = MAX_VALUE;
@@ -400,7 +400,7 @@ public class Civilization implements Variables {
 			System.out.println(e);
 			panelMenu.getAreaConsola().append("No hay recursos suficientes para crear la unidad/todas las unidades \ndeseadas.\n");
 
-			int maxFood = MAX_VALUE;
+			int maxFood = this.food / FOOD_COST_CANNON;
 			int maxWood = this.wood / WOOD_COST_CANNON;
 			int maxIron = this.iron / IRON_COST_CANNON;
 			int maxMana = MAX_VALUE;
@@ -456,7 +456,7 @@ public class Civilization implements Variables {
 
 			int maxFood = MAX_VALUE;
 			int maxWood = this.wood / WOOD_COST_ARROWTOWER;
-			int maxIron = MAX_VALUE;
+			int maxIron = this.iron / IRON_COST_ARROWTOWER;
 			int maxMana = MAX_VALUE;
 			
 			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));
@@ -676,8 +676,8 @@ public class Civilization implements Variables {
 			panelMenu.getAreaConsola().append("No hay recursos suficientes para crear la unidad/todas las unidades \ndeseadas.\n");
 
 			int maxFood = this.food / FOOD_COST_PRIEST;
-			int maxWood = MAX_VALUE;
-			int maxIron = MAX_VALUE;
+			int maxWood = this.wood / FOOD_COST_PRIEST;
+			int maxIron = this.iron / IRON_COST_PRIEST;
 			int maxMana = this.mana / MANA_COST_PRIEST;
 			
 			int minimum = Math.min(maxFood, Math.min(maxWood, Math.min(maxIron, maxMana)));

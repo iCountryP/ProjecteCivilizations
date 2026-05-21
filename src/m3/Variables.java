@@ -7,7 +7,7 @@ public interface Variables {
 	public final int FOOD_BASE_ENEMY_ARMY = 40000;
 	
 	// % de incremento de los recursos del ejercito enemigo despues de cada batalla
-	public final int ENEMY_ARMY_INCREASE = 8;
+	public final int ENEMY_ARMY_INCREASE = 20;
 	
 	// Incremento de recursos por segundo
 	public final int CIVILIZATION_IRON_GENERATED = 1;
