@@ -37,6 +37,17 @@ Este proyecto ha sido desarrollado aplicando la **Programación Orientada a Obje
 ---
 
 ## 🚀 Instalación y Ejecución
+
+## Instalación (Programa de java)
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/iCountryP/ProjecteCivilizations.git
+   ```
+
+2. Exportar la carpeta del proyecto en eclipse.
+
+3. Asegurarse de usar el jdk correspondiente (25.0.2) y el nivel de compilación de Java 25.
+
 ## Instalación (Base de datos)
 
 *Nosotros hemos utilizado Ubuntu para hostear nuestra base de datos, así que el tutorial a continuación serán los pasos para Ubuntu o distribuciones parecidas.*
