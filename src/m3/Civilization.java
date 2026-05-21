@@ -675,7 +675,7 @@ public class Civilization implements Variables {
 			panelMenu.getAreaConsola().append("No hay recursos suficientes para crear la unidad/todas las unidades \ndeseadas.\n");
 
 			int maxFood = this.food / FOOD_COST_PRIEST;
-			int maxWood = this.wood / FOOD_COST_PRIEST;
+			int maxWood = this.wood / WOOD_COST_PRIEST;
 			int maxIron = this.iron / IRON_COST_PRIEST;
 			int maxMana = this.mana / MANA_COST_PRIEST;
 			
