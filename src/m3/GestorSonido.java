@@ -11,6 +11,8 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException; 
 
 public class GestorSonido  {
+	
+	private Clip clipMusicaFondo;
 	// Sonido Click
 	public void reproducirClick() {
 	    File sonidoBoton = new File("./src/m3/sonidoBoton.wav"); // hacemos un objeto tipo file para el sonido
@@ -54,10 +56,10 @@ public class GestorSonido  {
 	    File musicaFondo = new File("./src/m3/dominionMainTheme.wav"); // hacemos un objeto tipo file para el sonido
 	    try { // obligatorio un try catch
 	        AudioInputStream stream = AudioSystem.getAudioInputStream(musicaFondo); // le pasamos a un objeto de tipo AudioInputStream el sonido
-	        Clip clip = AudioSystem.getClip(); // hacemos un objeto tipo Clip que coja el audio
-	        clip.open(stream); // le pasamos el objeto AudioInputStream que tiene el sonido
-	        clip.loop(Clip.LOOP_CONTINUOUSLY);
-	        clip.start(); // lo iniciamos
+	        clipMusicaFondo = AudioSystem.getClip(); // hacemos un objeto tipo Clip que coja el audio
+	        clipMusicaFondo.open(stream); // le pasamos el objeto AudioInputStream que tiene el sonido
+	        clipMusicaFondo.loop(Clip.LOOP_CONTINUOUSLY);
+	        clipMusicaFondo.start(); // lo iniciamos
 	        
 	    } catch (UnsupportedAudioFileException e) {
 	        e.printStackTrace();
@@ -103,5 +105,13 @@ public class GestorSonido  {
 	    }
 	}
 	
-
+	// para la musica
+	public void pararMusica() {
+        if (clipMusicaFondo != null && clipMusicaFondo.isRunning()) {
+            clipMusicaFondo.stop();
+            clipMusicaFondo.close();
+        }
+    }
 }
+
+
