@@ -1,0 +1,82 @@
+<main>
+    <section class="portada linea no_select">
+        <div>
+            <a href="/civilizaciones"><button><strong>Civilizaciones</strong></button></a>
+        </div>
+    </section>
+    <section class="infojuego marmol linea">
+        <div class="infojuego_texto">
+            <h1>Información del juego</h1>
+            <p>
+                En este juego, vas a estar al mando de tu propia civilización. 
+                Desgraciadamente, no vas a poder vivir tranquilamente, ya que existen otras civilizaciones con ganas de conquistar tu hogar y acabar con todo lo que has construido.
+                <br><br>
+                Por eso tendrás que gestionar cuidadosamente tus recursos, mejorar tecnologías, construir edificios y reforzar tus defensas para resistir los ataques enemigos. 
+                También podrás reclutar y entrenar soldados, formando un ejército capaz de proteger a tu pueblo y enfrentarse a cualquier amenaza.
+                <br><br>
+                Cada decisión será importante para el desarrollo de tu civilización, ya que una mala gestión o unas defensas débiles podrían llevarte a la derrota. Tu objetivo será crecer, sobrevivir y convertirte en una de las civilizaciones más poderosas.
+            </p>
+        </div>
+        <div>
+            <img src="/img/logo.png" alt="logo">
+        </div>
+    </section>
+    <!-- Carrusel para las capturas de pantalla -->
+    <section class="carrusel linea">
+        <input type="radio" name="slide" id="slide1" checked>
+        <input type="radio" name="slide" id="slide2">
+        <input type="radio" name="slide" id="slide3">
+        <!-- Diapositivas -->
+        <div class="slides">
+            <div class="slide"><img src="./img/captura_juego1.png" alt="a"></div>
+            <div class="slide"><img src="./img/captura_juego2.png" alt="a"></div>
+            <div class="slide"><img src="./img/captura_juego3.png" alt="a"></div>
+        </div>
+        <!-- Flechas para moverse por el carrusel -->
+        <!-- Anterior -->
+        <label for="slide1" class="flecha prev flecha_Prev2">&lt;</label>
+        <label for="slide2" class="flecha prev flecha_Prev3">&lt;</label>
+        <!-- Posterior -->
+        <label for="slide2" class="flecha next flecha_Next1">&gt;</label>
+        <label for="slide3" class="flecha next flecha_Next2">&gt;</label>
+        <!-- Puntos de navegacion -->
+        <div class="dots">
+            <label class="dot" for="slide1"></label>
+            <label class="dot" for="slide2"></label>
+            <label class="dot" for="slide3"></label>
+        </div>
+    </section>
+    <section class="batallas_recien madera linea">
+        <h1 class="titulo_beige">Batallas recientes</h1>
+        <div class="poster">
+            <div class="batalla_recien_info">
+                {{#each battles}}
+                    <div>
+                        <h2>Batalla {{num_battle}}</h2>
+                        <h3>
+                            <strong>Civilización:</strong> {{civilization_name}}
+                        </h3>
+                        <p><strong>Fecha:</strong> {{created_at}}</p>
+                        <p>
+                            <strong>Resultado:</strong>
+                            {{#if (eq winner "civilization")}}
+                                Victoria
+                            {{/if}}
+
+                            {{#if (eq winner "enemy")}}
+                                Derrota
+                            {{/if}}
+
+                            {{#if (eq winner "tie")}}
+                                Empate
+                            {{/if}}
+                        </p>
+                        <p><strong>Pérdida madera:</strong> {{wood_waste}}</p>
+                        <p><strong>Pérdida hierro:</strong> {{iron_waste}}</p>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+    </section>
+</main>

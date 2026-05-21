@@ -24,16 +24,21 @@ public class Main implements Variables {
 		for(int i = 0; i < enemyArmy.length; i++) {
 			enemyArmy[i] = new ArrayList<MilitaryUnit>();
 		}
-		// mientras que el enemigo pueda pagarse un swordsman (q es el mas barato) entonces se ejecuta el while para rellenar .
-		while(comidaEnemigo >= FOOD_COST_SWORDSMAN && maderaEnemigo >= WOOD_COST_SWORDSMAN && hierroEnemigo >= IRON_COST_SWORDSMAN) {
+		// 
+		while ( (comidaEnemigo >= FOOD_COST_SWORDSMAN && maderaEnemigo >= WOOD_COST_SWORDSMAN && hierroEnemigo >= IRON_COST_SWORDSMAN) ||
+		        (comidaEnemigo >= FOOD_COST_SPEARMAN && maderaEnemigo >= WOOD_COST_SPEARMAN && hierroEnemigo >= IRON_COST_SPEARMAN) ||
+		        (comidaEnemigo >= FOOD_COST_CROSSBOW && maderaEnemigo >= WOOD_COST_CROSSBOW && hierroEnemigo >= IRON_COST_CROSSBOW) ||
+		        (comidaEnemigo >= FOOD_COST_CANNON && maderaEnemigo >= WOOD_COST_CANNON && hierroEnemigo >= IRON_COST_CANNON) ) {
 			int probabilidad = (int)(Math.random() * 100);
 			
 			// 1. SWORDSMAN
 			if(probabilidad < 35) {
-				comidaEnemigo -= FOOD_COST_SWORDSMAN;
-				maderaEnemigo -= WOOD_COST_SWORDSMAN;
-				hierroEnemigo -= IRON_COST_SWORDSMAN;
-				enemyArmy[0].add(new Swordsman());
+				if(comidaEnemigo >= FOOD_COST_SWORDSMAN && maderaEnemigo >= WOOD_COST_SWORDSMAN && hierroEnemigo >= IRON_COST_SWORDSMAN) {
+			        comidaEnemigo -= FOOD_COST_SWORDSMAN;
+			        maderaEnemigo -= WOOD_COST_SWORDSMAN;
+			        hierroEnemigo -= IRON_COST_SWORDSMAN;
+			        enemyArmy[0].add(new Swordsman());
+				}
 			}
 			
 			// 2. SPEARMAN
