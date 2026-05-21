@@ -10,14 +10,14 @@ public interface Variables {
 	public final int ENEMY_ARMY_INCREASE = 20;
 	
 	// Incremento de recursos por segundo
-	public final int CIVILIZATION_IRON_GENERATED = 1;
-	public final int CIVILIZATION_WOOD_GENERATED = 3;
-	public final int CIVILIZATION_FOOD_GENERATED = 5;
+	public final int CIVILIZATION_IRON_GENERATED = 5; //3
+	public final int CIVILIZATION_WOOD_GENERATED = 7; //5
+	public final int CIVILIZATION_FOOD_GENERATED = 9; //7
 	
-	public final int CIVILIZATION_IRON_GENERATED_PER_SMITHY = (int) (1.5*CIVILIZATION_IRON_GENERATED);
-	public final int CIVILIZATION_WOOD_GENERATED_PER_CARPENTRY = (int) (1.5*CIVILIZATION_WOOD_GENERATED);
-	public final int CIVILIZATION_FOOD_GENERATED_PER_FARM = (int) (1.5*CIVILIZATION_FOOD_GENERATED);
-	public final int CIVILIZATION_MANA_GENERATED_PER_MAGIC_TOWER = 5;
+	public final int CIVILIZATION_IRON_GENERATED_PER_SMITHY = (int) (2.5*CIVILIZATION_IRON_GENERATED);
+	public final int CIVILIZATION_WOOD_GENERATED_PER_CARPENTRY = (int) (2.5*CIVILIZATION_WOOD_GENERATED);
+	public final int CIVILIZATION_FOOD_GENERATED_PER_FARM = (int) (2.5*CIVILIZATION_FOOD_GENERATED);
+	public final int CIVILIZATION_MANA_GENERATED_PER_MAGIC_TOWER = 25;
 	
 	// Costes de la tecnologia
 	public final int UPGRADE_BASE_DEFENSE_TECHNOLOGY_IRON_COST = 1500;
@@ -86,27 +86,27 @@ public interface Variables {
 	public final int[] IRON_COST_UNITS = {IRON_COST_SWORDSMAN, IRON_COST_SPEARMAN, IRON_COST_CROSSBOW, IRON_COST_CANNON, IRON_COST_ARROWTOWER, IRON_COST_CATAPULT, IRON_COST_ROCKETLAUNCHERTOWER, IRON_COST_MAGICIAN, IRON_COST_PRIEST};
 	public final int[] FOOD_COST_UNITS = {FOOD_COST_SWORDSMAN, FOOD_COST_SPEARMAN, FOOD_COST_CROSSBOW, FOOD_COST_CANNON, FOOD_COST_ARROWTOWER, FOOD_COST_CATAPULT, FOOD_COST_ROCKETLAUNCHERTOWER, FOOD_COST_MAGICIAN, FOOD_COST_PRIEST};
 	
-	// Coste de las construcciones (Escalonados por tipo)
-	public final int FOOD_COST_FARM = 1500;
-	public final int WOOD_COST_FARM = 3000;
-	public final int IRON_COST_FARM = 500;
+	// Coste de las construcciones
+	public final int FOOD_COST_FARM = 1000;
+	public final int WOOD_COST_FARM = 2500;
+	public final int IRON_COST_FARM = 250;
 	
-	public final int FOOD_COST_CARPENTRY = 2000;
-	public final int WOOD_COST_CARPENTRY = 2500;
-	public final int IRON_COST_CARPENTRY = 1000;
+	public final int FOOD_COST_CARPENTRY = 1500;
+	public final int WOOD_COST_CARPENTRY = 2000;
+	public final int IRON_COST_CARPENTRY = 500;
 	
-	public final int FOOD_COST_SMITHY = 2500;
-	public final int WOOD_COST_SMITHY = 4000;
-	public final int IRON_COST_SMITHY = 2000;
+	public final int FOOD_COST_SMITHY = 2000;
+	public final int WOOD_COST_SMITHY = 3500;
+	public final int IRON_COST_SMITHY = 1500;
 	
-	// Edificios avanzados (Más caros)
-	public final int FOOD_COST_CHURCH = 5000;
-	public final int WOOD_COST_CHURCH = 8000;
-	public final int IRON_COST_CHURCH = 6000;
+	// Edificios avanzados
+	public final int FOOD_COST_CHURCH = 3000;
+	public final int WOOD_COST_CHURCH = 7000;
+	public final int IRON_COST_CHURCH = 5000;
 	
-	public final int FOOD_COST_MAGICTOWER = 4000;
-	public final int WOOD_COST_MAGICTOWER = 6000;
-	public final int IRON_COST_MAGICTOWER = 8000;
+	public final int FOOD_COST_MAGICTOWER = 200;
+	public final int WOOD_COST_MAGICTOWER = 4000;
+	public final int IRON_COST_MAGICTOWER = 6000;
 	
 	// Ataque base de las unidades ofensivas
 	public final int BASE_DAMAGE_SWORDSMAN = 120;
